@@ -1,51 +1,75 @@
-\documentclass[11pt,oneside]{thesis}
-\usepackage{subfigure}
-\usepackage[linesnumbered,lined,titlenumbered,ruled]{algorithm2e}
+\documentclass[12pt,twoside]{thesis}
+
+\usepackage{afterpage}
+\usepackage{amsbsy}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{amsbsy}
-\usepackage{mathpazo}
+\usepackage[autostyle,english=american]{csquotes}
+\usepackage{dialogue}
+\usepackage{epigraph}
 \usepackage{float}
+\usepackage{mathpazo}
+\usepackage{subcaption}
 
-%\floatstyle{ruled}
-%\restylefloat{table}
+\usepackage[linesnumbered,lined,titlenumbered,ruled]{algorithm2e}
 
-\renewcommand{\tablename}{Tabla}
-%\dontprintsemicolon
+% \renewcommand\cftchapleader{\cftdotfill{\cftchapdotsep}}
+% \newcommand\blankpage{
+% 	\null
+% 	\thispagestyle{empty}
+% 	\addtocounter{page}{-1}
+% 	\newpage
+% }
 
-\title{Título}
-\author{Autor}
-\advisor{Tutores}
-\degree{Grado}
-\university{Universidad}
-\faculty{Facultad}
-\date{Fecha}
+\newcommand{\doublequote}[1]{``#1''}
+\newcommand{\guillemot}[1]{\guillemotleft#1\guillemotright}
+
+\title{Aprendizaje de Ontologías}
+\author{José Ariel Romero Costa}
+\advisor{MSc. Juan Pablo Consuegra Ayala}
+\degree{Licenciado en Ciencia de la Computación}
+\university{Universidad de La Habana}
+\faculty{Facultad de Matemática y Computación}
+\date{2020}
 \logo{graphics/university_logo}
-\makenomenclature
-
-\renewcommand{\vec}[1]{\boldsymbol{#1}}
-\newcommand{\diff}[1]{\ensuremath{\mathrm{d}#1}}
+%\makenomenclature
 
 \begin{document}
+	\let\cleardoublepage\clearpage
 
-\frontmatter
-\maketitle
+	\frontmatter
+	\maketitle
 
-\include{frontmatter/dedication}
-\include{frontmatter/thanks}
-\include{frontmatter/supervisor_opinion}
-\include{frontmatter/abstract}
-\include{frontmatter/contents}
+	\include{frontmatter/phrase}
+	\include{frontmatter/thanks}
+	\include{frontmatter/dedication}
+	\include{frontmatter/supervisor_opinion}
+	\include{frontmatter/abstract}
+	\include{frontmatter/contents}
 
-\mainmatter
-	
-\include{mainmatter/introduction}
-\include{mainmatter/background}
-\include{mainmatter/results}
+	\mainmatter
 
-\backmatter
+	% introduction
+	\include{mainmatter/introduction}
 
-\include{backmatter/conclusions}
-\include{backmatter/bibliography}
+	% ontology learning
+	\include{mainmatter/chapter1}
+
+	% annotation model
+	\include{mainmatter/chapter2}
+
+	% proposed solution
+	\include{mainmatter/chapter3}
+
+	% results
+	\include{mainmatter/results}
+
+	\backmatter
+
+	% conclusions
+	\include{backmatter/conclusions}
+
+	% bibliography
+	\include{backmatter/bibliography}
 
 \end{document}

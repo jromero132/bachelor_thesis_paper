@@ -1,0 +1,354 @@
+%===================================================================================
+% Chapter: Annotation model
+%===================================================================================
+\chapter{Modelo de anotación}\label{chapter:corpus-description}
+El primer paso para el algoritmo presentado en este trabajo, es tener un corpus\footnote{Un corpus es un conjunto de oraciones y/o documentos de ejemplos reales usados en el lenguaje natural.} anotado basado en el esquema presentado a continuación. Además, en este capítulo son analizadas varias estadísticas de un corpus de oraciones del dominio médico en idioma español, el cual es utilizado en la presente investigación y son mostradas las herramientas empleadas para construirlo y trabajar con el mismo.
+
+%===================================================================================
+
+\section{Esquema de Anotación}
+El modelo de anotación de propósito general empleado busca capturar los rasgos y relaciones semánticas más relevantes presentes en oraciones del lenguaje natural. Este debe evitar ambigüedades tanto como sea posible, de forma que anotadores humanos distintos tengan una alta probabilidad de coincidir. Necesita ser lo suficientemente expresivo para capturar los conceptos relevantes del dominio y sus interacciones. Además, debe ser capaz de representar conceptos complejos a partir de combinar otros más simples, esto permitiría construir conceptos mucho más complejos que los que se nombran directamente en el texto con un conjunto reducido de reglas. También está diseñado para asistir en la construcción de sistemas de descubrimiento de conocimiento. Por este motivo es necesario independizar la representación del modelo de la estructura gramatical de las oraciones, y en su lugar tratar de representar su significado semántico.
+
+Este modelo de anotación se basa en las tripletas \textit{Subject-Action-Target} (en español \textit{Sujeto-Acción-Objetivo}) y además en la estructura gramatical \textit{sujeto-verbo-objeto}, normalmente expresada con su abreviatura \textbf{SVO} y es el orden más usado en los idiomas del mundo. Tiende a ser el orden predeterminado porque el verbo se usa para dividir el sujeto del predicado, sin necesidad de usar partículas para indicar dónde empieza o terminan los mismos. Es, por ende, una de las secuencias más frecuente en el lenguaje natural y de hecho es usada en la mayoría de lenguas occidentales y un buen número de orientales.
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{graphics/annotation_model.png}
+	\caption[Esquema conceptual del modelo de anotación]{Esquema conceptual del modelo de anotación.}
+	\label{fig:annotation_model}
+\end{figure}
+
+Es válido destacar que al estar interesados en fragmentos de conocimiento, el rol semántico de las entidades anotadas puede no coincidir con su rol gramatical. Los roles semánticos fundamentales de este modelo son \textit{Concept} y \textit{Action} (en español \textit{Concepto} y \textit{Acción} respectivamente), siendo usados para representar información objetiva acerca de lo que está siendo hecho, por quién, y a quién. Estas estructuras pueden ser contextualizadas en tiempo, lugar y otras circunstancias generales.
+
+Existen otros 2 roles semánticos, llamados \textit{Predicate} y \textit{Reference} (en español \textit{Referencia} y \textit{Predicado} respectivamente). \textit{Predicate} es utilizado para construir conceptos más complejos a partir de otros más simples. \textit{Reference} define un término del que se menciona un hecho, pero en el contexto de la oración no está escrito explícitamente, por lo que la información semántica de estas anotaciones no está contenida en las anotaciones.
+
+Por último, son usadas seis relaciones con semántica específica para representar conocimiento de propósito general. Las relaciones
+\textit{is-a}, \textit{part-of}, \textit{same-as} y \textit{has-property} (en español \textit{es-un}, \textit{parte-de}, \textit{igual-que} y \textit{tiene-propiedad} respectivamente) son tomadas de representaciones ontológicas y taxonómicas, mientras que \textit{causes} y \textit{entails} (en español \textit{causa} e \textit{implica} respectivamente) se toman del dominio de la comprensión del texto. Además, las relaciones \textit{in-time}, \textit{in-place} e \textit{in-context} (en español \textit{en-tiempo}, \textit{en-lugar} y \textit{en-contexto} respectivamente) son usadas para dar contexto y cuatro atributos booleanos son asociados a los conceptos. Las próximas secciones explican cada rol semántico y las relaciones detalladamente, incluyendo ejemplos de su uso en oraciones del lenguaje natural.
+
+La figura \ref{fig:annotation_model} muestra una representación gráfica del modelo de anotación. En el esquema conceptual se puede apreciar que cada uno de los roles semánticos definidos en el modelo de anotación está representado por un círculo. Además, las posibles relaciones definidas entre cada pareja de roles se representan con óvalos y con un rectángulo los atributos que pueden tener los roles semánticos. En color café están representadas las relaciones de contexto, en azul las taxonómicas y en violeta las de causalidad e implicación.
+
+\subsection{Conceptos}
+El rol \textit{Concept} es usado para anotar fragmentos de texto que representan una unidad atómica de información en el dominio. Puede ser una entidad nombrada, un sustantivo, adjetivo o verbo, que representa un concepto relevante en el dominio del texto. Por ende, la gran mayoría de palabras o frases que expresan un significado propio es anotado como \textit{Concept} (o uno de sus derivados, como se explica más adelante). Palabras tales como artículos, preposiciones y conjunciones, las cuales solo realizan una función gramatical y sin significado semántico, no son anotados.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=3.5in]{graphics/annotation_example_concept.png}
+		\caption[Anotación de conceptos]{Ejemplo de anotación de conceptos.}
+		\label{fig:annotation_example_concept}
+	\end{center}
+\end{figure}
+
+En la figura \ref{fig:annotation_example_concept} se distinguen claramente las palabras \guillemot{\texttt{depresión}} y \guillemot{\texttt{severa}} como conceptos en el dominio médico, cuyo significado de cada uno de ellos es independiente del rol gramatical que tengan en la oración. Algunos conceptos, como \guillemot{\texttt{enfermedad clínica}} en este caso, se componen de múltiples palabras, ya sea porque las palabras individuales que lo componen no tengan significado por sí mismas, o porque el concepto formado por su unión es diferente de sus significados individuales. En esta ocasión, a pesar de que \guillemot{\texttt{enfermedad}} y \guillemot{\texttt{clínica}} poseen un significado individual bien definido, el concepto \guillemot{\texttt{enfermedad clínica}} tiene su significado bien definido en el dominio médico, lo cual lo hace una unidad única de información, en otras palabras, un especialista del dominio puede identificarla claramente. Las palabras que conforman el concepto no tienen que estar consecutivas en el texto, pero sí son seleccionadas de izquierda a derecha.
+
+\subsection{Acciones}
+El rol \textit{Action} es un tipo particular de \textit{Concept} que indica una acción o evento que otro concepto puede realizar o ser objetivo de ella. Un \textit{Action} puede ser enlazado con otros conceptos relevantes a partir de 2 roles semánticos: \textit{subject} y \textit{target} (en español \textit{sujeto} y \textit{objetivo} respectivamente). El \textit{subject} es el concepto que produce la acción, mientras que el \textit{target} es el concepto que recibe los efectos o es el objetivo de la acción.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[height=1.7in]{graphics/annotation_example_action.png}
+		\caption[Anotación de acción]{Ejemplo de anotación de acción.}
+		\label{fig:annotation_example_action}
+	\end{center}
+\end{figure}
+
+En la figura \ref{fig:annotation_example_action} la acción es indicada por una palabra con el rol gramatical de verbo. Intuitivamente este es el caso más común, sin embargo, una acción puede ser indicada además por una palabra con otro rol gramatical, como los sustantivos. Por ejemplo, en la frase \doublequote{\textit{\dots\space el empeoramiento de los síntomas \dots}}, la palabra \guillemot{\texttt{empeoramiento}} se considera también un \textit{Action} a pesar de que no es un verbo, dado que describe un proceso o evento que ocurre sobre otros conceptos.
+
+Por tanto, el rol semántico \textit{Action} describe el significado de un concepto en el dominio semántico, en lugar de su función gramatical en una oración específica. Si un concepto del dominio expresa un proceso o evento que realiza un concepto o produce un efecto sobre otro(s), entonces es un \textit{Action}, incluso si puede ser usado con una función gramatical distinta.
+
+\subsection{Referencias}
+El rol \textit{Reference} es un tipo de \textit{Concept} que no tiene un significado semántico específico, pero que es necesario por razones gramaticales. Es usado para anotar pronombres (por ejemplo, \textit{este}, \textit{aquel}) y demás elementos que hacen referencia a otro \textit{Concept} presente en la oración, documento y/o corpus. En la figura \ref{fig:annotation_example_reference_and_predicate} puede verse un ejemplo.
+
+\subsection{Predicados}
+El rol \textit{Predicate} es usado para formar conceptos más complejos a partir de aplicar un determinado criterio sobre otros conceptos en una oración. Un caso de uso común es para definir el subconjunto de un concepto que cumple determinadas propiedades.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=3.4in]{graphics/annotation_example_reference_and_predicate.png}
+		\caption[Anotación de referencia y predicado]{Ejemplo de anotación de referencia y predicado.}
+		\label{fig:annotation_example_reference_and_predicate}
+	\end{center}
+\end{figure}
+
+\vspace{-0.04in}
+Por ejemplo, en la figura \ref{fig:annotation_example_reference_and_predicate}, la palabra \textit{muchos} cumple la función de filtrar algunos de los bebés, por eso es anotada como \textit{Predicate}.
+
+De conjunto con esta relación, cualquier concepto puede jugar dos roles adicionales: \textit{domain} y \textit{argument} (en español \textit{dominio} y \textit{argumento} respectivamente), completando así su significado. El \textit{Predicate} define el conjunto de objetos pertenecientes al dominio (el concepto enlazado con el rol \textit{domain}) que cumplen el predicado anotado según los argumentos señalados (el o los conceptos anotados con el rol \textit{argument}). De forma matemática, la relación \textit{Predicate} define al conjunto:
+
+\begin{center}
+	$\{x\in Domain~|~Predicate(x,~arg_1,~arg_2,\dots,~arg_n)\}$
+\end{center}
+
+En el ejemplo de la figura \ref{fig:annotation_example_reference_and_predicate}, el dominio de este \textit{Predicate} es representado por el \textit{Concept} \guillemot{\texttt{bebés}}, y el único argumento es \guillemot{\texttt{cuatro meses}}. Esta construcción da lugar a un nuevo concepto, el de muchos bebés de 4 meses, el cual puede ser entendido como la aplicación del filtro \guillemot{\texttt{muchos}} sobre el conjunto de elementos
+definido por el \textit{Concept} \guillemot{\texttt{bebés}}, de los cuales son seleccionados aquellos con el argumento \guillemot{\texttt{cuatro meses}}.
+
+\begin{center}
+	$\{x\in Beb\acute{e}s~|~muchos(x,~cuatro~meses)\}$
+\end{center}
+
+El nuevo concepto complejo construido de esta forma es representado
+en la oración por la anotación \textit{Predicate} en sí misma. Por tanto, para continuar con el ejemplo anterior, en caso de querer que estos \guillemot{\texttt{muchos bebés}} jugaran el rol \textit{subject} o \textit{target}, la anotación correspondiente debe ir desde un \textit{Action} hacia el \textit{Predicate}, como se muestra en la figura \ref{fig:annotation_example_reference_and_predicate}. Es un error anotar que el \textit{subject} de \guillemot{\texttt{padecen}} es \guillemot{\texttt{bebés}} porque este concepto representa \doublequote{todos los bebés}. Por ende, el \textit{Predicate} es usado para representar el concepto filtrado en sí, no el operador de filtrado.
+
+Como caso de uso particular de esta anotación, se encuentra el caso en que un término no representa un concepto relevante por sí mismo (por tanto no debe ser anotado como \textit{Concept}), sino que denota una propiedad o rasgo medible de otro concepto. Por ejemplo, \guillemot{\texttt{tipo}}, \guillemot{\texttt{parte}}, \guillemot{\texttt{nivel}} y \guillemot{\texttt{cada}} en \doublequote{\textit{tipo de cáncer}}, \doublequote{\textit{parte del cuerpo}}, \doublequote{\textit{nivel de glucosa}} y \doublequote{\textit{cada trimestre}} respectivamente.
+En tales casos, el \textit{Predicate} debe carecer de alguno de los roles \textit{domain} o \textit{argument}. Si el tipo o clase resultante de formar el predicado coincide con el del concepto a enlazar, entonces el rol utilizado es \textit{domain}. En otro caso, se enlaza al concepto con el rol \textit{argument}.
+
+\subsection{Componiendo conceptos}
+Así como un \textit{Predicate} puede utilizarse para componer conceptos, se puede lograr un resultado similar al considerar un \textit{Action} como el \textit{subject} o \textit{target} de otro.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_composing_concepts.png}
+		\caption[Anotación de conceptos compuestos]{Ejemplo de anotación de conceptos compuestos.}
+		\label{fig:annotation_example_composing_concepts}
+	\end{center}
+\end{figure}
+
+Por ejemplo, en la figura \ref{fig:annotation_example_composing_concepts}, hay un concepto complejo
+que involucra a \guillemot{\texttt{problemas}} y \guillemot{\texttt{sangre}}. Este concepto actúa como \textit{subject} de \guillemot{\texttt{afectan}}, dado que no todos los \guillemot{\texttt{problemas}} se \guillemot{\texttt{afectan}}, sino solo aquellos que son \guillemot{\texttt{problemas de la sangre}}. Por otro lado, la propia palabra \guillemot{\texttt{sangre}} actúa como \textit{domain} del predicado \guillemot{\texttt{partes}}. Quien a su vez es el \textit{target} de \guillemot{\texttt{afectan}}. De manera similar sucede con los otros tres conceptos complejos \guillemot{\texttt{impiden}}, \guillemot{{cumpla}} y \guillemot{\texttt{función}}.
+
+De esta forma puede apreciarse que la construcción y/o anotación de conceptos complejos es una tarea compleja en sí. Además, esta estrategia puede ser usada para representar la nominalización de un verbo, pues al anotar el \textit{Action} y los correspondientes \textit{subject} y \textit{target} se
+construye el concepto complejo.
+
+\subsection{Relaciones taxonómicas}
+Los roles \textit{Action} y \textit{Concept} permiten capturar gran parte del significado semántico de una oración a partir de anotar como acción todos los conceptos que indican alguna interacción entre otros conceptos. Sin embargo, algunos tipos específicos de interacciones son tan comunes que son considerados en diferentes dominios del conocimiento como los bloques constructores para las representaciones ontológicas y taxonómicas. Tal es el caso de las parejas de hiperonimia/hiponimia, anotadas como relaciones \textit{is-a} (en español \textit{es-un}) y meronimia/holonimia, anotadas como relaciones \textit{part-of} (en español \textit{parte-de}), que forma el centro de muchas bases de conocimiento.
+
+Estos dos tipos de relaciones son muy comunes en la mayoría de los dominios del conocimiento, y hay muchas formas distintas para expresar
+estas ideas en texto. Debido a ello, resulta mejor representarlas explícitamente como relaciones entre conceptos, en lugar de recurrir a anotar como \textit{Action} las formas del verbo ser o estar. Además, una anotación explícita de estas relaciones permite que sistemas de descubrimiento de conocimiento entrenados en estas anotaciones extraigan estructuras del conocimiento más compactas y concisas, dado que no es necesario realizar interpretaciones adicionales. Las relaciones \textit{is-a} y \textit{part-of} pueden ser indicadas explícitamente en el texto por la aparición de patrones textuales comunes (por ejemplo, patrones de Hearst \textbf{ESTO LLEVA REFERENCIA}). Sin embargo, aun cuando no ocurrieran en el texto indicaciones explícitas de estas relaciones, consideramos su anotación.
+
+En la figura \ref{fig:annotation_example_is_a} puede verse un ejemplo de anotación de la relación \textit{is-a}. En esta oración, las palabras \guillemot{\texttt{hepatitis}} e \guillemot{\texttt{hígado}} son claramente conceptos, mientras que la palabra \guillemot{\texttt{inflamación}} es una acción. Como se ha visto anteriormente, una relación con un rol complejo, es decir, un rol que esté relacionado hacia otros roles implica la relación con él como un todo y no solo con su significado semántico. Por ende, el resultado de la anotación de esta oración es \guillemot{\texttt{hepatitis} \textit{is-a} \texttt{inflamación del hígado}}.
+
+Por otra parte, en la figura \ref{fig:annotation_example_part_of} se puede apreciar un ejemplo de la relación \textit{part-of}. En esta oración son anotadas como conceptos la palabra \guillemot{\texttt{depresión}} y la frase \guillemot{\texttt{trastorno bipolar}}. Resultando así la anotación \guillemot{\texttt{depresión} \textit{part-of} \texttt{trastorno bipolar}}.
+
+Las parejas de sinonimia, anotadas como relaciones \textit{same-as} (en español \textit{igual-que}) es usada para indicar sinónimos, o conceptos que son considerados iguales en el dominio del documento. Puede ser usada cuando un concepto simple es definido a partir de describirlo como otro concepto más complejo.
+
+La figura \ref{fig:annotation_example_same_as} muestra un ejemplo de anotación de la relación \textit{same-as}. En esta oración son anotadas la palabra \guillemot{\texttt{SIDA}} y la frase \guillemot{\texttt{síndrome de inmunodeficiencia adquirida}} como conceptos, resultando la anotación \guillemot{\texttt{SIDA} \textit{same-as} \texttt{síndrome de inmunodeficiencia adquirida}}.
+
+Las propiedades, anotadas como relaciones \textit{has-property} (en español \textit{tiene-propiedad}) es usada para especificar que un concepto tiene una propiedad o característica, o puede ser descrita por otro concepto. Sin embargo, este tipo de relación puede conllevar a ciertas dificultades, como por ejemplo la paradoja de Bertrand Russell \textbf{NECESITO REFERENCIA} y la de Grelling-Nelson \textbf{NECESITO REFERENCIA}. Además, una propiedad puede implicar gran cantidad de propiedades e incluso una cantidad infinita de ellas. Por ejemplo si se cumple que \guillemot{\texttt{la persona pesa más de 60 kilogramos}} entonces también se cumple que \guillemot{\texttt{la persona pesa más de 59 kilogramos}} y que \guillemot{\texttt{la persona pesa más de 58 kilogramos}} y de forma similar, se puede concluir infinitas propiedas de este tipo.
+
+En la figura \ref{fig:annotation_example_has_property} se puede observar un ejemplo de anotación de la relación \textit{has-property}. En esta oración son anotadas la frase \guillemot{\texttt{estreptococo del grupo A}} y las palabras \guillemot{\texttt{causa}} y \guillemot{\texttt{común}} como conceptos. También, la palabra \guillemot{\texttt{más}} es anotada como un predicado, con las palabras \guillemot{\texttt{causa}} y \guillemot{\texttt{común}} como dominio y argumento respectivamente. Al ser anotada la relación \textit{has-property}, la anotación resulta como \guillemot{\texttt{estreptococo del grupo A} \textit{has-property} \texttt{causa más común}}.
+
+Para todas las relaciones taxonómicas, solo se considera su anotación cuando la oración implica la existencia de dicha relación, aun cuando fuese implícita. En ningún caso se anota basada solamente en conocimiento externo o del dominio.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{3.1in}
+		\includegraphics[width=\textwidth]{graphics/annotation_example_is_a.png}
+		\caption{Ejemplo de anotación de hiperonimia e hiponimia.}
+		\vspace{0.4in}
+		\label{fig:annotation_example_is_a}
+	\end{subfigure}
+	\begin{subfigure}{3.25in}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_part_of.png}
+		\caption{Ejemplo de anotación de meronimia y holonimia.}
+		\vspace{0.4in}
+		\label{fig:annotation_example_part_of}
+	\end{subfigure}
+	\begin{subfigure}{4.2in}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_same_as.png}
+		\caption{Ejemplo de anotación de sinonimia.}
+		\vspace{0.4in}
+		\label{fig:annotation_example_same_as}
+	\end{subfigure}
+	\begin{subfigure}{3.9in}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_has_property.png}
+		\caption{Ejemplo de anotación de propiedad.}
+		\label{fig:annotation_example_has_property}
+	\end{subfigure}
+	\caption{Anotación de las relaciones taxonómicas}
+\end{figure}
+
+\subsection{Causalidad e implicación}
+Las cuatro relaciones semánticas presentadas hasta ahora son útiles para capturar la estructura taxonómica del conocimiento expresado en textos del lenguaje natural. Dos relaciones adicionales son definidas para capturar conexiones lógicas entre conceptos: \textit{causes} y \textit{entails} (en español \textit{causa} e \textit{implica} respectivamente). La relación \textit{causes} es usada para expresar que un evento, identificado en general como un concepto, es una posible causa para otro evento. En la figura \ref{fig:annotation_example_causes} se muestra un ejemplo anotado.
+
+Esta relación indica causalidad, no correlación ni implicación lógica. Por tanto, debe estar declarado con claridad en la oración que hay una conexión de causa directa entre ambos eventos. Además, hay un grado de incertidumbre implicada en la causalidad, lo cual significa que si \guillemot{\texttt{A} \textit{causes} \texttt{B}}, eso no necesariamente implica que cada vez que pase \guillemot{\texttt{A}} sería seguido por \guillemot{\texttt{B}}, ni que en cualquier caso que ocurra \guillemot{\texttt{B}} será a causa de \guillemot{\texttt{A}}.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{3.25in}
+		\includegraphics[width=\textwidth]{graphics/annotation_example_causes.png}
+		\caption{Ejemplo de anotación de causalidad.}
+		\vspace{0.4in}
+		\label{fig:annotation_example_causes}
+	\end{subfigure}
+	\begin{subfigure}{3.9in}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_entails.png}
+		\caption{Ejemplo de anotación de implicación.}
+		\label{fig:annotation_example_entails}
+	\end{subfigure}
+	\caption{Anotación de causalidad e implicación}
+\end{figure}
+
+En contraste, la relación \textit{entails} es usada para denotar implicación lógica. En este caso, no es necesario que los eventos estén relacionados por causalidad en lo más mínimo; lo único que debe cumplirse es que cuando la proposición \guillemot{\texttt{A}} es verdadera entonces siempre sucede el caso de que la proposición \guillemot{\texttt{B}} es verdadera. En la figura \ref{fig:annotation_example_entails} puede verse un ejemplo, donde un concepto complejo, en este caso \guillemot{\texttt{tener}} implica \guillemot{\texttt{necesita}}, otro concepto complejo. Desde otro punto de vista, la anotación de esa oración resulta en:
+
+\begin{center}
+	\guillemot{$\big($tener [suficiente energía] en el cuerpo$\big)$\\\textit{entails}\\(necesitar glucosa en el cuerpo)}
+\end{center}
+
+La anotación de causalidad e implicación evita anotar varias palabras y frases que comparten el mismo significado semántico. Por ejemplo, en la figura \ref{fig:annotation_example_causes} no resulta necesario anotar \guillemot{\texttt{puede causarle}} debido a que el significado correcto está siendo representado por la relación \textit{causes}.
+
+\subsection{Contextualización}
+En ocasiones, los conceptos solo participan en determinada relación con precondiciones, como por ejemplo, si dura un período específico de tiempo o solo en una ubicación específica, o con algunas propiedades adicionales.
+
+Un ejemplo es la oración de la figura \ref{fig:annotation_example_in_place}. En esta oración, la anotación \guillemot{\texttt{injerto óseo--transplanta--tejidos}} falla en capturar la semántica completa del mensaje, dado que el \guillemot{\texttt{injerto óseo}} no es necesariamente siempre \guillemot{\texttt{transplantar tejidos}} (según la oración), sino solo en la situación específica en la que el tejido transplantado es de los \guillemot{\texttt{huesos}}. Para resolver estas situaciones, el modelo incluye tres relaciones de contexto: \textit{in-time}, \textit{in-place} y el más general \textit{in-context} (en español \textit{en-tiempo}, \textit{en-lugar} y \textit{en-contexto} respectivamente).
+
+La relación \textit{in-time} restringe un concepto a un instante de tiempo determinado. Además, permite atrapar restricciones más generales siempre que hablen del concepto mientras cumpla determinada condición o durante el tiempo que lo hace. Puede verse un ejemplo en la figura \ref{fig:annotation_example_in_time}.
+
+La relación \textit{in-place} restringe un concepto a un lugar determinado. Además, puede ser visto como la contextualización de la relación \textit{part-of}, en el sentido de que permite plantear un hecho sobre un concepto que es parte de otro. Puede verse un ejemplo en la figura \ref{fig:annotation_example_in_place}.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{3.8in}
+		\includegraphics[width=\textwidth]{graphics/annotation_example_in_time.png}
+		\caption{Ejemplo de anotación de tiempo.}
+		\vspace{0.4in}
+		\label{fig:annotation_example_in_time}
+	\end{subfigure}
+	\begin{subfigure}{3.6in}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_in_place.png}
+		\caption{Ejemplo de anotación de lugar.}
+		\vspace{0.4in}
+		\label{fig:annotation_example_in_place}
+	\end{subfigure}
+	\begin{subfigure}{3.5in}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_in_context.png}
+		\caption{Ejemplo de anotación de contexto.}
+		\label{fig:annotation_example_in_context}
+	\end{subfigure}
+	\caption{Anotación de contextualización}
+\end{figure}
+
+La relación \textit{in-context} restringe un concepto a condiciones más generales que las descritas anteriormente. Es el contextualizador más general y al igual que el resto, solo debe ser aplicado cuando el contexto habla de un rasgo o valor que puede tener el concepto a contextualizar. Eso implica que el objeto a contextualizar debe tener semántica propia independiente del contexto. De forma general, puede verse como el contextualizador de la relación \textit{has-property}. Un caso de uso particular es en las oraciones imperativas, donde un fragmento como \guillemot{\dots\space \texttt{si X entonces haga Y} \dots} se anotaría como \guillemot{\texttt{Y} \textit{in-context} \texttt{X}}. Puede verse un ejemplo en la figura \ref{fig:annotation_example_in_context}.
+
+La diferencia entre las relaciones de contexto y el resto es que ellas no definen una aserción, sino que son útiles solo para construir conceptos más complejos. Por ejemplo, la anotación \guillemot{\texttt{problemas} \textit{in-context} \texttt{únicos}} no solo significa que las mujeres tienen problemas de salud, sino que además tienen problemas únicos. Es exclusivamente cuando se enlaza con otro concepto, a través de \textit{has-property} u otra relación, que esta construcción toma sentido. Por esta razón, no es correcto intercambiar arbitrariamente \textit{in-context} con \textit{has-property}, ya que una relación \textit{has-property} declara una aserción concreta por sí misma. De igual forma enlazar un concepto sobre el que se ha establecido una relación que no es de contextualización, con otro concepto a través de alguna relación o rol, no indica que dicha relación o rol sea válida solamente para aquellas instancias del concepto que cumplan la propiedad indicada por la relación que no es de contextualización, puesto que estas relaciones, no construyen conceptos complejos que se puedan enlazar.
+
+\subsection{Atributos}
+Cuatro atributos booleanos\footnote{HAY QUE PONER ALGO AQUÍ} adicionales pueden ser asociados a cualquier concepto para calificarlo o describirlo aún más. Ellos son: \textit{negated}, \textit{uncertain}, \textit{diminished} y \textit{emphasized} (en español \textit{negación}, \textit{incertidumbre}, \textit{disminución} y \textit{énfasis} respectivamente). Estos atributos son usados para evitar anotar palabras comunes del idioma que son usadas con bastante frecuencia como \textit{no}, \textit{puede}, \textit{poco}, \textit{mucho}, y en su lugar asociar directamente el calificador correspondiente al concepto en sí. Además, los atributos capturan la negación, incertidumbre, disminución o énfasis que se pretendía en la oración aun cuando sea implícito y no indicado explícitamente por otra palabra de la misma. Estos atributos acompañan al concepto que modifican en todas las relaciones en que este participe. En la figura \ref{fig:annotation_examples_attributes} puede verse un ejemplo anotado de cada uno de estos cuatro atributos.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{2.4in}
+		\includegraphics[width=\textwidth]{graphics/annotation_example_attribute_negated.png}
+		\caption{Ejemplo de anotación del atributo negación.}
+		\vspace{0.3in}
+		\label{fig:annotation_example_attribute_negated}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}{2.2in}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_attribute_uncertain.png}
+		\caption{Ejemplo de anotación del atributo incertidumbre.}
+		\vspace{0.3in}
+		\label{fig:annotation_example_attribute_uncertain}
+	\end{subfigure}
+	\begin{subfigure}{4.2in}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_attribute_diminished.png}
+		\caption{Ejemplo de anotación del atributo disminución.}
+		\vspace{0.3in}
+		\label{fig:annotation_example_attribute_diminished}
+	\end{subfigure}
+	\begin{subfigure}{2.3in}
+		\includegraphics[width=\linewidth]{graphics/annotation_example_attribute_emphasized.png}
+		\caption{Ejemplo de anotación del atributo énfasis.}
+		\label{fig:annotation_example_attribute_emphasized}
+	\end{subfigure}
+	\caption{Anotación de los atributos}
+	\label{fig:annotation_examples_attributes}
+\end{figure}
+
+\section{Análisis del Corpus}
+El corpus fue construido a partir de un fichero \textit{XML}\footnote{Siglas en inglés de \textit{e\textbf{X}tensible \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado desarrollado por el \textit{World Wide Web Consortium} (W3C).} tomado del sitio web de \textit{Medline} (\textbf{NECESITA REFERENCIAAAAAAAAA}) el $9$ de enero de $2018$, específicamente a las $02:30:31$. \textit{Medline} fue producida y es mantenida por la Biblioteca Nacional de Medicina de los Estados Unidos. Recoge referencias bibliográficas de los artículos publicados en aproximadamente $5,500$ revistas médicas desde $1966$. Actualmente reúne más de $30,000,000$ citas. Cada registro de \textit{Medline} es la referencia bibliográfica de un artículo científico publicado en una revista médica, con los datos bibliográficos básicos de un artículo: título, autores, nombre de la revista, año de publicación, entre otros. Esto permite la recuperación de estas referencias posteriormente en una biblioteca o a través de un \textit{software} específico de recuperación.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[height=3.6in]{graphics/corpus_processing.png}
+		\caption[Esquema del procesamiento inicial del corpus]{Esquema del procesamiento inicial del corpus.}
+		\label{fig:corpus_processing}
+	\end{center}
+\end{figure}
+
+En la figura \ref{fig:corpus_processing} puede verse una representación esquemática del procesamiento inicial que se le hace al corpus de \textit{Medline}, el cual de forma análoga puede aplicarse a otros. En esta investigación solo se trabajará con los artículos en español, estos son procesados para eliminar las marcas específicas de \textit{HTML}\footnote{Siglas en inglés de \textit{\textbf{H}yper\textbf{T}ext \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado usado en la elaboración de páginas web.} y ser divididos en oraciones. Luego, las oraciones anotadas son mezcladas con sus respectivos artículos. Potencialmente, un artículo podrá no tener ninguna de sus oraciones anotadas o estar completamente anotado. Las tablas \ref{tab:stats_corpus} y \ref{tab:stats_annotated_corpus} muestran algunas estadísticas acerca de este corpus y de las oraciones anotadas pertenecientes al mismo.
+
+\vspace{-0.02in}
+\begin{table}[h!]
+	\begin{center}
+		\begin{tabular}{lcc}
+			\noalign{\hrule height 1pt}\\
+			\vspace{-0.35in}\\
+			\textbf{Métrica} & \textbf{\textit{Medline}} & \textbf{Anotado}\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Artículos & $1,013$ & $25^*$\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Oraciones & $12,830$ & $999$\\
+			Promedio de oraciones por artículo & $\approx13$ & $\approx40$\\
+			Menor cantidad de oraciones en un artículo & $2$ & $39$\\
+			Artículos con la menor cantidad de oraciones & $9$ & $1$\\
+			Mayor cantidad de oraciones en un artículo & $65$ & $40$\\
+			Artículos con la mayor cantidad de oraciones & $1$ & $24$\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Palabras & $191,256$ & $14,529$\\
+			Promedio de palabras por artículo & $\approx189$ & $\approx581$\\
+			Promedio de palabras por oración & $\approx15$ & $\approx15$\\
+			Menor cantidad de palabras en un artículo & $33$ & $489$\\
+			Artículos con la menor cantidad de palabras & $1$ & $1$\\
+			Menor cantidad de palabras en una oración & $1$ & $4$\\
+			Oraciones con la menor cantidad de palabras & $87$ & $1$\\
+			Mayor cantidad de palabras en un artículo & $1,199$ & $671$\\
+			Artículos con la mayor cantidad de palabras & $1$ & $1$\\
+			Mayor cantidad de palabras en una oración & $258$ & $46$\\
+			Oraciones con la mayor cantidad de palabras & $1$ & $1$\\
+			\noalign{\hrule height 1pt}
+			\vspace{0in}
+		\end{tabular}
+		*\small{Esta cifra no son artículos en sí, sino archivos, los cuales pueden contener oraciones de varios artículos.}
+		\caption[Estadísticas del corpus tomado de \textit{Medline} y del anotado]{Estadísticas del corpus tomado de \textit{Medline} y del anotado.}
+		\label{tab:stats_corpus}
+	\end{center}
+\end{table}
+
+\begin{table}[h!]
+	\begin{center}
+		\begin{tabular}{lc}
+			\noalign{\hrule height 1pt}\\
+			\vspace{-0.35in}\\
+			\textbf{Métrica} & \textbf{Total}\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Oraciones & $999$\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Conceptos & $6,324$\\
+			\quad \texttt{Concept} & $3,914$\\
+			\quad \texttt{Action} & $1,661$\\
+			\quad \texttt{Reference} & $213$\\
+			\quad \texttt{Predicate} & $536$\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Relaciones & $5,925$\\
+			\quad \texttt{Subject} & $859$\\
+			\quad \texttt{Target} & $1,688$\\
+			\quad \texttt{Domain} & $346$\\
+			\quad \texttt{Argument} & $333$\\
+			\quad \texttt{Is-a} & $570$\\
+			\quad \texttt{Part-of} & $95$\\
+			\quad \texttt{Same-as} & $124$\\
+			\quad \texttt{Has-property} & $168$\\
+			\quad \texttt{Causes} & $381$\\
+			\quad \texttt{Entails} & $170$\\
+			\quad \texttt{In-time} & $154$\\
+			\quad \texttt{In-place} & $384$\\
+			\quad \texttt{In-context} & $653$\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Atributos & $559$\\
+			\quad \texttt{Negated} & $160$\\
+			\quad \texttt{Uncertain} & $262$\\
+			\quad \texttt{Diminished} & $17$\\
+			\quad \texttt{Emphasized} & $120$\\
+			\noalign{\hrule height 1pt}
+		\end{tabular}
+		\caption[Estadísticas del corpus anotado]{Estadísticas del corpus anotado.}
+		\label{tab:stats_annotated_corpus}
+	\end{center}
+\end{table}
+
+% Finalmente, se obtuvieron 9 956 oraciones,divididas en 41 ficheros según el tema.Usando este conjunto de oraciones, se implementó un proceso de ano-tación  para  etiquetar  manualmente  las  entidades  relevantes  y  relacionessegún el modelo descrito en la sección 2.1. Este proceso de anotación sedescribe en detalle en la sección 2.2. La figura 2.8 ilustra el procesamientorealizado. Luego del proceso de anotación, se obtuvo un total de 1, 045 ora-ciones de dominio médico, divididas en 4 colecciones según se describe acontinuación. La tabla 2.1 resume las estadísticas fundamentales del corpusfinal.La colección de prueba (trial collection) contiene 45 oraciones. Esta colec-ción fue creada antes de comenzar el proceso de anotación, con el propósitode llegar a un consenso común entre los anotadores. La colección de pruebaresume todos los posibles patrones de anotación que aparecen en el texto.A partir de esta colección, una guía de anotación es creada para asistir a losanotadores.Las restantes 1 000 oraciones se dividieron en tres colecciones en el con-texto deleHealth-KD challenge: las colecciones de entrenamiento (training),desarrollo  (development)  y  evaluación  (test),  formadas  por  600,  100  y  300oraciones respectivamente. En la colección de entrenamiento, a diferenciade la edición anterior, las oraciones se unieron en un único fichero en lu-gar de mantenerse separadas en ficheros por tópico. De forma general, lasoraciones en cada colección pertenecen a múltiples temas y están distribui-das aleatoriamente en el fichero. La colección de desarrollo está pensadapara usarse en la selección, validación, y ajuste de hiperparámetros, de los modelos de aprendizaje. A diferencia de la edición anterior, no se busca ga-rantizar un balance entre las colecciones de entrenamiento y evaluación entérminos del número relativo de cada tipo de anotación.

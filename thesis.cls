@@ -26,31 +26,31 @@
                 linkcolor=black,anchorcolor=black,citecolor=black,%
                 filecolor=black,menucolor=black,runcolor=black,%
                 urlcolor=black]{hyperref}
-                
-% fancyhdr settings from texlive-doc
-\RequirePackage{fancyhdr}
-\fancypagestyle{plain}{%
-\fancyhf{} % clear all header and footer fields
-\fancyfoot[C]{\bfseries \thepage} % except the center
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}}
 
-\fancyhf{}
-\if@twoside
-    \renewcommand{\chaptermark}[1]{\markboth{\small \ \chaptername\ \thechapter. \ #1}{}}
-    \renewcommand{\sectionmark}[1]{\markright{\thesection \ \ #1}}
-    \fancyhead[L]{\slshape \leftmark}
-    \fancyhead[R]{\thepage}
-    \fancyhead[LO]{\slshape \rightmark}
-    \fancyhead[RO,LE]{\textbf{\thepage}}
-    \fancyhead[RE]{\slshape \leftmark}
-\else
-    \renewcommand{\chaptermark}[1]{\markboth{\small \ \chaptername\ \thechapter. \ #1}{}}
-    \fancyhead[L]{\slshape \leftmark}
-    \fancyhead[R]{\thepage}
-\fi
-\renewcommand{\headheight}{28pt}
-	
+% % fancyhdr settings from texlive-doc
+% \RequirePackage{fancyhdr}
+% \fancypagestyle{wakala}{%
+% \fancyhf{} % clear all header and footer fields
+% \fancyfoot[C]{\bfseries\thepage} % except the center
+% \renewcommand{\headrulewidth}{1pt}
+% \renewcommand{\footrulewidth}{0pt}}
+
+% \fancyhf{}
+% \if@twoside
+%     \renewcommand{\chaptermark}[1]{\markboth{\small \ \chaptername\ \thechapter. \ #1}{}}
+%     \renewcommand{\sectionmark}[1]{\markright{\thesection \ \ #1}}
+%     \fancyhead[L]{\slshape \leftmark}
+%     \fancyhead[R]{\thepage}
+%     \fancyhead[LO]{\slshape \rightmark}
+%     \fancyhead[RO,LE]{\textbf{\thepage}}
+%     \fancyhead[RE]{\slshape \leftmark}
+% \else
+%     \renewcommand{\chaptermark}[1]{\markboth{\small \ \chaptername\ \thechapter. \ #1}{}}
+%     \fancyhead[L]{\slshape\leftmark}
+%     \fancyhead[R]{\thepage}
+% \fi
+% \renewcommand{\headheight}{28pt}
+
 \setlength\oddsidemargin{36.1\p@}
 \setlength\evensidemargin{36.1\p@}
 \setlength\marginparwidth{36.1\p@}
@@ -147,20 +147,22 @@
 
 % The title page.
 \def\maketitle{%
-  \thispagestyle{empty}%
+  \thispagestyle{empty}
   \begin{center}
-    {\large \@university} \\ \@faculty \\ 
+    {\large \@university}\\
+    \@faculty\\
     \vskip 0.25cm
-    \includegraphics[width=1.75cm]{\@logo} \\
+    \includegraphics[width=1.75cm]{\@logo}\\
     \vfill
-    {\LARGE \textbf{\@title}} \\
+    {\huge \textbf{\@title}}\\
     \vskip 2cm
-    {\Large Autor: \textbf{\@author}} \\
+    {\Large Autor: \textbf{\@author}}\\
     \vskip 0.5cm
-    {\Large Tutores: \textbf{\@advisor}} \\
-    %{\Large Tutores: \foreach \advisor in {\@advisor}{\advisor\\} \\
+    {\Large Tutor: \textbf{\@advisor}}\\
     \vfill
-    {\large Trabajo de Diploma \\presentado en opción al título de \\ \@degree} \\
+    {\large Trabajo de Diploma\\
+    presentado en opción al título de\\
+    \@degree}\\
     \vskip 0.25cm
     \includegraphics[width=2.5cm]{Graphics/qrcode-thesis}
     \vskip 0.25cm
@@ -170,17 +172,86 @@
 
 \def\frontmatter{%
   \pagenumbering{roman}
-  \pagestyle{empty}
+  \pagestyle{plain}
 }
 
 \def\mainmatter{%
   \cleardoublepage%
   \pagenumbering{arabic}
-  \pagestyle{fancy}
+  % \pagestyle{main_section_style}
 }
 
 \def\backmatter{%
   \pagestyle{plain}
 }
+
+% % fancyhdr settings from texlive-doc
+% \RequirePackage{fancyhdr}
+% \fancypagestyle{main_section_style}{
+%   \fancyhf{} % clear all header and footer fields
+
+%   % \fancyhead[C]{\@title
+
+%   \fancyhead[L]{\@title}
+%   \fancyhead[R]{\@author}
+
+%   % \fancyfoot[LE,RO]{\bfseries\thepage}
+%   % \renewcommand{\chaptermark}{1}{\markboth{#1}{}}
+%   \fancyfoot[LE,RO]{\leftmark}
+%   \fancyfoot[RE,LO]{\small\@author}
+
+%   \renewcommand{\headrulewidth}{1pt}
+%   \renewcommand{\footrulewidth}{1pt}
+% }
+
+% \RequirePackage[explicit]{titlesec}
+% \RequirePackage{lettrine}
+% \titleformat
+% {\chapter}
+% [display]
+% {\bfseries\Large\flushright\itshape}
+% {{\fontsize{40}{48}\selectfont C}apítulo\space\space\space{\fontsize{40}{48}\selectfont\thechapter}}
+% {-1ex}
+% {
+%   \rule{\textwidth}{1.5pt}
+%   \centering
+%   #1
+% }
+% [
+%   \vspace{-1ex}
+%   \rule{\textwidth}{0.2pt}
+% ]
+
+% \RequirePackage{xstring}
+% \newcommand*{\ExtractFirstChar}[1]{%
+%     \StrRemoveBraces{#1}[\FirstChar]%
+%     \StrChar{\FirstChar}{1}[\FirstChar]%
+%     '\FirstChar'
+% }
+
+% \makeatletter
+% \newcommand{\shortcut}[1]{%
+%   \@tempswafalse
+%   \@for\next:=#1\do
+%     {\if@tempswa\else\@tempswatrue\fi\ExtractFirstChar{\next}}%
+% }
+% \makeatother
+
+% \titleformat
+% {name=\chapter,numberless}
+% [display]
+% {\bfseries\Large\flushright\itshape}
+% {}
+% {0em}
+% {\shortcut{#1}}
+% []
+
+% \titleformat
+% {\section}
+% [wrap]
+% {\normalfont\bfseries}
+% {\thesection.}
+% {0.5em}
+% {}
 
 % Created by José Ariel Romero Costa <josea132.romero@gmail.com>
