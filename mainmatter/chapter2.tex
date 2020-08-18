@@ -68,7 +68,6 @@ El rol \textit{Predicate} es usado para formar conceptos más complejos a partir
 	\end{center}
 \end{figure}
 
-\vspace{-0.04in}
 Por ejemplo, en la figura \ref{fig:annotation_example_reference_and_predicate}, la palabra \textit{muchos} cumple la función de filtrar algunos de los bebés, por eso es anotada como \textit{Predicate}.
 
 De conjunto con esta relación, cualquier concepto puede jugar dos roles adicionales: \textit{domain} y \textit{argument} (en español \textit{dominio} y \textit{argumento} respectivamente), completando así su significado. El \textit{Predicate} define el conjunto de objetos pertenecientes al dominio (el concepto enlazado con el rol \textit{domain}) que cumplen el predicado anotado según los argumentos señalados (el o los conceptos anotados con el rol \textit{argument}). De forma matemática, la relación \textit{Predicate} define al conjunto:
@@ -252,6 +251,313 @@ Cuatro atributos booleanos\footnote{HAY QUE PONER ALGO AQUÍ} adicionales pueden
 	\label{fig:annotation_examples_attributes}
 \end{figure}
 
+\section{Formato de anotación}
+Las anotaciones creadas con este formato son guardadas en archivos separados del documento de texto. Este último nunca es modificado. Para cada documento de texto que se vaya a anotar se crea su respectivo documento de anotación. Ambos archivos son asociados a través de su nombre, los cuales coinciden completamente exceptuando en su extensión. Las extensiones correspondientes al documento de texto y al anotado son \texttt{.txt} y \texttt{.ann} respectivamente.
+
+En el documento anotado, las anotaciones individuales se conectan a fragmentos de texto a través de rangos de posiciones de los caracteres. Por ejemplo, si el documento comenzara así:
+
+\begin{center}
+	\doublequote{\textit{El consumo de alcohol puede causar problemas en el hogar} \dots}
+\end{center}
+
+La palabra \guillemot{\texttt{consumo}} se identifica por el rango de posiciones $3\dots10$. Las posiciones comienzan en $0$ con el inicio del documento, además, todo carácter cuenta como posición válida, incluyendo los espacios en blanco y los cambios de línea. De manera formal, lo anterior queda expresado como:
+
+\begin{definition}
+	Un \textbf{símbolo} $c$ es una entidad abstracta que no tiene significado por si mismo.
+\end{definition}
+
+Por ejemplo, las letras de los distintos idiomas, dígitos y signos de puntuación son los símbolos más conocidos. Además, los caracteres especiales, glifos y cualquier otro carácter son también símbolos.
+
+\begin{definition}
+	Un \textbf{alfabeto} $\sum$ es un conjunto finito de símbolos.
+\end{definition}
+
+Por ejemplo, $B = \{0,~1\}$ es un alfabeto que tiene los símbolos \doublequote{$0$} y \doublequote{$1$}. De igual forma, $C=\{a,~b,~c\}$ es un alfabeto que tiene los símbolos \doublequote{\textit{a}}, \doublequote{\textit{b}} y \doublequote{\textit{c}}. A veces el carácter espacio (\doublequote{ }), coma (\doublequote{,}) y llaves (\doublequote{\{\}}) son usados como símbolos de un alfabeto, mientras que otras veces son solo metasímbolos\footnote{Un metasímbolo o metacarácter es un símbolo o carácter que tiene un significado especial. En este caso, el carácter espacio, la coma y las llaves son usados para describir los símbolos contenidos en el alfabeto.} usados para la descripción del mismo.
+
+\begin{definition}
+	Una \textbf{cadena} o \textbf{palabra} es una secuencia de símbolos pertenecientes a un alfabeto.
+\end{definition}
+
+Por ejemplo \guillemot{\texttt{1101}} y \guillemot{\texttt{10000100}} son palabras formadas con el alfabeto $B$. A su vez, \guillemot{\texttt{abbccc}} y \guillemot{\texttt{acababa}} son formadas con el alfabeto $C$.
+
+\begin{definition}
+	La \textbf{cadena vacía} o \textbf{palabra vacía} se define por $\varepsilon$ y es aquella palabra que no contiene símbolos. Formalmente, $\varepsilon$ cumple que: $\forall c\in\varepsilon:~c\notin\sum\cup\sum^C$.
+\end{definition}
+
+\begin{definition}
+	Un \textbf{lenguaje formal} es un conjunto de palabras producidas por un alfabeto. Este conjunto puede ser vacío, finito o infinito.
+\end{definition}
+
+\begin{definition}
+	El conjunto $\sum^*$ es el conjunto de todas las palabras producidas por el alfabeto $\sum$.
+\end{definition}
+
+\begin{definition}
+	El conjunto $\sum^+$ es el conjunto de todas las palabras no vacías producidas por el alfabeto $\sum$. De forma formal: $\sum^+=\sum^*-\{\varepsilon\}$.
+\end{definition}
+
+\noindent Dadas las palabras $v,~w\in\sum^*$:
+
+\begin{itemize}
+	\item[•] \begin{definition}
+		La \textbf{concatenación} de dos palabras, es la palabra resultante de sus secuencias de símbolos en continuación una de otra. De manera formal, sea $v=a_1a_2\dots a_n$ y $w=b_1b_2\dots b_m$ con $n,~m\ge0$ entonces la concatenación de $v$ y $w$ se define como $v\circ w=a_1a_2\dots a_nb_1b_2\dots b_m$. La concatenación a veces se escribe como $v\oplus w$ o sencillamente $vw$.
+	\end{definition}
+
+	\item[•] \begin{definition}
+		$v$ es un \textbf{prefijo} de $w$ sí y solo sí existe una palabra $u$ tal que $u\in\sum^*$ y $w=vu$.
+	\end{definition}
+
+	\item[•] \begin{definition}
+		$v$ es un \textbf{sufijo} de $w$ sí y solo sí existe una palabra $u$ tal que $u\in\sum^*$ y $w=uv$.
+	\end{definition}
+
+	\item[•] \begin{definition}
+		$v$ es un \textbf{infijo} de $w$ sí y solo sí existen dos palabras $u_1$ y $u_2$ tal que $u_1,~u_2\in\sum^*$ y $w=u_1vu_2$.
+	\end{definition}
+\end{itemize}
+
+\begin{definition}
+	Sea la palabra $w=a_1a_2\dots a_n$, el \textbf{tamaño de la palabra} $w$ es $\abs{w}=n$ y es el número de símbolos que esta contiene. De forma formal, el tamaño de la palabra queda definido como:
+	\begin{center}
+		$\abs{w}=\left\{\begin{array}{cl}
+			0 & $si $w=\varepsilon\\
+			|v| + 1 & $siendo $w=cv$, con $c\in\sum$ y por ende, $v$ un sufijo de $w
+		\end{array}\right.$
+	\end{center}
+\end{definition}
+
+Una vez planteadas esas definiciones, se puede dar una definición formal del rango de posiciones pertenecientes a una palabra o frase en un documento.
+
+Sea $\sum$ un alfabeto de símbolos, el documento $D=c_1c_2\dots c_n$ y la palabra o frase $w$ perteneciente a este, entonces $\exists v$ tal que $vw$ es un prefijo de $D$. El rango de posiciones de $w$ en el archivo anotado comienza en $\abs{v}$ y acaba en $\abs{v}+\abs{w}$.
+
+\subsection{Archivo de texto}
+El archivo de texto debe tener como extensión \guillemot{\texttt{.txt}} y contener el texto del documento original. Este archivo debe estar guardado en texto plano y codificado usando UTF-8\footnote{\label{note:utf8}Siglas de \textit{\textbf{U}nicode \textbf{T}ransformation \textbf{F}ormat - 8}, un formato de codificación de caracteres.}. Este archivo puede tener cambios de línea, los cuales cuentan como un símbolo.
+
+\subsection{Archivo de anotación}
+El archivo de anotación debe tener como extensión \guillemot{\texttt{.ann}}. Este archivo debe estar guardado en texto plano y codificado usando UTF-8\textsuperscript{\ref{note:utf8}}. Los tipos de anotación específicas que pueden estar presentes en este archivo se explican en las proximas secciones.
+
+\subsection{Estructura general de la anotación}
+Todas las anotaciones tienen la misma estructura básica: cada línea tiene una única anotación y esta tiene un identificador único que se encuentra al inicio de la línea, separado del resto de esta por un único carácter TAB. El resto de la estructura varía en dependencia del tipo de anotación.
+
+\begin{annexample}
+	[backgroundcolor=cyan!13]
+	{2.8in}
+	{fig:general_annotation_structure}
+	{Ejemplo de escritura del identificador de anotaciones}
+	{Ejemplo de escritura del identificador de anotaciones.}
+	T9\space\space Concept 658 664\space cuerpo\\
+	R13\space in-place Arg1:T3 Arg2:T13\\
+	A1\space\space Negated T10\\
+	\textasteriskcentered\space\space\space same-as T1 T2
+\end{annexample}
+
+\subsection{Convenio de anotación de identificadores}
+\label{subsection:id_annotation_conventions}
+Todos los identificadores de anotaciones consisten en un único carácter en mayúsculas identificando el tipo de anotación y su número. El carácter inial del ID está relacionado con el tipo de anotación de la siguiente forma:
+
+\begin{center}
+	\begin{itemize}
+		\item[•] \texttt{T}: texto
+		\vspace{-0.1in}
+		\item[•] \texttt{R}: relación
+		\vspace{-0.1in}
+		\item[•] \texttt{A}: atributo
+		\vspace{-0.1in}
+		\item[•] \texttt{\#}: nota o comentario
+	\end{itemize}
+\end{center}
+
+Adicionalmente, un asterisco (\doublequote{\,*\,}) puede ser usado como un identificador, pero solo en casos especiales.
+
+\subsection{Anotación de texto}
+La anotación de texto es una categoría importante de anotación, pudiera decirse que es la base de la anotación, pues es quien delimita los fragmentos de texto específicos que serán usados en la anotación y además, sobre estos es que las relaciones y atributos surten efecto. Todas las anotaciones de texto siguen la siguiente estructura:
+
+\begin{annexample}
+	[backgroundcolor=green!13]
+	{3.7in}
+	{fig:text_bound_annotation_structure}
+	{Estructura de anotación de texto}
+	{Estructura de anotación de texto.}
+	T<id>[TAB]<type>[SPACE]<span>[TAB]<text>
+\end{annexample}
+
+\begin{itemize}
+	\item[•] \texttt{[TAB]} y \texttt{[SPACE]} son el carácter TAB y el carácter espacio respectivamente.
+	\vspace{-0.1in}
+	\item[•] \texttt{<id>} es el número correspondiente a esa anotación específica.
+	\vspace{-0.1in}
+	\item[•] \texttt{<type>} es el tipo de relación, el cual puede ser solo uno de los trece siguientes: {\it Concept}, {\it Action}, {\it Reference} o {\it Predicate}.
+	\vspace{-0.1in}
+	\item[•] \texttt{<span>} son los rangos de posiciones de las palabras pertenecientes al texto que será anotado. Si este fragmento de texto contiene más de una palabra, entonces se unirán sus rangos de posiciones usando el carácter punto y coma (\doublequote{\texttt{;}}) como separador y las palabras serás escsritas separadas por un único carácter espacio.
+	\vspace{-0.1in}
+	\item[•] \texttt{<text>} es el texto específico que será anotado.
+\end{itemize}
+
+Para este ejemplo, y los restantes en esta sección de explicar el formato de anotación, se usará el siguiente documento de ejemplo, el cual contiene una única oración:
+\begin{center}
+	\guillemot{\textit{Las mujeres embarazadas también pueden desarrollar diabetes, llamada diabetes gestacional.}}
+	\label{sentence:annotation_example}
+\end{center}
+
+En la figura \ref{fig:text_bound_annotation_example} se puede ver el resultado de anotar el texto relevante en \hyperref[sentence:annotation_example]{el documento de prueba}.
+
+\begin{annexample}
+	[backgroundcolor=cyan!13]
+	{4.1in}
+	{fig:text_bound_annotation_example}
+	{Ejemplo de anotación de texto}
+	{Ejemplo de anotación de texto.}
+	T1\space\space Concept 4 11\space\space\space\space mujeres\\
+	T2\space\space Concept 12 23\space\space\space embarazadas\\
+	T3\space\space Action 39 50\space\space\space\space desarrollar\\
+	T4\space\space Concept 51 59\space\space\space diabetes\\
+	T5\space\space Concept 69 77;78 89 diabetes gestacional
+\end{annexample}
+
+\subsection{Anotación de relaciones}
+Todas las relaciones anotadas son binarias\footnote{ALGO AQUI}. Estas anotaciones siguen la siguiente estructura:
+
+\begin{annexample}
+	[backgroundcolor=green!13]
+	{4.75in}
+	{fig:text_bound_annotation_structure}
+	{Estructura de anotación de texto}
+	{Estructura de anotación de texto.}
+	R<id>[TAB]<type>[SPACE]Arg1:T<id1>[SPACE]Arg2:T<id2>
+\end{annexample}
+
+\begin{itemize}
+	\item[•] \texttt{[TAB]} y \texttt{[SPACE]} son el carácter TAB y el carácter espacio respectivamente.
+	\vspace{-0.1in}
+	\item[•] \texttt{<id>} es el número correspondiente a esa anotación específica.
+	\vspace{-0.1in}
+	\item[•] \texttt{<type>} es el tipo de relación anotada, el cual puede ser solo uno de los trece vistos anteriormente: {\it subject}, {\it target}, {\it domain}, {\it argument}, {\it is-a}, {\it part-of}, {\it same-as}, {\it has-property}, {\it causes}, {\it entails}, {\it in-time}, {\it in-place} o {\it in-context}.
+	\vspace{-0.1in}
+	\item[•] \texttt{<id1>} e \texttt{<id2>} son los identificadores de las anotaciones de texto que participan en esta relación. La anotación se interpreta de izquierda a derecha, es decir, se interpreta \guillemot{\texttt{T<id1>} \textit{<type>} \texttt{T<id2>}}.
+\end{itemize}
+
+En la figura \ref{fig:relation_annotation_example} se puede ver el resultado de anotar las relaciones en \hyperref[sentence:annotation_example]{el documento de prueba}.
+
+\begin{annexample}
+	[backgroundcolor=cyan!13]
+	{3in}
+	{fig:relation_annotation_example}
+	{Ejemplo de anotación de relaciones}
+	{Ejemplo de anotación de relaciones.}
+	R1\space\space in-context Arg1:T1 Arg2:T2\\
+	R2\space\space subject Arg1:T3 Arg2:T1\\
+	R3\space\space target Arg1:T3 Arg2:T4
+\end{annexample}
+
+Como se comentó anteriormente, en algunos casos especiales un asterisco (\doublequote{\,*\,}) puede ser usado en vez un identificador. Este es el caso de la relación \texttt{same-as}, la cual es simétrica y transitiva. Esta anotación puede tener un asterisco al comienzo o un identificador estándar como las restantes relaciones. Cuando esta relación tiene un asterisco, no es necesario anotar los argumentos explícitamente junto a los identificadores, ni tampoco que sean solo dos argumentos. Es por este motivo que puede ser compactada y los identificadores que actúan en esta relación deben ser anotados separados por un único carácter espacio, sin importar si son dos o más. A continuación en la figura \ref{fig:same_as_relation_annotation_example} se puede ver un ejemplo de anotación de esto en \hyperref[sentence:annotation_example]{el documento de prueba}.
+
+\begin{annexample}
+	[backgroundcolor=cyan!13]
+	{1.8in}
+	{fig:same_as_relation_annotation_example}
+	{Ejemplo de anotación de la relación \texttt{same-as}}
+	{Ejemplo de anotación de la relación \texttt{same-as}.}
+	\textasteriskcentered\space\space\space same-as T3 T5
+\end{annexample}
+
+\subsection{Anotación de atributos}
+Las anotaciones de atributos siguen la siguiente estructura:
+
+\begin{annexample}
+	[backgroundcolor=green!13]
+	{2.87in}
+	{fig:text_bound_annotation_structure}
+	{Estructura de anotación de texto}
+	{Estructura de anotación de texto.}
+	A<id>[TAB]<type>[SPACE]T<id1>
+\end{annexample}
+
+\begin{itemize}
+	\item[•] \texttt{[TAB]} y \texttt{[SPACE]} son el carácter TAB y el carácter espacio respectivamente.
+	\vspace{-0.1in}
+	\item[•] \texttt{<id>} es el número correspondiente a esa anotación específica.
+	\vspace{-0.1in}
+	\item[•] \texttt{<type>} es el tipo de atributo anotado, el cual puede ser solo uno de los cuatro vistos anteriormente: {\it Negated}, {\it Uncertain}, {\it Diminished} o {\it Emphasized}.
+	\vspace{-0.1in}
+	\item[•] \texttt{<id1>} es el identificador de la anotación de texto que es modificada por este atributo.
+\end{itemize}
+
+En la figura \ref{fig:attribute_annotation_example} se puede ver el resultado de anotar el único atributo en \hyperref[sentence:annotation_example]{el documento de prueba}.
+
+\begin{annexample}
+	[backgroundcolor=cyan!13]
+	{1.7in}
+	{fig:attribute_annotation_example}
+	{Ejemplo de anotación de atributo}
+	{Ejemplo de anotación de atributo.}
+	A1\space\space Uncertain T3
+\end{annexample}
+
+\subsection{Anotación de comentarios}
+Las anotaciones de comentarios siguen la siguiente estructura:
+
+\begin{annexample}
+	[backgroundcolor=green!13]
+	{2.1in}
+	{fig:comment_annotation_structure}
+	{Estructura de anotación de comentarios}
+	{Estructura de anotación de comentarios.}
+	\#<id>[SPACE]<comment>
+\end{annexample}
+
+\begin{itemize}
+	\item[•] \texttt{[SPACE]} es el carácter espacio.
+	\vspace{-0.1in}
+	\item[•] \texttt{<id>} es el número correspondiente a esa anotación específica. Este no es obligatorio para anotar comentarios.
+	\vspace{-0.1in}
+	\item[•] \texttt{<comment>} es el comentario en sí, y puede contener cualquier texto.
+\end{itemize}
+
+En la figura \ref{fig:comment_annotation_example} se puede ver un ejemplo de un comentario anotado.
+
+\begin{annexample}
+	[backgroundcolor=cyan!13]
+	{4.8in}
+	{fig:comment_annotation_example}
+	{Ejemplo de anotación de comentario}
+	{Ejemplo de anotación de comentario.}
+	\# Las mujeres embarazadas también pueden desarrollar\\
+	\# diabetes, llamada diabetes gestacional.
+\end{annexample}
+
+\subsection{Consideraciones finales}
+Como se vio en la sección \ref{subsection:id_annotation_conventions}, la letra inicial del identificador debe ser mayúscula, no obstante, puede ser minúscula también, aunque siempre guiarse por los convenios es una buena práctica.
+
+Por otra parte, el convenio de anotación de los tipos es anotarlo con la primera letra en mayúscula y el resto en minúsculas para los textos y atributos, mientras que para las relaciones se debe anotar completamente en minúsculas.
+
+Además, el orden de las anotaciones en el archivo no es relevante y tampoco lo son los números específicos de los identificadores. Aunque por cuestión de estética y para una mejor comprensión se recomienda escribir siempre las anotaciones de texto primero, luego las relaciones y por último los atributos. En caso de los identificadores, estos deberían comenzar con el número $1$ y continuar la secuencia de forma incremental de uno en uno.
+
+Por último, es recomendable ordenar las anotaciones de texto respecto a la posición inicial de la primera palabra en estos. Las relaciones deben estar ordenadas por los identificadores de sus argumentos, es decir, ordenar primero por el identificador del primer argumento y en caso de que varios coincidan, ordenar por el identificador del segundo argumento. Siendo un caso especial las anotaciones de relaciones de igualdad que comienzan con asteriscos, las cuales deben ser ordenadas de igual forma que las demás relaciones pero deben ir después de estas. Los atributos deben ordenarse de manera similar, pero en este caso, por el identificador su único argumento.
+
+Siguiendo las recomendaciones anteriores, \hyperref[sentence:annotation_example]{el documento de prueba} quedaría anotado de la siguiente manera:
+
+\begin{annexample}
+	[backgroundcolor=cyan!13]
+	{4.8in}
+	{fig:comment_annotation_example}
+	{Ejemplo de anotación de comentario}
+	{Ejemplo de anotación de comentario.}
+	\# Las mujeres embarazadas también pueden desarrollar\\
+	\# diabetes, llamada diabetes gestacional.\\
+	T1\space\space Concept 4 11\space\space\space\space mujeres\\
+	T2\space\space Concept 12 23\space\space\space embarazadas\\
+	T3\space\space Action 39 50\space\space\space\space desarrollar\\
+	T4\space\space Concept 51 59\space\space\space diabetes\\
+	T5\space\space Concept 69 77;78 89 diabetes gestacional\\
+	R1\space\space in-context Arg1:T1 Arg2:T2\\
+	R2\space\space subject Arg1:T3 Arg2:T1\\
+	R3\space\space target Arg1:T3 Arg2:T4\\
+	\textasteriskcentered\space\space\space same-as T3 T5\\
+	A1\space\space Uncertain T3
+\end{annexample}
+
+% \section{Proceso de anotación}
+
 \section{Análisis del Corpus}
 El corpus fue construido a partir de un fichero \textit{XML}\footnote{Siglas en inglés de \textit{e\textbf{X}tensible \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado desarrollado por el \textit{World Wide Web Consortium} (W3C).} tomado del sitio web de \textit{Medline} (\textbf{NECESITA REFERENCIAAAAAAAAA}) el $9$ de enero de $2018$, específicamente a las $02:30:31$. \textit{Medline} fue producida y es mantenida por la Biblioteca Nacional de Medicina de los Estados Unidos. Recoge referencias bibliográficas de los artículos publicados en aproximadamente $5,500$ revistas médicas desde $1966$. Actualmente reúne más de $30,000,000$ citas. Cada registro de \textit{Medline} es la referencia bibliográfica de un artículo científico publicado en una revista médica, con los datos bibliográficos básicos de un artículo: título, autores, nombre de la revista, año de publicación, entre otros. Esto permite la recuperación de estas referencias posteriormente en una biblioteca o a través de un \textit{software} específico de recuperación.
 
@@ -265,7 +571,6 @@ El corpus fue construido a partir de un fichero \textit{XML}\footnote{Siglas en 
 
 En la figura \ref{fig:corpus_processing} puede verse una representación esquemática del procesamiento inicial que se le hace al corpus de \textit{Medline}, el cual de forma análoga puede aplicarse a otros. En esta investigación solo se trabajará con los artículos en español, estos son procesados para eliminar las marcas específicas de \textit{HTML}\footnote{Siglas en inglés de \textit{\textbf{H}yper\textbf{T}ext \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado usado en la elaboración de páginas web.} y ser divididos en oraciones. Luego, las oraciones anotadas son mezcladas con sus respectivos artículos. Potencialmente, un artículo podrá no tener ninguna de sus oraciones anotadas o estar completamente anotado. Las tablas \ref{tab:stats_corpus} y \ref{tab:stats_annotated_corpus} muestran algunas estadísticas acerca de este corpus y de las oraciones anotadas pertenecientes al mismo.
 
-\vspace{-0.02in}
 \begin{table}[h!]
 	\begin{center}
 		\begin{tabular}{lcc}
@@ -350,5 +655,3 @@ En la figura \ref{fig:corpus_processing} puede verse una representación esquem�
 		\label{tab:stats_annotated_corpus}
 	\end{center}
 \end{table}
-
-% Finalmente, se obtuvieron 9 956 oraciones,divididas en 41 ficheros según el tema.Usando este conjunto de oraciones, se implementó un proceso de ano-tación  para  etiquetar  manualmente  las  entidades  relevantes  y  relacionessegún el modelo descrito en la sección 2.1. Este proceso de anotación sedescribe en detalle en la sección 2.2. La figura 2.8 ilustra el procesamientorealizado. Luego del proceso de anotación, se obtuvo un total de 1, 045 ora-ciones de dominio médico, divididas en 4 colecciones según se describe acontinuación. La tabla 2.1 resume las estadísticas fundamentales del corpusfinal.La colección de prueba (trial collection) contiene 45 oraciones. Esta colec-ción fue creada antes de comenzar el proceso de anotación, con el propósitode llegar a un consenso común entre los anotadores. La colección de pruebaresume todos los posibles patrones de anotación que aparecen en el texto.A partir de esta colección, una guía de anotación es creada para asistir a losanotadores.Las restantes 1 000 oraciones se dividieron en tres colecciones en el con-texto deleHealth-KD challenge: las colecciones de entrenamiento (training),desarrollo  (development)  y  evaluación  (test),  formadas  por  600,  100  y  300oraciones respectivamente. En la colección de entrenamiento, a diferenciade la edición anterior, las oraciones se unieron en un único fichero en lu-gar de mantenerse separadas en ficheros por tópico. De forma general, lasoraciones en cada colección pertenecen a múltiples temas y están distribui-das aleatoriamente en el fichero. La colección de desarrollo está pensadapara usarse en la selección, validación, y ajuste de hiperparámetros, de los modelos de aprendizaje. A diferencia de la edición anterior, no se busca ga-rantizar un balance entre las colecciones de entrenamiento y evaluación entérminos del número relativo de cada tipo de anotación.

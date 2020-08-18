@@ -1,17 +1,35 @@
 \documentclass[12pt,twoside]{thesis}
 
-\usepackage{afterpage}
-\usepackage{amsbsy}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage[autostyle,english=american]{csquotes}
-\usepackage{dialogue}
-\usepackage{epigraph}
+% \usepackage{afterpage}
+% \usepackage{amsbsy}
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+% \usepackage{dialogue}
+% \usepackage{epigraph}
 \usepackage{float}
-\usepackage{mathpazo}
+% \usepackage{mathpazo}
 \usepackage{subcaption}
 
+\usepackage{varwidth}
+\usepackage{environ}
+
+\usepackage[framemethod=default]{mdframed}
 \usepackage[linesnumbered,lined,titlenumbered,ruled]{algorithm2e}
+
+\definecolor{lightblue}{RGB}{225,244,249}
+
+\NewEnviron{annexample}[5][]{
+	\begin{figure}[H]
+		\centering
+		\begin{minipage}{\dimexpr #2\relax}
+			\begin{mdframed}[linecolor=black,backgroundcolor=white,linewidth=1pt,#1]
+				\texttt{\BODY}
+			\end{mdframed}
+		\end{minipage}
+		\caption[#4]{#5}
+		\label{#3}
+	\end{figure}
+}
 
 % \renewcommand\cftchapleader{\cftdotfill{\cftchapdotsep}}
 % \newcommand\blankpage{
@@ -23,6 +41,8 @@
 
 \newcommand{\doublequote}[1]{``#1''}
 \newcommand{\guillemot}[1]{\guillemotleft#1\guillemotright}
+
+\newcommand{\abs}[1]{\left|#1\right|}
 
 \title{Aprendizaje de Ontologías}
 \author{José Ariel Romero Costa}
