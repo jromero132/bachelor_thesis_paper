@@ -9,23 +9,24 @@
 \ProcessOptions
 \relax
 \LoadClass{book}
-\RequirePackage{mathptmx}
-\RequirePackage[T1]{fontenc}
-\RequirePackage{lmodern}
 
-\RequirePackage[spanish]{babel}
-\RequirePackage[fixlanguage]{babelbib}
-\RequirePackage{graphicx}
-\RequirePackage{xcolor}
-\RequirePackage[nottoc,notlof,notlot]{tocbibind}
 \RequirePackage{footmisc}
-\RequirePackage[refpage, intoc, spanish]{nomencl}
+\RequirePackage{graphicx}
+\RequirePackage{lmodern}
+\RequirePackage{mathptmx}
 \RequirePackage{pgffor}
+\RequirePackage{xcolor}
 
+% \RequirePackage[ruled,vlined]{algorithm2e}
+\RequirePackage[fixlanguage]{babelbib}
+\RequirePackage[nottoc,notlof,notlot]{tocbibind}
 \RequirePackage[pagebackref,linktocpage,breaklinks,colorlinks,%
                 linkcolor=black,anchorcolor=black,citecolor=black,%
                 filecolor=black,menucolor=black,runcolor=black,%
                 urlcolor=black]{hyperref}
+\RequirePackage[refpage, intoc, spanish]{nomencl}
+\RequirePackage[spanish,es-nodecimaldot]{babel}
+\RequirePackage[T1]{fontenc}
 
 % % fancyhdr settings from texlive-doc
 % \RequirePackage{fancyhdr}
@@ -137,7 +138,6 @@
 \newtheorem{theorem}{Teorema}
 \newtheorem{definition}{Definición}
 
-
 \AtBeginDocument{%
   \hypersetup{pdftitle=\@title,pdfauthor=\@author}%
   % Renaming cuadro to tabla.
@@ -164,7 +164,7 @@
     presentado en opción al título de\\
     \@degree}\\
     \vskip 0.25cm
-    \includegraphics[width=2.5cm]{Graphics/qrcode-thesis}
+    \includegraphics[width=2.5cm]{graphics/qrcode-thesis}
     \vskip 0.25cm
     \@date
   \end{center}

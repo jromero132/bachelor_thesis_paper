@@ -1,12 +1,13 @@
 %===================================================================================
 % Chapter: Annotation model
 %===================================================================================
-\chapter{Modelo de anotación}\label{chapter:corpus-description}
+\chapter{Modelo de anotación}\label{chapter:annotation_model}
 El primer paso para el algoritmo presentado en este trabajo, es tener un corpus\footnote{Un corpus es un conjunto de oraciones y/o documentos de ejemplos reales usados en el lenguaje natural.} anotado basado en el esquema presentado a continuación. Además, en este capítulo son analizadas varias estadísticas de un corpus de oraciones del dominio médico en idioma español, el cual es utilizado en la presente investigación y son mostradas las herramientas empleadas para construirlo y trabajar con el mismo.
 
 %===================================================================================
 
-\section{Esquema de Anotación}
+\section{Esquema de anotación}
+\label{section:annotation_structure}
 El modelo de anotación de propósito general empleado busca capturar los rasgos y relaciones semánticas más relevantes presentes en oraciones del lenguaje natural. Este debe evitar ambigüedades tanto como sea posible, de forma que anotadores humanos distintos tengan una alta probabilidad de coincidir. Necesita ser lo suficientemente expresivo para capturar los conceptos relevantes del dominio y sus interacciones. Además, debe ser capaz de representar conceptos complejos a partir de combinar otros más simples, esto permitiría construir conceptos mucho más complejos que los que se nombran directamente en el texto con un conjunto reducido de reglas. También está diseñado para asistir en la construcción de sistemas de descubrimiento de conocimiento. Por este motivo es necesario independizar la representación del modelo de la estructura gramatical de las oraciones, y en su lugar tratar de representar su significado semántico.
 
 Este modelo de anotación se basa en las tripletas \textit{Subject-Action-Target} (en español \textit{Sujeto-Acción-Objetivo}) y además en la estructura gramatical \textit{sujeto-verbo-objeto}, normalmente expresada con su abreviatura \textbf{SVO} y es el orden más usado en los idiomas del mundo. Tiende a ser el orden predeterminado porque el verbo se usa para dividir el sujeto del predicado, sin necesidad de usar partículas para indicar dónde empieza o terminan los mismos. Es, por ende, una de las secuencias más frecuente en el lenguaje natural y de hecho es usada en la mayoría de lenguas occidentales y un buen número de orientales.
@@ -29,7 +30,7 @@ La figura \ref{fig:annotation_model} muestra una representación gráfica del mo
 \subsection{Conceptos}
 El rol \textit{Concept} es usado para anotar fragmentos de texto que representan una unidad atómica de información en el dominio. Puede ser una entidad nombrada, un sustantivo, adjetivo o verbo, que representa un concepto relevante en el dominio del texto. Por ende, la gran mayoría de palabras o frases que expresan un significado propio es anotado como \textit{Concept} (o uno de sus derivados, como se explica más adelante). Palabras tales como artículos, preposiciones y conjunciones, las cuales solo realizan una función gramatical y sin significado semántico, no son anotados.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=3.5in]{graphics/annotation_example_concept.png}
 		\caption[Anotación de conceptos]{Ejemplo de anotación de conceptos.}
@@ -90,6 +91,7 @@ Como caso de uso particular de esta anotación, se encuentra el caso en que un t
 En tales casos, el \textit{Predicate} debe carecer de alguno de los roles \textit{domain} o \textit{argument}. Si el tipo o clase resultante de formar el predicado coincide con el del concepto a enlazar, entonces el rol utilizado es \textit{domain}. En otro caso, se enlaza al concepto con el rol \textit{argument}.
 
 \subsection{Componiendo conceptos}
+\label{section:composing_concepts}
 Así como un \textit{Predicate} puede utilizarse para componer conceptos, se puede lograr un resultado similar al considerar un \textit{Action} como el \textit{subject} o \textit{target} de otro.
 
 \begin{figure}[H]
@@ -252,6 +254,7 @@ Cuatro atributos booleanos\footnote{HAY QUE PONER ALGO AQUÍ} adicionales pueden
 \end{figure}
 
 \section{Formato de anotación}
+\label{section:annotation_file_format}
 Las anotaciones creadas con este formato son guardadas en archivos separados del documento de texto. Este último nunca es modificado. Para cada documento de texto que se vaya a anotar se crea su respectivo documento de anotación. Ambos archivos son asociados a través de su nombre, los cuales coinciden completamente exceptuando en su extensión. Las extensiones correspondientes al documento de texto y al anotado son \texttt{.txt} y \texttt{.ann} respectivamente.
 
 En el documento anotado, las anotaciones individuales se conectan a fragmentos de texto a través de rangos de posiciones de los caracteres. Por ejemplo, si el documento comenzara así:
@@ -386,7 +389,7 @@ La anotación de texto es una categoría importante de anotación, pudiera decir
 	\vspace{-0.1in}
 	\item[•] \texttt{<id>} es el número correspondiente a esa anotación específica.
 	\vspace{-0.1in}
-	\item[•] \texttt{<type>} es el tipo de relación, el cual puede ser solo uno de los trece siguientes: {\it Concept}, {\it Action}, {\it Reference} o {\it Predicate}.
+	\item[•] \texttt{<type>} es el tipo de rol, el cual puede ser solo uno de los trece siguientes: {\it Concept}, {\it Action}, {\it Reference} o {\it Predicate}.
 	\vspace{-0.1in}
 	\item[•] \texttt{<span>} son los rangos de posiciones de las palabras pertenecientes al texto que será anotado. Si este fragmento de texto contiene más de una palabra, entonces se unirán sus rangos de posiciones usando el carácter punto y coma (\doublequote{\texttt{;}}) como separador y las palabras serás escsritas separadas por un único carácter espacio.
 	\vspace{-0.1in}
@@ -415,12 +418,13 @@ En la figura \ref{fig:text_bound_annotation_example} se puede ver el resultado d
 \end{annexample}
 
 \subsection{Anotación de relaciones}
+\label{section:relation_annotation}
 Todas las relaciones anotadas son binarias\footnote{ALGO AQUI}. Estas anotaciones siguen la siguiente estructura:
 
 \begin{annexample}
 	[backgroundcolor=green!13]
 	{4.75in}
-	{fig:text_bound_annotation_structure}
+	{fig:relation_annotation_structure}
 	{Estructura de anotación de texto}
 	{Estructura de anotación de texto.}
 	R<id>[TAB]<type>[SPACE]Arg1:T<id1>[SPACE]Arg2:T<id2>
@@ -466,7 +470,7 @@ Las anotaciones de atributos siguen la siguiente estructura:
 \begin{annexample}
 	[backgroundcolor=green!13]
 	{2.87in}
-	{fig:text_bound_annotation_structure}
+	{fig:attribute_annotation_structure}
 	{Estructura de anotación de texto}
 	{Estructura de anotación de texto.}
 	A<id>[TAB]<type>[SPACE]T<id1>
@@ -526,6 +530,8 @@ En la figura \ref{fig:comment_annotation_example} se puede ver un ejemplo de un 
 \end{annexample}
 
 \subsection{Consideraciones finales}
+Las oraciones anotadas en el documento con extensión \guillemot{\texttt{.ann}} deben estar en el mismo orden con el que aparecen en el documento de texto con extensión \guillemot{\texttt{.txt}}. Además, no es necesario que todas las oraciones en el documento de texto sean anotadas, incluso puede que ninguna esté anotada.
+
 Como se vio en la sección \ref{subsection:id_annotation_conventions}, la letra inicial del identificador debe ser mayúscula, no obstante, puede ser minúscula también, aunque siempre guiarse por los convenios es una buena práctica.
 
 Por otra parte, el convenio de anotación de los tipos es anotarlo con la primera letra en mayúscula y el resto en minúsculas para los textos y atributos, mientras que para las relaciones se debe anotar completamente en minúsculas.
@@ -539,7 +545,7 @@ Siguiendo las recomendaciones anteriores, \hyperref[sentence:annotation_example]
 \begin{annexample}
 	[backgroundcolor=cyan!13]
 	{4.8in}
-	{fig:comment_annotation_example}
+	{fig:annotated_document_example}
 	{Ejemplo de anotación de comentario}
 	{Ejemplo de anotación de comentario.}
 	\# Las mujeres embarazadas también pueden desarrollar\\
@@ -556,9 +562,7 @@ Siguiendo las recomendaciones anteriores, \hyperref[sentence:annotation_example]
 	A1\space\space Uncertain T3
 \end{annexample}
 
-% \section{Proceso de anotación}
-
-\section{Análisis del Corpus}
+\section{Análisis del corpus}
 El corpus fue construido a partir de un fichero \textit{XML}\footnote{Siglas en inglés de \textit{e\textbf{X}tensible \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado desarrollado por el \textit{World Wide Web Consortium} (W3C).} tomado del sitio web de \textit{Medline} (\textbf{NECESITA REFERENCIAAAAAAAAA}) el $9$ de enero de $2018$, específicamente a las $02:30:31$. \textit{Medline} fue producida y es mantenida por la Biblioteca Nacional de Medicina de los Estados Unidos. Recoge referencias bibliográficas de los artículos publicados en aproximadamente $5,500$ revistas médicas desde $1966$. Actualmente reúne más de $30,000,000$ citas. Cada registro de \textit{Medline} es la referencia bibliográfica de un artículo científico publicado en una revista médica, con los datos bibliográficos básicos de un artículo: título, autores, nombre de la revista, año de publicación, entre otros. Esto permite la recuperación de estas referencias posteriormente en una biblioteca o a través de un \textit{software} específico de recuperación.
 
 \begin{figure}[H]
@@ -569,89 +573,4 @@ El corpus fue construido a partir de un fichero \textit{XML}\footnote{Siglas en 
 	\end{center}
 \end{figure}
 
-En la figura \ref{fig:corpus_processing} puede verse una representación esquemática del procesamiento inicial que se le hace al corpus de \textit{Medline}, el cual de forma análoga puede aplicarse a otros. En esta investigación solo se trabajará con los artículos en español, estos son procesados para eliminar las marcas específicas de \textit{HTML}\footnote{Siglas en inglés de \textit{\textbf{H}yper\textbf{T}ext \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado usado en la elaboración de páginas web.} y ser divididos en oraciones. Luego, las oraciones anotadas son mezcladas con sus respectivos artículos. Potencialmente, un artículo podrá no tener ninguna de sus oraciones anotadas o estar completamente anotado. Las tablas \ref{tab:stats_corpus} y \ref{tab:stats_annotated_corpus} muestran algunas estadísticas acerca de este corpus y de las oraciones anotadas pertenecientes al mismo.
-
-\begin{table}[h!]
-	\begin{center}
-		\begin{tabular}{lcc}
-			\noalign{\hrule height 1pt}\\
-			\vspace{-0.35in}\\
-			\textbf{Métrica} & \textbf{\textit{Medline}} & \textbf{Anotado}\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Artículos & $1,013$ & $25^*$\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Oraciones & $12,830$ & $999$\\
-			Promedio de oraciones por artículo & $\approx13$ & $\approx40$\\
-			Menor cantidad de oraciones en un artículo & $2$ & $39$\\
-			Artículos con la menor cantidad de oraciones & $9$ & $1$\\
-			Mayor cantidad de oraciones en un artículo & $65$ & $40$\\
-			Artículos con la mayor cantidad de oraciones & $1$ & $24$\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Palabras & $191,256$ & $14,529$\\
-			Promedio de palabras por artículo & $\approx189$ & $\approx581$\\
-			Promedio de palabras por oración & $\approx15$ & $\approx15$\\
-			Menor cantidad de palabras en un artículo & $33$ & $489$\\
-			Artículos con la menor cantidad de palabras & $1$ & $1$\\
-			Menor cantidad de palabras en una oración & $1$ & $4$\\
-			Oraciones con la menor cantidad de palabras & $87$ & $1$\\
-			Mayor cantidad de palabras en un artículo & $1,199$ & $671$\\
-			Artículos con la mayor cantidad de palabras & $1$ & $1$\\
-			Mayor cantidad de palabras en una oración & $258$ & $46$\\
-			Oraciones con la mayor cantidad de palabras & $1$ & $1$\\
-			\noalign{\hrule height 1pt}
-			\vspace{0in}
-		\end{tabular}
-		*\small{Esta cifra no son artículos en sí, sino archivos, los cuales pueden contener oraciones de varios artículos.}
-		\caption[Estadísticas del corpus tomado de \textit{Medline} y del anotado]{Estadísticas del corpus tomado de \textit{Medline} y del anotado.}
-		\label{tab:stats_corpus}
-	\end{center}
-\end{table}
-
-\begin{table}[h!]
-	\begin{center}
-		\begin{tabular}{lc}
-			\noalign{\hrule height 1pt}\\
-			\vspace{-0.35in}\\
-			\textbf{Métrica} & \textbf{Total}\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Oraciones & $999$\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Conceptos & $6,324$\\
-			\quad \texttt{Concept} & $3,914$\\
-			\quad \texttt{Action} & $1,661$\\
-			\quad \texttt{Reference} & $213$\\
-			\quad \texttt{Predicate} & $536$\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Relaciones & $5,925$\\
-			\quad \texttt{Subject} & $859$\\
-			\quad \texttt{Target} & $1,688$\\
-			\quad \texttt{Domain} & $346$\\
-			\quad \texttt{Argument} & $333$\\
-			\quad \texttt{Is-a} & $570$\\
-			\quad \texttt{Part-of} & $95$\\
-			\quad \texttt{Same-as} & $124$\\
-			\quad \texttt{Has-property} & $168$\\
-			\quad \texttt{Causes} & $381$\\
-			\quad \texttt{Entails} & $170$\\
-			\quad \texttt{In-time} & $154$\\
-			\quad \texttt{In-place} & $384$\\
-			\quad \texttt{In-context} & $653$\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Atributos & $559$\\
-			\quad \texttt{Negated} & $160$\\
-			\quad \texttt{Uncertain} & $262$\\
-			\quad \texttt{Diminished} & $17$\\
-			\quad \texttt{Emphasized} & $120$\\
-			\noalign{\hrule height 1pt}
-		\end{tabular}
-		\caption[Estadísticas del corpus anotado]{Estadísticas del corpus anotado.}
-		\label{tab:stats_annotated_corpus}
-	\end{center}
-\end{table}
+En la figura \ref{fig:corpus_processing} puede verse una representación esquemática del procesamiento inicial que se le hace al corpus de \textit{Medline}, el cual de forma análoga puede aplicarse a otros.
