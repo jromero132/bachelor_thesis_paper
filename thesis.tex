@@ -1,25 +1,16 @@
 \documentclass[12pt,twoside]{thesis}
 
-% \usepackage{afterpage}
-% \usepackage{amsbsy}
-% \usepackage{amsmath}
 \usepackage{amssymb}
-% \usepackage{dialogue}
-% \usepackage{epigraph}
 \usepackage{float}
-% \usepackage{mathpazo}
 \usepackage{subcaption}
 \usepackage{varwidth}
 \usepackage{environ}
-%\usepackage{showframe}
 
 \usepackage[framemethod=default]{mdframed}
 \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
 
 \renewcommand{\baselinestretch}{1}
 \setlength{\parskip}{0.25\baselineskip}
-
-\definecolor{lightblue}{RGB}{225,244,249}
 
 \NewEnviron{annexample}[5][]{
 	\begin{figure}[H]
@@ -34,56 +25,6 @@
 	\end{figure}
 }
 
-% algorithm title
-\renewcommand*{\algorithmcfname}{Algoritmo}
-
-% colored if
-\SetKwIF{If}{ElseIf}{Else}
-{{\color{blue}{\tt\bf if}}}
-{{\color{blue}{\tt\bf then}}\textnormal{:}}
-{{\color{blue}{\tt\bf else if}}}
-{{\color{blue}{\tt\bf else}}}
-{{\color{blue}{\tt\bf end}}}
-
-\SetKwSwitch{Switch}{Case}{Other}
-{{\color{blue}{\tt\bf switch}}}
-{{\color{blue}{\tt\bf do}}\textnormal{:}}
-{{\color{blue}{\tt\bf case}}}
-{{\color{blue}{\tt\bf otherwise}}}
-{{\color{blue}{\tt\bf endcase}}}
-
-% colored foreach
-\SetKwFor{ForEach}
-{{\color{blue}{\tt\bf foreach}}}
-{{\color{blue}{\tt\bf do}}\textnormal{:}}
-{{\color{blue}{\tt\bf end}}}
-
-% new commands in algorithm
-\SetKw{DefineCommand}{\tt\bf Define\space}
-\SetKw{ErrorCommand}{\tt\bf\textcolor{red}{error}\space}
-\SetKw{InCommand}{\tt\bf\textcolor{blue}{in}\space}
-\SetKw{IsCommand}{\tt\bf\textcolor{blue}{is}\space}
-\SetKw{NotCommand}{\tt\bf\textcolor{blue}{not}\space}
-\SetKw{Return}{\tt\bf\textcolor{brown}{return}\space}
-
-\SetKwInput{Input}{input}
-\SetKwInput{Output}{output}
-
-\newcommand{\Function}[2]{
-	\SetKwBlock{FunctionBlock}{{\color{teal}{\tt\bf Function}} \textnormal{#1}:}{{\color{teal}{\tt\bf end}}}
-	\FunctionBlock{#2}
-}
-
-\newcommand{\assignment}[2]{#1 \gets #2}
-
-% regular expressions
-\newcommand{\StartingRegex}{{\color{red}{\textasciicircum}}}
-\newcommand{\EndingRegex}{{\color{red}{\$}}}
-\newcommand{\BracketRegex}[1]{{\color{red}{[}}#1{\color{red}{]}}}
-\newcommand{\GroupRegex}[1]{{\color{blue}{\big(}}#1{\color{blue}{\big)}}}
-\newcommand{\ZeroOrMoreRegex}{{\color{purple}{*}}}
-\newcommand{\OneOrMoreRegex}{{\color{purple}{+}}}
-
 % quotation
 \newcommand{\doublequote}[1]{``#1''}
 \newcommand{\guillemot}[1]{\guillemotleft#1\guillemotright}
@@ -97,7 +38,7 @@
 \degree{Licenciado en Ciencia de la Computación}
 \university{Universidad de La Habana}
 \faculty{Facultad de Matemática y Computación}
-\date{2020}
+\date{Septiembre de 2020}
 \logo{graphics/university_logo}
 %\makenomenclature
 
@@ -109,7 +50,7 @@
 
 	% phrase
 	\include{frontmatter/phrase}
-	
+
 	% dedication
 	\include{frontmatter/dedication}
 

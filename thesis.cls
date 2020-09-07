@@ -17,11 +17,9 @@
 \RequirePackage{mathptmx}
 \RequirePackage{multirow}
 \RequirePackage{pgffor}
-% \RequirePackage{titleps}
 \RequirePackage{suffix}
 \RequirePackage{xcolor}
 
-% \RequirePackage[ruled,vlined]{algorithm2e}
 \RequirePackage[fixlanguage]{babelbib}
 \RequirePackage[nottoc,notlof,notlot]{tocbibind}
 \RequirePackage[pagebackref,linktocpage,breaklinks,colorlinks,%
@@ -173,8 +171,7 @@
     presentado en opción al título de\\
     \@degree}\\
     \vskip 0.25cm
-    % \includegraphics[width=2.5cm]{graphics/qrcode-thesis}
-    \textbf{CÓDIGO QR EN UN GRAFO SIMULANDO UN GRAFO DE CONOCIMIENTO PARA QUE QUEDE CON UN USO PARECIDO AL RESULTADO DE LA TESIS :)}
+    \includegraphics[width=3cm]{graphics/qrcode-thesis}
     \vskip 0.25cm
     \@date
   \end{center}
