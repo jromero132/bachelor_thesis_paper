@@ -1,34 +1,33 @@
 %===================================================================================
 % Chapter: Annotation model
 %===================================================================================
-\chapter{Modelo de anotación}\label{chapter:annotation_model}
-El primer paso para el algoritmo presentado en este trabajo, es tener un corpus\footnote{Un corpus es un conjunto de oraciones y/o documentos de ejemplos reales usados en el lenguaje natural.} anotado basado en el esquema presentado a continuación. Además, en este capítulo son analizadas varias estadísticas de un corpus de oraciones del dominio médico en idioma español, el cual es utilizado en la presente investigación y son mostradas las herramientas empleadas para construirlo y trabajar con el mismo.
-
+\Chapter{Modelo de Anotación}\label{chapter:annotation_model}
+El primer paso para el algoritmo presentado en este trabajo, es tener un corpus\footnote{Un corpus es un conjunto de oraciones y/o documentos de ejemplos reales usados en el lenguaje natural.} anotado basado en el esquema presentado a continuación. Además, en este capítulo son analizadas algunas estadísticas de un corpus de oraciones del dominio médico en idioma español, el cual es utilizado en la presente investigación y son mostradas las herramientas empleadas para construirlo y trabajar con el mismo.
 %===================================================================================
 
 \section{Esquema de anotación}
 \label{section:annotation_structure}
-El modelo de anotación de propósito general empleado busca capturar los rasgos y relaciones semánticas más relevantes presentes en oraciones del lenguaje natural. Este debe evitar ambigüedades tanto como sea posible, de forma que anotadores humanos distintos tengan una alta probabilidad de coincidir. Necesita ser lo suficientemente expresivo para capturar los conceptos relevantes del dominio y sus interacciones. Además, debe ser capaz de representar conceptos complejos a partir de combinar otros más simples, esto permitiría construir conceptos mucho más complejos que los que se nombran directamente en el texto con un conjunto reducido de reglas. También está diseñado para asistir en la construcción de sistemas de descubrimiento de conocimiento. Por este motivo es necesario independizar la representación del modelo de la estructura gramatical de las oraciones, y en su lugar tratar de representar su significado semántico.
+El modelo de anotación de propósito general empleado busca capturar los rasgos y relaciones semánticas más relevantes presentes en oraciones del lenguaje natural. Este debe evitar ambigüedades tanto como sea posible, de forma que anotadores humanos distintos tengan una alta probabilidad de coincidir. A la misma vez, necesita ser lo suficientemente expresivo para representar los conceptos relevantes del dominio y sus interacciones. Además, debe ser capaz de construir conceptos complejos a partir de combinar otros más simples mediante el uso de un conjunto reducido de reglas. También está diseñado para asistir en desarrollo de sistemas de descubrimiento de conocimiento. Por este motivo es necesario independizar la representación del modelo de la estructura gramatical de las oraciones, y en su lugar, tratar de representar el significado semántico.
 
-Este modelo de anotación se basa en las tripletas \textit{Subject-Action-Target} (en español \textit{Sujeto-Acción-Objetivo}) y además en la estructura gramatical \textit{sujeto-verbo-objeto}, normalmente expresada con su abreviatura \textbf{SVO} y es el orden más usado en los idiomas del mundo. Tiende a ser el orden predeterminado porque el verbo se usa para dividir el sujeto del predicado, sin necesidad de usar partículas para indicar dónde empieza o terminan los mismos. Es, por ende, una de las secuencias más frecuente en el lenguaje natural y de hecho es usada en la mayoría de lenguas occidentales y un buen número de orientales.
+Este modelo de anotación se basa en las tripletas \textit{Subject-Action-Target} (en español \textit{Sujeto-Acción-Objetivo}) y en la estructura gramatical \textit{sujeto-verbo-objeto}, normalmente expresada con su abreviatura \textbf{SVO}. Tiende a ser el orden predeterminado porque el verbo se usa para dividir el sujeto del predicado, sin necesidad de usar partículas para indicar dónde empiezan o terminan los mismos. Es, por ende, una de las secuencias más frecuente en el lenguaje natural y de hecho es usada en la mayoría de lenguas occidentales y un buen número de orientales.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\includegraphics[width=\linewidth]{graphics/annotation_model.png}
 	\caption[Esquema conceptual del modelo de anotación]{Esquema conceptual del modelo de anotación.}
 	\label{fig:annotation_model}
 \end{figure}
 
-Es válido destacar que al estar interesados en fragmentos de conocimiento, el rol semántico de las entidades anotadas puede no coincidir con su rol gramatical. Los roles semánticos fundamentales de este modelo son \textit{Concept} y \textit{Action} (en español \textit{Concepto} y \textit{Acción} respectivamente), siendo usados para representar información objetiva acerca de lo que está siendo hecho, por quién, y a quién. Estas estructuras pueden ser contextualizadas en tiempo, lugar y otras circunstancias generales.
+Es válido destacar que al estar interesados en fragmentos de conocimiento, el rol semántico de las entidades anotadas puede no coincidir con su rol gramatical. Los roles semánticos fundamentales de este modelo son \textit{Concept} y \textit{Action} (en español \textit{Concepto} y \textit{Acción} respectivamente), siendo usados para representar información objetiva acerca de lo que se está haciendo, por quién, y a quién. Estas estructuras pueden ser contextualizadas en tiempo, lugar y otras circunstancias generales.
 
-Existen otros 2 roles semánticos, llamados \textit{Predicate} y \textit{Reference} (en español \textit{Referencia} y \textit{Predicado} respectivamente). \textit{Predicate} es utilizado para construir conceptos más complejos a partir de otros más simples. \textit{Reference} define un término del que se menciona un hecho, pero en el contexto de la oración no está escrito explícitamente, por lo que la información semántica de estas anotaciones no está contenida en las anotaciones.
+Existen otros 2 roles semánticos, llamados \textit{Predicate} y \textit{Reference} (en español \textit{Predicado} y \textit{Referencia} respectivamente). \textit{Predicate} es utilizado para construir conceptos más complejos a partir de otros más simples. \textit{Reference} define un término del que se menciona un hecho, pero en el contexto de la oración no está escrito explícitamente, por lo que la información semántica de este rol no está contenida en las anotaciones.
 
 Por último, son usadas seis relaciones con semántica específica para representar conocimiento de propósito general. Las relaciones
 \textit{is-a}, \textit{part-of}, \textit{same-as} y \textit{has-property} (en español \textit{es-un}, \textit{parte-de}, \textit{igual-que} y \textit{tiene-propiedad} respectivamente) son tomadas de representaciones ontológicas y taxonómicas, mientras que \textit{causes} y \textit{entails} (en español \textit{causa} e \textit{implica} respectivamente) se toman del dominio de la comprensión del texto. Además, las relaciones \textit{in-time}, \textit{in-place} e \textit{in-context} (en español \textit{en-tiempo}, \textit{en-lugar} y \textit{en-contexto} respectivamente) son usadas para dar contexto y cuatro atributos booleanos son asociados a los conceptos. Las próximas secciones explican cada rol semántico y las relaciones detalladamente, incluyendo ejemplos de su uso en oraciones del lenguaje natural.
 
-La figura \ref{fig:annotation_model} muestra una representación gráfica del modelo de anotación. En el esquema conceptual se puede apreciar que cada uno de los roles semánticos definidos en el modelo de anotación está representado por un círculo. Además, las posibles relaciones definidas entre cada pareja de roles se representan con óvalos y con un rectángulo los atributos que pueden tener los roles semánticos. En color café están representadas las relaciones de contexto, en azul las taxonómicas y en violeta las de causalidad e implicación.
+La figura \ref{fig:annotation_model} muestra una representación gráfica del modelo de anotación. En el esquema conceptual se puede apreciar que cada uno de los roles semánticos definidos en el modelo de anotación está representado por un círculo. Además, las posibles relaciones definidas entre cada pareja de roles se representan con óvalos y con un rectángulo los atributos que pueden tener los mismos. En color café están representadas las relaciones de contexto, en azul las taxonómicas y en violeta las de causalidad e implicación.
 
 \subsection{Conceptos}
-El rol \textit{Concept} es usado para anotar fragmentos de texto que representan una unidad atómica de información en el dominio. Puede ser una entidad nombrada, un sustantivo, adjetivo o verbo, que representa un concepto relevante en el dominio del texto. Por ende, la gran mayoría de palabras o frases que expresan un significado propio es anotado como \textit{Concept} (o uno de sus derivados, como se explica más adelante). Palabras tales como artículos, preposiciones y conjunciones, las cuales solo realizan una función gramatical y sin significado semántico, no son anotados.
+El rol \textit{Concept} es usado para anotar fragmentos de texto que representan una unidad atómica de información en el dominio. Puede ser una entidad nombrada, un sustantivo, adjetivo o verbo, que representa un concepto relevante en el dominio del texto. Por ende, la gran mayoría de palabras o frases que expresan un significado propio es anotado de esta manera (o uno de sus derivados, como se explica más adelante). Palabras tales como artículos, preposiciones y conjunciones, las cuales solo realizan una función gramatical y sin significado semántico, no son anotados.
 
 \begin{figure}[H]
 	\begin{center}
@@ -38,10 +37,15 @@ El rol \textit{Concept} es usado para anotar fragmentos de texto que representan
 	\end{center}
 \end{figure}
 
-En la figura \ref{fig:annotation_example_concept} se distinguen claramente las palabras \guillemot{\texttt{depresión}} y \guillemot{\texttt{severa}} como conceptos en el dominio médico, cuyo significado de cada uno de ellos es independiente del rol gramatical que tengan en la oración. Algunos conceptos, como \guillemot{\texttt{enfermedad clínica}} en este caso, se componen de múltiples palabras, ya sea porque las palabras individuales que lo componen no tengan significado por sí mismas, o porque el concepto formado por su unión es diferente de sus significados individuales. En esta ocasión, a pesar de que \guillemot{\texttt{enfermedad}} y \guillemot{\texttt{clínica}} poseen un significado individual bien definido, el concepto \guillemot{\texttt{enfermedad clínica}} tiene su significado bien definido en el dominio médico, lo cual lo hace una unidad única de información, en otras palabras, un especialista del dominio puede identificarla claramente. Las palabras que conforman el concepto no tienen que estar consecutivas en el texto, pero sí son seleccionadas de izquierda a derecha.
+\vspace{-0.8cm}
+En la figura \ref{fig:annotation_example_concept} se distinguen claramente como conceptos en el dominio médico las palabras \guillemot{\texttt{depresión}} y \guillemot{\texttt{severa}}, cuyo significado de cada uno de ellos es independiente del rol gramatical que tengan en la oración. Algunos conceptos, como \guillemot{\texttt{enfermedad clínica}} en este caso, se componen de múltiples palabras, ya sea porque de manera independiente no tienen relevancia, o porque al unirlos cobra un significado diferente al de sus componentes individuales. En esta ocasión, a pesar de que \guillemot{\texttt{enfermedad}} y \guillemot{\texttt{clínica}} poseen una connotación bien definida por sí mismas, el concepto \guillemot{\texttt{enfermedad clínica}} tiene gran importancia en el dominio médico, lo cual lo hace una unidad única de información, es decir, un especialista en este campo puede identificarla claramente. Las palabras que conforman un concepto no tienen que estar consecutivas en el texto, pero sí son seleccionadas de izquierda a derecha.
 
 \subsection{Acciones}
-El rol \textit{Action} es un tipo particular de \textit{Concept} que indica una acción o evento que otro concepto puede realizar o ser objetivo de ella. Un \textit{Action} puede ser enlazado con otros conceptos relevantes a partir de 2 roles semánticos: \textit{subject} y \textit{target} (en español \textit{sujeto} y \textit{objetivo} respectivamente). El \textit{subject} es el concepto que produce la acción, mientras que el \textit{target} es el concepto que recibe los efectos o es el objetivo de la acción.
+El rol \textit{Action} es un tipo particular de \textit{Concept} que indica una acción o evento que otro concepto puede realizar o ser objetivo de ella. Un \textit{Action} puede ser enlazado con otros conceptos relevantes a partir de 2 roles semánticos: \textit{subject} y \textit{target} (en español \textit{sujeto} y \textit{objetivo} respectivamente). El \textit{subject} es el que produce la acción, mientras que el \textit{target} es el que recibe los efectos o el objetivo de la acción.
+
+En la figura \ref{fig:annotation_example_action} la acción es indicada por una palabra con el rol gramatical de verbo. Intuitivamente este es el caso más común, sin embargo, una acción puede ser indicada además por una palabra con otro rol gramatical, como los sustantivos. Por ejemplo, en la frase \doublequote{\textit{\dots\space el empeoramiento de los síntomas \dots}}, la palabra \guillemot{\texttt{empeoramiento}} se considera también un \textit{Action} a pesar de que no es un verbo, dado que describe un proceso o evento que ocurre sobre otros conceptos.
+
+Por tanto, el rol semántico \textit{Action} describe el significado de un concepto en el dominio semántico, en lugar de su función gramatical en una oración específica. Si un concepto del dominio expresa un proceso o evento que realiza otro concepto o produce un efecto sobre otro(s), entonces es un \textit{Action}, incluso si puede ser usado con una función gramatical distinta.
 
 \begin{figure}[H]
 	\begin{center}
@@ -51,15 +55,8 @@ El rol \textit{Action} es un tipo particular de \textit{Concept} que indica una 
 	\end{center}
 \end{figure}
 
-En la figura \ref{fig:annotation_example_action} la acción es indicada por una palabra con el rol gramatical de verbo. Intuitivamente este es el caso más común, sin embargo, una acción puede ser indicada además por una palabra con otro rol gramatical, como los sustantivos. Por ejemplo, en la frase \doublequote{\textit{\dots\space el empeoramiento de los síntomas \dots}}, la palabra \guillemot{\texttt{empeoramiento}} se considera también un \textit{Action} a pesar de que no es un verbo, dado que describe un proceso o evento que ocurre sobre otros conceptos.
-
-Por tanto, el rol semántico \textit{Action} describe el significado de un concepto en el dominio semántico, en lugar de su función gramatical en una oración específica. Si un concepto del dominio expresa un proceso o evento que realiza un concepto o produce un efecto sobre otro(s), entonces es un \textit{Action}, incluso si puede ser usado con una función gramatical distinta.
-
 \subsection{Referencias}
 El rol \textit{Reference} es un tipo de \textit{Concept} que no tiene un significado semántico específico, pero que es necesario por razones gramaticales. Es usado para anotar pronombres (por ejemplo, \textit{este}, \textit{aquel}) y demás elementos que hacen referencia a otro \textit{Concept} presente en la oración, documento y/o corpus. En la figura \ref{fig:annotation_example_reference_and_predicate} puede verse un ejemplo.
-
-\subsection{Predicados}
-El rol \textit{Predicate} es usado para formar conceptos más complejos a partir de aplicar un determinado criterio sobre otros conceptos en una oración. Un caso de uso común es para definir el subconjunto de un concepto que cumple determinadas propiedades.
 
 \begin{figure}[H]
 	\begin{center}
@@ -69,23 +66,28 @@ El rol \textit{Predicate} es usado para formar conceptos más complejos a partir
 	\end{center}
 \end{figure}
 
+
+\subsection{Predicados}
+El rol \textit{Predicate} es usado para formar conceptos más complejos a partir de aplicar un determinado criterio sobre otros en una oración. Un caso de uso común es para definir el subconjunto perteneciente a un concepto y que cumple determinadas propiedades.
+
 Por ejemplo, en la figura \ref{fig:annotation_example_reference_and_predicate}, la palabra \textit{muchos} cumple la función de filtrar algunos de los bebés, por eso es anotada como \textit{Predicate}.
 
-De conjunto con esta relación, cualquier concepto puede jugar dos roles adicionales: \textit{domain} y \textit{argument} (en español \textit{dominio} y \textit{argumento} respectivamente), completando así su significado. El \textit{Predicate} define el conjunto de objetos pertenecientes al dominio (el concepto enlazado con el rol \textit{domain}) que cumplen el predicado anotado según los argumentos señalados (el o los conceptos anotados con el rol \textit{argument}). De forma matemática, la relación \textit{Predicate} define al conjunto:
+De conjunto con esta relación, cualquier concepto puede jugar dos roles adicionales: \textit{domain} y \textit{argument} (en español \textit{dominio} y \textit{argumento} respectivamente), completando así su significado. El \textit{Predicate} define el conjunto de objetos pertenecientes al dominio (el concepto enlazado con el rol \textit{domain}) que cumplen el predicado anotado según los argumentos señalados (el o los conceptos anotados con el rol \textit{argument}).
+
+De forma matemática, la relación \textit{Predicate} define al conjunto:
 
 \begin{center}
 	$\{x\in Domain~|~Predicate(x,~arg_1,~arg_2,\dots,~arg_n)\}$
 \end{center}
 
-En el ejemplo de la figura \ref{fig:annotation_example_reference_and_predicate}, el dominio de este \textit{Predicate} es representado por el \textit{Concept} \guillemot{\texttt{bebés}}, y el único argumento es \guillemot{\texttt{cuatro meses}}. Esta construcción da lugar a un nuevo concepto, el de muchos bebés de 4 meses, el cual puede ser entendido como la aplicación del filtro \guillemot{\texttt{muchos}} sobre el conjunto de elementos
-definido por el \textit{Concept} \guillemot{\texttt{bebés}}, de los cuales son seleccionados aquellos con el argumento \guillemot{\texttt{cuatro meses}}.
+En el ejemplo de la figura \ref{fig:annotation_example_reference_and_predicate}, el dominio de este \textit{Predicate} es representado por el \textit{Concept} \guillemot{\texttt{bebés}}, y el único argumento es \guillemot{\texttt{cuatro meses}}. Esta construcción da lugar a un nuevo concepto, el de \guillemot{\texttt{muchos bebés de 4 meses}}, el cual puede ser entendido como la aplicación del filtro \guillemot{\texttt{muchos}} sobre el conjunto de elementos definido por el \textit{Concept} \guillemot{\texttt{bebés}}, de los cuales son seleccionados aquellos con el argumento \guillemot{\texttt{cuatro meses}}.
 
 \begin{center}
 	$\{x\in Beb\acute{e}s~|~muchos(x,~cuatro~meses)\}$
 \end{center}
 
 El nuevo concepto complejo construido de esta forma es representado
-en la oración por la anotación \textit{Predicate} en sí misma. Por tanto, para continuar con el ejemplo anterior, en caso de querer que estos \guillemot{\texttt{muchos bebés}} jugaran el rol \textit{subject} o \textit{target}, la anotación correspondiente debe ir desde un \textit{Action} hacia el \textit{Predicate}, como se muestra en la figura \ref{fig:annotation_example_reference_and_predicate}. Es un error anotar que el \textit{subject} de \guillemot{\texttt{padecen}} es \guillemot{\texttt{bebés}} porque este concepto representa \doublequote{todos los bebés}. Por ende, el \textit{Predicate} es usado para representar el concepto filtrado en sí, no el operador de filtrado.
+en la oración por la anotación \textit{Predicate} en sí misma. Por tanto, para continuar con el ejemplo anterior, en caso de querer que estos \guillemot{\texttt{muchos bebés}} jugaran el rol \textit{subject} o \textit{target}, la anotación correspondiente debe ir desde un \textit{Action} hacia el \textit{Predicate}, como se muestra en la figura \ref{fig:annotation_example_reference_and_predicate}. Es un error anotar que el \textit{subject} de \guillemot{\texttt{padecen}} es \guillemot{\texttt{bebés}} porque este concepto representa \guillemot{\texttt{todos los bebés}}. Por ende, el \textit{Predicate} es usado para representar el concepto filtrado en sí, no el operador de filtrado.
 
 Como caso de uso particular de esta anotación, se encuentra el caso en que un término no representa un concepto relevante por sí mismo (por tanto no debe ser anotado como \textit{Concept}), sino que denota una propiedad o rasgo medible de otro concepto. Por ejemplo, \guillemot{\texttt{tipo}}, \guillemot{\texttt{parte}}, \guillemot{\texttt{nivel}} y \guillemot{\texttt{cada}} en \doublequote{\textit{tipo de cáncer}}, \doublequote{\textit{parte del cuerpo}}, \doublequote{\textit{nivel de glucosa}} y \doublequote{\textit{cada trimestre}} respectivamente.
 En tales casos, el \textit{Predicate} debe carecer de alguno de los roles \textit{domain} o \textit{argument}. Si el tipo o clase resultante de formar el predicado coincide con el del concepto a enlazar, entonces el rol utilizado es \textit{domain}. En otro caso, se enlaza al concepto con el rol \textit{argument}.
@@ -96,37 +98,29 @@ Así como un \textit{Predicate} puede utilizarse para componer conceptos, se pue
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=\linewidth]{graphics/annotation_example_composing_concepts.png}
+		\includegraphics[width=\textwidth]{graphics/annotation_example_composing_concepts.png}
 		\caption[Anotación de conceptos compuestos]{Ejemplo de anotación de conceptos compuestos.}
 		\label{fig:annotation_example_composing_concepts}
 	\end{center}
 \end{figure}
 
-Por ejemplo, en la figura \ref{fig:annotation_example_composing_concepts}, hay un concepto complejo
-que involucra a \guillemot{\texttt{problemas}} y \guillemot{\texttt{sangre}}. Este concepto actúa como \textit{subject} de \guillemot{\texttt{afectan}}, dado que no todos los \guillemot{\texttt{problemas}} se \guillemot{\texttt{afectan}}, sino solo aquellos que son \guillemot{\texttt{problemas de la sangre}}. Por otro lado, la propia palabra \guillemot{\texttt{sangre}} actúa como \textit{domain} del predicado \guillemot{\texttt{partes}}. Quien a su vez es el \textit{target} de \guillemot{\texttt{afectan}}. De manera similar sucede con los otros tres conceptos complejos \guillemot{\texttt{impiden}}, \guillemot{{cumpla}} y \guillemot{\texttt{función}}.
+Por ejemplo, en la figura \ref{fig:annotation_example_composing_concepts}, hay un concepto complejo formado con las palabras \guillemot{\texttt{problemas}} y \guillemot{\texttt{sangre}}. Este a su vez, actúa como \textit{subject} de \guillemot{\texttt{afectan}}, dado que no todos los \guillemot{\texttt{problemas}} se \guillemot{\texttt{afectan}}, sino solo aquellos que son \guillemot{\texttt{problemas de la sangre}}. Por otro lado, la propia palabra \guillemot{\texttt{sangre}} actúa como \textit{domain} del predicado \guillemot{\texttt{partes}}, el cual es el \textit{target} de \guillemot{\texttt{afectan}}. De manera similar sucede con los otros tres conceptos complejos \guillemot{\texttt{impiden}}, \guillemot{{cumpla}} y \guillemot{\texttt{función}}.
 
 De esta forma puede apreciarse que la construcción y/o anotación de conceptos complejos es una tarea compleja en sí. Además, esta estrategia puede ser usada para representar la nominalización de un verbo, pues al anotar el \textit{Action} y los correspondientes \textit{subject} y \textit{target} se
 construye el concepto complejo.
 
 \subsection{Relaciones taxonómicas}
-Los roles \textit{Action} y \textit{Concept} permiten capturar gran parte del significado semántico de una oración a partir de anotar como acción todos los conceptos que indican alguna interacción entre otros conceptos. Sin embargo, algunos tipos específicos de interacciones son tan comunes que son considerados en diferentes dominios del conocimiento como los bloques constructores para las representaciones ontológicas y taxonómicas. Tal es el caso de las parejas de hiperonimia/hiponimia, anotadas como relaciones \textit{is-a} (en español \textit{es-un}) y meronimia/holonimia, anotadas como relaciones \textit{part-of} (en español \textit{parte-de}), que forma el centro de muchas bases de conocimiento.
+Los roles \textit{Action} y \textit{Concept} permiten capturar gran parte del significado semántico de una oración a partir de anotar como acción todos los conceptos que indican alguna interacción entre ellos. Sin embargo, algunos tipos específicos de interacciones son tan comunes que son considerados en diferentes dominios del conocimiento como los bloques constructores para las representaciones ontológicas y taxonómicas. Tal es el caso de las parejas de hiperonimia/hiponimia, anotadas como relaciones \textit{is-a} (en español \textit{es-un}) y meronimia/holonimia, anotadas como relaciones \textit{part-of} (en español \textit{parte-de}), que forman el centro de muchas bases de conocimiento.
 
-Estos dos tipos de relaciones son muy comunes en la mayoría de los dominios del conocimiento, y hay muchas formas distintas para expresar
-estas ideas en texto. Debido a ello, resulta mejor representarlas explícitamente como relaciones entre conceptos, en lugar de recurrir a anotar como \textit{Action} las formas del verbo ser o estar. Además, una anotación explícita de estas relaciones permite que sistemas de descubrimiento de conocimiento entrenados en estas anotaciones extraigan estructuras del conocimiento más compactas y concisas, dado que no es necesario realizar interpretaciones adicionales. Las relaciones \textit{is-a} y \textit{part-of} pueden ser indicadas explícitamente en el texto por la aparición de patrones textuales comunes (por ejemplo, patrones de Hearst \textbf{ESTO LLEVA REFERENCIA}). Sin embargo, aun cuando no ocurrieran en el texto indicaciones explícitas de estas relaciones, consideramos su anotación.
+Estos dos tipos de relaciones son muy comunes en la mayoría de los dominios del conocimiento, y hay muchas formas distintas para expresar estas ideas en texto. Debido a ello, resulta mejor representarlas explícitamente como relaciones entre conceptos, en lugar de recurrir a anotar como \textit{Action} las formas del verbo ser o estar. Además, una anotación explícita de estas relaciones permite que sistemas de descubrimiento de conocimiento entrenados en estas anotaciones extraigan estructuras más compactas y concisas, dado que no es necesario realizar interpretaciones adicionales.
 
-En la figura \ref{fig:annotation_example_is_a} puede verse un ejemplo de anotación de la relación \textit{is-a}. En esta oración, las palabras \guillemot{\texttt{hepatitis}} e \guillemot{\texttt{hígado}} son claramente conceptos, mientras que la palabra \guillemot{\texttt{inflamación}} es una acción. Como se ha visto anteriormente, una relación con un rol complejo, es decir, un rol que esté relacionado hacia otros roles implica la relación con él como un todo y no solo con su significado semántico. Por ende, el resultado de la anotación de esta oración es \guillemot{\texttt{hepatitis} \textit{is-a} \texttt{inflamación del hígado}}.
+Las relaciones \textit{is-a} y \textit{part-of} pueden ser indicadas explícitamente en el texto por la aparición de patrones textuales comunes, como es el caso de los patrones de Hearst~\cite{ref:14}. Sin embargo, aun cuando no ocurrieran en el texto indicaciones explícitas de estas relaciones, se considera su anotación.
 
-Por otra parte, en la figura \ref{fig:annotation_example_part_of} se puede apreciar un ejemplo de la relación \textit{part-of}. En esta oración son anotadas como conceptos la palabra \guillemot{\texttt{depresión}} y la frase \guillemot{\texttt{trastorno bipolar}}. Resultando así la anotación \guillemot{\texttt{depresión} \textit{part-of} \texttt{trastorno bipolar}}.
+En la figura \ref{fig:annotation_example_is_a} puede verse un ejemplo de anotación de la relación \textit{is-a}. En esta oración, las palabras \guillemot{\texttt{hepatitis}} e \guillemot{\texttt{hígado}} son claramente conceptos, mientras que \guillemot{\texttt{inflamación}} es una acción. Como se ha visto anteriormente, una relación con un rol complejo, es decir, un rol que esté relacionado hacia otros roles, implica la relación con él como un todo y no solo con su significado semántico. Por ende, \guillemot{\texttt{hepatitis} \textit{is-a} \texttt{inflamación del hígado}} es el resultado de la anotación de esta oración.
 
-Las parejas de sinonimia, anotadas como relaciones \textit{same-as} (en español \textit{igual-que}) es usada para indicar sinónimos, o conceptos que son considerados iguales en el dominio del documento. Puede ser usada cuando un concepto simple es definido a partir de describirlo como otro concepto más complejo.
+Por otra parte, en la figura \ref{fig:annotation_example_part_of} se puede apreciar un ejemplo de la relación \textit{part-of}. En esta oración son anotadas como conceptos la palabra \guillemot{\texttt{depresión}} y la frase \guillemot{\texttt{trastorno bipolar}}. Esta oración, a modo de anotación, resulta en \guillemot{\texttt{depresión} \textit{part-of} \texttt{trastorno bipolar}}.
 
-La figura \ref{fig:annotation_example_same_as} muestra un ejemplo de anotación de la relación \textit{same-as}. En esta oración son anotadas la palabra \guillemot{\texttt{SIDA}} y la frase \guillemot{\texttt{síndrome de inmunodeficiencia adquirida}} como conceptos, resultando la anotación \guillemot{\texttt{SIDA} \textit{same-as} \texttt{síndrome de inmunodeficiencia adquirida}}.
-
-Las propiedades, anotadas como relaciones \textit{has-property} (en español \textit{tiene-propiedad}) es usada para especificar que un concepto tiene una propiedad o característica, o puede ser descrita por otro concepto. Sin embargo, este tipo de relación puede conllevar a ciertas dificultades, como por ejemplo la paradoja de Bertrand Russell \textbf{NECESITO REFERENCIA} y la de Grelling-Nelson \textbf{NECESITO REFERENCIA}. Además, una propiedad puede implicar gran cantidad de propiedades e incluso una cantidad infinita de ellas. Por ejemplo si se cumple que \guillemot{\texttt{la persona pesa más de 60 kilogramos}} entonces también se cumple que \guillemot{\texttt{la persona pesa más de 59 kilogramos}} y que \guillemot{\texttt{la persona pesa más de 58 kilogramos}} y de forma similar, se puede concluir infinitas propiedas de este tipo.
-
-En la figura \ref{fig:annotation_example_has_property} se puede observar un ejemplo de anotación de la relación \textit{has-property}. En esta oración son anotadas la frase \guillemot{\texttt{estreptococo del grupo A}} y las palabras \guillemot{\texttt{causa}} y \guillemot{\texttt{común}} como conceptos. También, la palabra \guillemot{\texttt{más}} es anotada como un predicado, con las palabras \guillemot{\texttt{causa}} y \guillemot{\texttt{común}} como dominio y argumento respectivamente. Al ser anotada la relación \textit{has-property}, la anotación resulta como \guillemot{\texttt{estreptococo del grupo A} \textit{has-property} \texttt{causa más común}}.
-
-Para todas las relaciones taxonómicas, solo se considera su anotación cuando la oración implica la existencia de dicha relación, aun cuando fuese implícita. En ningún caso se anota basada solamente en conocimiento externo o del dominio.
+Las parejas de sinonimia, anotadas como relaciones \textit{same-as} (en español \textit{igual-que}) es usada para indicar sinónimos o conceptos que son considerados iguales en el dominio del documento. Puede ser usada cuando un concepto simple es definido a partir de describirlo como otro concepto más complejo.
 
 \begin{figure}[H]
 	\centering
@@ -156,11 +150,27 @@ Para todas las relaciones taxonómicas, solo se considera su anotación cuando l
 	\caption{Anotación de las relaciones taxonómicas}
 \end{figure}
 
+La figura \ref{fig:annotation_example_same_as} muestra un ejemplo de anotación de la relación \textit{same-as}. La palabra \guillemot{\texttt{SIDA}} y la frase \guillemot{\texttt{síndrome de inmunodeficiencia adquirida}} son anotadas como conceptos. Por tanto, esta oración a modo de anotación queda \guillemot{\texttt{SIDA} \textit{same-as} \texttt{síndrome de inmunodeficiencia adquirida}}.
+
+Las propiedades, anotadas como relaciones \textit{has-property} (traducido al español como \textit{tiene-propiedad}) es usada para especificar que un concepto tiene una propiedad, característica, o puede ser descrita por otro concepto. Sin embargo, este tipo de relación puede conllevar a ciertas dificultades, como por ejemplo la paradoja de Bertrand Russell~\cite{ref:15} y la de Grelling-Nelson~\cite{ref:16}. Además, una propiedad puede implicar gran cantidad de propiedades e incluso una cantidad infinita de ellas. Por ejemplo si \guillemot{\texttt{la persona pesa más de 60 kilogramos}} entonces también se cumple que \guillemot{\texttt{la persona pesa más de 59 kilogramos}} y por consiguiente, que \guillemot{\texttt{la persona pesa más de 58 kilogramos}}. De manera similar, dado que en este caso, el peso es un valor numérico decimal, se pueden construir infinitas propiedas de este tipo.
+
+En la figura \ref{fig:annotation_example_has_property} se puede observar un ejemplo de la anotación \textit{has-property}. En esta oración son anotadas la frase \guillemot{\texttt{estreptococo del grupo A}} y las palabras \guillemot{\texttt{causa}} y \guillemot{\texttt{común}} como conceptos. También, la palabra \guillemot{\texttt{más}} es anotada como un predicado, en conjunto con \guillemot{\texttt{causa}} y \guillemot{\texttt{común}} como dominio y argumento respectivamente. Al ser anotada la relación \textit{has-property}, la anotación resulta como \guillemot{\texttt{estreptococo del grupo A} \textit{has-property} \texttt{causa más común}}.
+
+Para todas las relaciones taxonómicas, solo se considera su anotación cuando la oración implica la existencia de ella, aun cuando fuese implícita. En ningún caso se anota basada solamente en conocimiento externo o del dominio.
+
 \subsection{Causalidad e implicación}
-Las cuatro relaciones semánticas presentadas hasta ahora son útiles para capturar la estructura taxonómica del conocimiento expresado en textos del lenguaje natural. Dos relaciones adicionales son definidas para capturar conexiones lógicas entre conceptos: \textit{causes} y \textit{entails} (en español \textit{causa} e \textit{implica} respectivamente). La relación \textit{causes} es usada para expresar que un evento, identificado en general como un concepto, es una posible causa para otro evento. En la figura \ref{fig:annotation_example_causes} se muestra un ejemplo anotado.
+Las cuatro relaciones semánticas presentadas hasta ahora son útiles para capturar la estructura taxonómica del conocimiento expresado en textos del lenguaje natural. Dos relaciones adicionales son definidas para construir conexiones lógicas entre conceptos: \textit{causes} y \textit{entails} (en español \textit{causa} e \textit{implica} respectivamente). La relación \textit{causes} es usada para expresar que un evento, identificado en general como un concepto, es una posible causa para otro evento. En la figura \ref{fig:annotation_example_causes} se muestra un ejemplo anotado.
 
 Esta relación indica causalidad, no correlación ni implicación lógica. Por tanto, debe estar declarado con claridad en la oración que hay una conexión de causa directa entre ambos eventos. Además, hay un grado de incertidumbre implicada en la causalidad, lo cual significa que si \guillemot{\texttt{A} \textit{causes} \texttt{B}}, eso no necesariamente implica que cada vez que pase \guillemot{\texttt{A}} sería seguido por \guillemot{\texttt{B}}, ni que en cualquier caso que ocurra \guillemot{\texttt{B}} será a causa de \guillemot{\texttt{A}}.
 
+En contraste, la relación \textit{entails} es usada para denotar implicación lógica. En este caso, no es necesario que los eventos estén relacionados por causalidad; lo único que debe cumplirse es que cuando la proposición \guillemot{\texttt{A}} es verdadera entonces siempre sucede el caso de que la proposición \guillemot{\texttt{B}} es verdadera. En la figura \ref{fig:annotation_example_entails} puede verse un ejemplo, donde un concepto complejo, en este caso \guillemot{\texttt{tener}} implica \guillemot{\texttt{necesita}}, el cual es también un concepto complejo. Desde otro punto de vista, la anotación de esa oración resulta en:
+
+\vspace{-0.05in}
+\begin{center}
+	\guillemot{$\big($tener [suficiente energía] en el cuerpo$\big)$\\\textit{entails}\\(necesitar glucosa en el cuerpo)}
+\end{center}
+
+\vspace{-0.05in}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{3.25in}
@@ -177,38 +187,38 @@ Esta relación indica causalidad, no correlación ni implicación lógica. Por t
 	\caption{Anotación de causalidad e implicación}
 \end{figure}
 
-En contraste, la relación \textit{entails} es usada para denotar implicación lógica. En este caso, no es necesario que los eventos estén relacionados por causalidad en lo más mínimo; lo único que debe cumplirse es que cuando la proposición \guillemot{\texttt{A}} es verdadera entonces siempre sucede el caso de que la proposición \guillemot{\texttt{B}} es verdadera. En la figura \ref{fig:annotation_example_entails} puede verse un ejemplo, donde un concepto complejo, en este caso \guillemot{\texttt{tener}} implica \guillemot{\texttt{necesita}}, otro concepto complejo. Desde otro punto de vista, la anotación de esa oración resulta en:
-
-\begin{center}
-	\guillemot{$\big($tener [suficiente energía] en el cuerpo$\big)$\\\textit{entails}\\(necesitar glucosa en el cuerpo)}
-\end{center}
-
+\vspace{-0.1in}
 La anotación de causalidad e implicación evita anotar varias palabras y frases que comparten el mismo significado semántico. Por ejemplo, en la figura \ref{fig:annotation_example_causes} no resulta necesario anotar \guillemot{\texttt{puede causarle}} debido a que el significado correcto está siendo representado por la relación \textit{causes}.
 
 \subsection{Contextualización}
-En ocasiones, los conceptos solo participan en determinada relación con precondiciones, como por ejemplo, si dura un período específico de tiempo o solo en una ubicación específica, o con algunas propiedades adicionales.
+En ocasiones, los conceptos solo participan en determinada relación con precondiciones, como por ejemplo, si dura un período específico de tiempo, solo en una ubicación específica o con algunas propiedades adicionales.
 
-Un ejemplo es la oración de la figura \ref{fig:annotation_example_in_place}. En esta oración, la anotación \guillemot{\texttt{injerto óseo--transplanta--tejidos}} falla en capturar la semántica completa del mensaje, dado que el \guillemot{\texttt{injerto óseo}} no es necesariamente siempre \guillemot{\texttt{transplantar tejidos}} (según la oración), sino solo en la situación específica en la que el tejido transplantado es de los \guillemot{\texttt{huesos}}. Para resolver estas situaciones, el modelo incluye tres relaciones de contexto: \textit{in-time}, \textit{in-place} y el más general \textit{in-context} (en español \textit{en-tiempo}, \textit{en-lugar} y \textit{en-contexto} respectivamente).
+En la figura \ref{fig:annotation_example_in_place}, la anotación \guillemot{\texttt{injerto óseo--transplanta--tejidos}} falla en capturar la semántica completa del mensaje, dado que el \guillemot{\texttt{injerto óseo}} no es necesariamente siempre \guillemot{\texttt{transplantar tejidos}}, sino solo en la situación específica en la que este tejido es de los \guillemot{\texttt{huesos}}. Para resolver estas situaciones, se incluyen tres relaciones de contexto: \textit{in-time}, \textit{in-place} y el más general \textit{in-context} (en español \textit{en-tiempo}, \textit{en-lugar} y \textit{en-contexto} respectivamente).
 
-La relación \textit{in-time} restringe un concepto a un instante de tiempo determinado. Además, permite atrapar restricciones más generales siempre que hablen del concepto mientras cumpla determinada condición o durante el tiempo que lo hace. Puede verse un ejemplo en la figura \ref{fig:annotation_example_in_time}.
+La relación \textit{in-time} restringe un concepto a un instante de tiempo determinado. Además, permite atrapar restricciones más generales, siempre que hablen del concepto mientras cumpla determinada condición o durante el tiempo que lo hace. Puede verse un ejemplo en la figura \ref{fig:annotation_example_in_time}.
 
-La relación \textit{in-place} restringe un concepto a un lugar determinado. Además, puede ser visto como la contextualización de la relación \textit{part-of}, en el sentido de que permite plantear un hecho sobre un concepto que es parte de otro. Puede verse un ejemplo en la figura \ref{fig:annotation_example_in_place}.
+La relación \textit{in-place} restringe un concepto a un lugar determinado. Además, puede ser visto como la contextualización de la relación \textit{part-of}, de esta forma permite plantear un hecho sobre un concepto que es parte de otro. Puede verse un ejemplo en la figura \ref{fig:annotation_example_in_place}.
 
+La relación \textit{in-context} restringe un concepto a condiciones más abarcadoras que las descritas anteriormente. Es el contextualizador más general y al igual que el resto, solo debe ser aplicado cuando el contexto habla de un rasgo o valor que puede tener el concepto a contextualizar. Eso implica que el objeto a contextualizar debe tener semántica propia independiente del contexto. A grandes rasgos, puede verse como el contextualizador de la relación \textit{has-property}. Un caso particular de su uso es en oraciones imperativas, donde fragmentos de oración escritos como \guillemot{\dots\space \texttt{si X entonces haga Y} \dots} se anotarían como \guillemot{\texttt{Y} \textit{in-context} \texttt{X}}. Puede verse un ejemplo en la figura \ref{fig:annotation_example_in_context}.
+
+La diferencia entre las relaciones de contexto y el resto es que ellas no definen una aserción, sino que son útiles solo para construir conceptos más complejos. Por ejemplo, la anotación \guillemot{\texttt{problemas} \textit{in-context} \texttt{únicos}} no solo significa que las mujeres tienen problemas de salud, sino que además, son únicos. Es exclusivamente cuando se enlaza con otro concepto, a través de \textit{has-property} u otra relación, que la construcción toma sentido. Por esta razón, no es correcto intercambiar arbitrariamente \textit{in-context} con \textit{has-property}, ya que una relación \textit{has-property} declara una aserción concreta por sí misma. De igual forma enlazar un concepto sobre el que se ha establecido una relación que no es de contextualización, con otro, a través de alguna relación o rol, no indica que dicha relación o rol sea válida solamente para aquellas instancias del concepto que cumplan la propiedad indicada por la relación que no es de contextualización, puesto que estas relaciones, no construyen conceptos complejos que se puedan enlazar.
+
+\vspace{-0.1in}
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{3.8in}
+	\begin{subfigure}{3.6in}
 		\includegraphics[width=\textwidth]{graphics/annotation_example_in_time.png}
 		\caption{Ejemplo de anotación de tiempo.}
-		\vspace{0.4in}
+		\vspace{0.3in}
 		\label{fig:annotation_example_in_time}
 	\end{subfigure}
-	\begin{subfigure}{3.6in}
+	\begin{subfigure}{3.3in}
 		\includegraphics[width=\linewidth]{graphics/annotation_example_in_place.png}
 		\caption{Ejemplo de anotación de lugar.}
-		\vspace{0.4in}
+		\vspace{0.3in}
 		\label{fig:annotation_example_in_place}
 	\end{subfigure}
-	\begin{subfigure}{3.5in}
+	\begin{subfigure}{3.2in}
 		\includegraphics[width=\linewidth]{graphics/annotation_example_in_context.png}
 		\caption{Ejemplo de anotación de contexto.}
 		\label{fig:annotation_example_in_context}
@@ -216,12 +226,6 @@ La relación \textit{in-place} restringe un concepto a un lugar determinado. Ade
 	\caption{Anotación de contextualización}
 \end{figure}
 
-La relación \textit{in-context} restringe un concepto a condiciones más generales que las descritas anteriormente. Es el contextualizador más general y al igual que el resto, solo debe ser aplicado cuando el contexto habla de un rasgo o valor que puede tener el concepto a contextualizar. Eso implica que el objeto a contextualizar debe tener semántica propia independiente del contexto. De forma general, puede verse como el contextualizador de la relación \textit{has-property}. Un caso de uso particular es en las oraciones imperativas, donde un fragmento como \guillemot{\dots\space \texttt{si X entonces haga Y} \dots} se anotaría como \guillemot{\texttt{Y} \textit{in-context} \texttt{X}}. Puede verse un ejemplo en la figura \ref{fig:annotation_example_in_context}.
-
-La diferencia entre las relaciones de contexto y el resto es que ellas no definen una aserción, sino que son útiles solo para construir conceptos más complejos. Por ejemplo, la anotación \guillemot{\texttt{problemas} \textit{in-context} \texttt{únicos}} no solo significa que las mujeres tienen problemas de salud, sino que además tienen problemas únicos. Es exclusivamente cuando se enlaza con otro concepto, a través de \textit{has-property} u otra relación, que esta construcción toma sentido. Por esta razón, no es correcto intercambiar arbitrariamente \textit{in-context} con \textit{has-property}, ya que una relación \textit{has-property} declara una aserción concreta por sí misma. De igual forma enlazar un concepto sobre el que se ha establecido una relación que no es de contextualización, con otro concepto a través de alguna relación o rol, no indica que dicha relación o rol sea válida solamente para aquellas instancias del concepto que cumplan la propiedad indicada por la relación que no es de contextualización, puesto que estas relaciones, no construyen conceptos complejos que se puedan enlazar.
-
-\subsection{Atributos}
-Cuatro atributos booleanos\footnote{HAY QUE PONER ALGO AQUÍ} adicionales pueden ser asociados a cualquier concepto para calificarlo o describirlo aún más. Ellos son: \textit{negated}, \textit{uncertain}, \textit{diminished} y \textit{emphasized} (en español \textit{negación}, \textit{incertidumbre}, \textit{disminución} y \textit{énfasis} respectivamente). Estos atributos son usados para evitar anotar palabras comunes del idioma que son usadas con bastante frecuencia como \textit{no}, \textit{puede}, \textit{poco}, \textit{mucho}, y en su lugar asociar directamente el calificador correspondiente al concepto en sí. Además, los atributos capturan la negación, incertidumbre, disminución o énfasis que se pretendía en la oración aun cuando sea implícito y no indicado explícitamente por otra palabra de la misma. Estos atributos acompañan al concepto que modifican en todas las relaciones en que este participe. En la figura \ref{fig:annotation_examples_attributes} puede verse un ejemplo anotado de cada uno de estos cuatro atributos.
 
 \begin{figure}[H]
 	\centering
@@ -253,9 +257,12 @@ Cuatro atributos booleanos\footnote{HAY QUE PONER ALGO AQUÍ} adicionales pueden
 	\label{fig:annotation_examples_attributes}
 \end{figure}
 
+\subsection{Atributos}\label{section:attributes}
+Cuatro atributos booleanos\footnote{El tipo de dato lógico o booleano es en computación aquel que puede representar valores de lógica binaria, estos son dos valores, los cuales normalmente se representan como falso y verdadero. Se utiliza generalmente en la programación, estadísticas, electrónica y matemáticas mediante la utilización del álgebra booleana.} adicionales pueden ser asociados a cualquier concepto para calificarlo o describirlo un poco más. Ellos son: \textit{negated}, \textit{uncertain}, \textit{diminished} y \textit{emphasized} (en español \textit{negación}, \textit{incertidumbre}, \textit{disminución} y \textit{énfasis} respectivamente). Estos atributos son usados para evitar anotar palabras del idioma que son usadas con bastante frecuencia como \textit{no}, \textit{puede}, \textit{poco}, \textit{mucho}, y en su lugar asociar directamente el calificador correspondiente al concepto en sí. Además, los atributos capturan la negación, incertidumbre, disminución o énfasis que se pretendía en la oración, aun cuando sea implícito y no indicado explícitamente por otra palabra de la misma. Estos atributos acompañan al concepto que modifican en todas las relaciones en que este participe. En la figura \ref{fig:annotation_examples_attributes} puede verse un ejemplo anotado de cada uno de estos cuatro atributos.
+
 \section{Formato de anotación}
 \label{section:annotation_file_format}
-Las anotaciones creadas con este formato son guardadas en archivos separados del documento de texto. Este último nunca es modificado. Para cada documento de texto que se vaya a anotar se crea su respectivo documento de anotación. Ambos archivos son asociados a través de su nombre, los cuales coinciden completamente exceptuando en su extensión. Las extensiones correspondientes al documento de texto y al anotado son \texttt{.txt} y \texttt{.ann} respectivamente.
+Las anotaciones creadas con este formato son guardadas en archivos separados del documento de texto. Este último nunca es modificado. Para cada documento que vaya a ser anotado, se crea su respectivo archivo de anotación. Ambos archivos son asociados a través de su nombre, los cuales coinciden completamente exceptuando en su extensión. Las extensiones correspondientes al documento de texto y al anotado son \texttt{.txt} y \texttt{.ann} respectivamente.
 
 En el documento anotado, las anotaciones individuales se conectan a fragmentos de texto a través de rangos de posiciones de los caracteres. Por ejemplo, si el documento comenzara así:
 
@@ -263,84 +270,20 @@ En el documento anotado, las anotaciones individuales se conectan a fragmentos d
 	\doublequote{\textit{El consumo de alcohol puede causar problemas en el hogar} \dots}
 \end{center}
 
-La palabra \guillemot{\texttt{consumo}} se identifica por el rango de posiciones $3\dots10$. Las posiciones comienzan en $0$ con el inicio del documento, además, todo carácter cuenta como posición válida, incluyendo los espacios en blanco y los cambios de línea. De manera formal, lo anterior queda expresado como:
+La palabra \guillemot{\texttt{consumo}} se identifica por el rango de posiciones $3\dots10$. Las posiciones comienzan en $0$ con el inicio del documento, además, todo carácter cuenta como posición válida, incluyendo los espacios en blanco y los cambios de línea.
 
-\begin{definition}
-	Un \textbf{símbolo} $c$ es una entidad abstracta que no tiene significado por si mismo.
-\end{definition}
-
-Por ejemplo, las letras de los distintos idiomas, dígitos y signos de puntuación son los símbolos más conocidos. Además, los caracteres especiales, glifos y cualquier otro carácter son también símbolos.
-
-\begin{definition}
-	Un \textbf{alfabeto} $\sum$ es un conjunto finito de símbolos.
-\end{definition}
-
-Por ejemplo, $B = \{0,~1\}$ es un alfabeto que tiene los símbolos \doublequote{$0$} y \doublequote{$1$}. De igual forma, $C=\{a,~b,~c\}$ es un alfabeto que tiene los símbolos \doublequote{\textit{a}}, \doublequote{\textit{b}} y \doublequote{\textit{c}}. A veces el carácter espacio (\doublequote{ }), coma (\doublequote{,}) y llaves (\doublequote{\{\}}) son usados como símbolos de un alfabeto, mientras que otras veces son solo metasímbolos\footnote{Un metasímbolo o metacarácter es un símbolo o carácter que tiene un significado especial. En este caso, el carácter espacio, la coma y las llaves son usados para describir los símbolos contenidos en el alfabeto.} usados para la descripción del mismo.
-
-\begin{definition}
-	Una \textbf{cadena} o \textbf{palabra} es una secuencia de símbolos pertenecientes a un alfabeto.
-\end{definition}
-
-Por ejemplo \guillemot{\texttt{1101}} y \guillemot{\texttt{10000100}} son palabras formadas con el alfabeto $B$. A su vez, \guillemot{\texttt{abbccc}} y \guillemot{\texttt{acababa}} son formadas con el alfabeto $C$.
-
-\begin{definition}
-	La \textbf{cadena vacía} o \textbf{palabra vacía} se define por $\varepsilon$ y es aquella palabra que no contiene símbolos. Formalmente, $\varepsilon$ cumple que: $\forall c\in\varepsilon:~c\notin\sum\cup\sum^C$.
-\end{definition}
-
-\begin{definition}
-	Un \textbf{lenguaje formal} es un conjunto de palabras producidas por un alfabeto. Este conjunto puede ser vacío, finito o infinito.
-\end{definition}
-
-\begin{definition}
-	El conjunto $\sum^*$ es el conjunto de todas las palabras producidas por el alfabeto $\sum$.
-\end{definition}
-
-\begin{definition}
-	El conjunto $\sum^+$ es el conjunto de todas las palabras no vacías producidas por el alfabeto $\sum$. De forma formal: $\sum^+=\sum^*-\{\varepsilon\}$.
-\end{definition}
-
-\noindent Dadas las palabras $v,~w\in\sum^*$:
-
-\begin{itemize}
-	\item[•] \begin{definition}
-		La \textbf{concatenación} de dos palabras, es la palabra resultante de sus secuencias de símbolos en continuación una de otra. De manera formal, sea $v=a_1a_2\dots a_n$ y $w=b_1b_2\dots b_m$ con $n,~m\ge0$ entonces la concatenación de $v$ y $w$ se define como $v\circ w=a_1a_2\dots a_nb_1b_2\dots b_m$. La concatenación a veces se escribe como $v\oplus w$ o sencillamente $vw$.
-	\end{definition}
-
-	\item[•] \begin{definition}
-		$v$ es un \textbf{prefijo} de $w$ sí y solo sí existe una palabra $u$ tal que $u\in\sum^*$ y $w=vu$.
-	\end{definition}
-
-	\item[•] \begin{definition}
-		$v$ es un \textbf{sufijo} de $w$ sí y solo sí existe una palabra $u$ tal que $u\in\sum^*$ y $w=uv$.
-	\end{definition}
-
-	\item[•] \begin{definition}
-		$v$ es un \textbf{infijo} de $w$ sí y solo sí existen dos palabras $u_1$ y $u_2$ tal que $u_1,~u_2\in\sum^*$ y $w=u_1vu_2$.
-	\end{definition}
-\end{itemize}
-
-\begin{definition}
-	Sea la palabra $w=a_1a_2\dots a_n$, el \textbf{tamaño de la palabra} $w$ es $\abs{w}=n$ y es el número de símbolos que esta contiene. De forma formal, el tamaño de la palabra queda definido como:
-	\begin{center}
-		$\abs{w}=\left\{\begin{array}{cl}
-			0 & $si $w=\varepsilon\\
-			|v| + 1 & $siendo $w=cv$, con $c\in\sum$ y por ende, $v$ un sufijo de $w
-		\end{array}\right.$
-	\end{center}
-\end{definition}
-
-Una vez planteadas esas definiciones, se puede dar una definición formal del rango de posiciones pertenecientes a una palabra o frase en un documento.
-
-Sea $\sum$ un alfabeto de símbolos, el documento $D=c_1c_2\dots c_n$ y la palabra o frase $w$ perteneciente a este, entonces $\exists v$ tal que $vw$ es un prefijo de $D$. El rango de posiciones de $w$ en el archivo anotado comienza en $\abs{v}$ y acaba en $\abs{v}+\abs{w}$.
+De manera formal, lo anterior queda expresado como: sea $\sum$ un alfabeto de símbolos, el documento $D=c_1c_2\dots c_n$ y la palabra o frase $w$ perteneciente a este, port tanto, $\exists v$ tal que $vw$ es un prefijo de $D$, entonces el rango de posiciones de $w$ en el archivo anotado comienza en $\abs{v}$ y acaba en $\abs{v}+\abs{w}$.
 
 \subsection{Archivo de texto}
-El archivo de texto debe tener como extensión \guillemot{\texttt{.txt}} y contener el texto del documento original. Este archivo debe estar guardado en texto plano y codificado usando UTF-8\footnote{\label{note:utf8}Siglas de \textit{\textbf{U}nicode \textbf{T}ransformation \textbf{F}ormat - 8}, un formato de codificación de caracteres.}. Este archivo puede tener cambios de línea, los cuales cuentan como un símbolo.
+El archivo de texto debe tener como extensión \guillemot{\texttt{.txt}} y contener la información del documento original. Además, debe estar guardado en texto plano y codificado usando UTF-8\footnote{\label{note:utf8}Siglas de \textit{\textbf{U}nicode \textbf{T}ransformation \textbf{F}ormat - 8}, un formato de codificación de caracteres.}. Puede contener cambios de línea, los cuales cuentan como un símbolo.
 
 \subsection{Archivo de anotación}
-El archivo de anotación debe tener como extensión \guillemot{\texttt{.ann}}. Este archivo debe estar guardado en texto plano y codificado usando UTF-8\textsuperscript{\ref{note:utf8}}. Los tipos de anotación específicas que pueden estar presentes en este archivo se explican en las proximas secciones.
+El archivo de anotación debe tener como extensión \guillemot{\texttt{.ann}}. Además, estar guardado en texto plano y codificado usando UTF-8\textsuperscript{\ref{note:utf8}}. Los tipos de anotación específicas que pueden estar presentes en este archivo se explican en las proximas secciones.
 
 \subsection{Estructura general de la anotación}
-Todas las anotaciones tienen la misma estructura básica: cada línea tiene una única anotación y esta tiene un identificador único que se encuentra al inicio de la línea, separado del resto de esta por un único carácter TAB. El resto de la estructura varía en dependencia del tipo de anotación.
+Todas las anotaciones tienen la misma estructura básica: cada línea tiene una sola anotación específica y esta tiene un identificador único que se encuentra al comienzo de la misma. Luego, separado por un carácter TAB, se encuentra el resto de la información en la anotación específica.
+
+El resto de la estructura de cada anotación específica varía en dependencia de los distintos tipos que hay. Esto se explica detalladamente en las siguientes secciones.
 
 \begin{annexample}
 	[backgroundcolor=cyan!13]
@@ -356,8 +299,9 @@ Todas las anotaciones tienen la misma estructura básica: cada línea tiene una 
 
 \subsection{Convenio de anotación de identificadores}
 \label{subsection:id_annotation_conventions}
-Todos los identificadores de anotaciones consisten en un único carácter en mayúsculas identificando el tipo de anotación y su número. El carácter inial del ID está relacionado con el tipo de anotación de la siguiente forma:
+Todos los identificadores de anotaciones consisten en un único carácter en mayúsculas identificando el tipo de anotación y a continuación su número. Este carácter inicial es:
 
+\vspace{-0.1in}
 \begin{center}
 	\begin{itemize}
 		\item[•] \texttt{T}: texto
@@ -370,10 +314,11 @@ Todos los identificadores de anotaciones consisten en un único carácter en may
 	\end{itemize}
 \end{center}
 
+\vspace{-0.1in}
 Adicionalmente, un asterisco (\doublequote{\,*\,}) puede ser usado como un identificador, pero solo en casos especiales.
 
 \subsection{Anotación de texto}
-La anotación de texto es una categoría importante de anotación, pudiera decirse que es la base de la anotación, pues es quien delimita los fragmentos de texto específicos que serán usados en la anotación y además, sobre estos es que las relaciones y atributos surten efecto. Todas las anotaciones de texto siguen la siguiente estructura:
+La anotación de texto es una categoría importante, incluso pudiera decirse que es la base de la anotación, pues es quien delimita los fragmentos de texto específicos que serán usados y además, sobre estos es que las relaciones y atributos surten efecto. Estas se basan en la siguiente estructura:
 
 \begin{annexample}
 	[backgroundcolor=green!13]
@@ -386,17 +331,13 @@ La anotación de texto es una categoría importante de anotación, pudiera decir
 
 \begin{itemize}
 	\item[•] \texttt{[TAB]} y \texttt{[SPACE]} son el carácter TAB y el carácter espacio respectivamente.
-	\vspace{-0.1in}
 	\item[•] \texttt{<id>} es el número correspondiente a esa anotación específica.
-	\vspace{-0.1in}
-	\item[•] \texttt{<type>} es el tipo de rol, el cual puede ser solo uno de los trece siguientes: {\it Concept}, {\it Action}, {\it Reference} o {\it Predicate}.
-	\vspace{-0.1in}
-	\item[•] \texttt{<span>} son los rangos de posiciones de las palabras pertenecientes al texto que será anotado. Si este fragmento de texto contiene más de una palabra, entonces se unirán sus rangos de posiciones usando el carácter punto y coma (\doublequote{\texttt{;}}) como separador y las palabras serás escsritas separadas por un único carácter espacio.
-	\vspace{-0.1in}
+	\item[•] \texttt{<type>} es el tipo de rol, el cual puede ser solo uno de los cuatro siguientes: {\it Concept}, {\it Action}, {\it Reference} o {\it Predicate}.
+	\item[•] \texttt{<span>} son los rangos de posiciones de las palabras pertenecientes al texto que será anotado. Si este fragmento contiene más de una palabra, entonces se unirán sus rangos de posiciones usando el carácter punto y coma (\doublequote{\texttt{;}}) como separador y estas serán escsritas separadas por un carácter espacio.
 	\item[•] \texttt{<text>} es el texto específico que será anotado.
 \end{itemize}
 
-Para este ejemplo, y los restantes en esta sección de explicar el formato de anotación, se usará el siguiente documento de ejemplo, el cual contiene una única oración:
+Para este ejemplo, y los restantes en esta sección pertenecientes a explicar el formato de anotación, se usará el siguiente documento de ejemplo, el cual contiene una única oración:
 \begin{center}
 	\guillemot{\textit{Las mujeres embarazadas también pueden desarrollar diabetes, llamada diabetes gestacional.}}
 	\label{sentence:annotation_example}
@@ -417,9 +358,10 @@ En la figura \ref{fig:text_bound_annotation_example} se puede ver el resultado d
 	T5\space\space Concept 69 77;78 89 diabetes gestacional
 \end{annexample}
 
+\vspace{-0.3in}
 \subsection{Anotación de relaciones}
 \label{section:relation_annotation}
-Todas las relaciones anotadas son binarias\footnote{ALGO AQUI}. Estas anotaciones siguen la siguiente estructura:
+Todas las relaciones anotadas son binarias\footnote{Una relación binaria $R$ es el subconjunto de los elementos del producto cartesiano $A_1\times A_2$ que cumplen una determinada condición: $R = \{(a_1,~a_2) : (a_1,~a_2)\in A_1\times A_2\wedge R(a_1,~a_2) = Verdadero \}$.}. Estas anotaciones siguen la siguiente estructura:
 
 \begin{annexample}
 	[backgroundcolor=green!13]
@@ -430,15 +372,15 @@ Todas las relaciones anotadas son binarias\footnote{ALGO AQUI}. Estas anotacione
 	R<id>[TAB]<type>[SPACE]Arg1:T<id1>[SPACE]Arg2:T<id2>
 \end{annexample}
 
+\vspace{-0.3in}
 \begin{itemize}
 	\item[•] \texttt{[TAB]} y \texttt{[SPACE]} son el carácter TAB y el carácter espacio respectivamente.
-	\vspace{-0.1in}
 	\item[•] \texttt{<id>} es el número correspondiente a esa anotación específica.
-	\vspace{-0.1in}
 	\item[•] \texttt{<type>} es el tipo de relación anotada, el cual puede ser solo uno de los trece vistos anteriormente: {\it subject}, {\it target}, {\it domain}, {\it argument}, {\it is-a}, {\it part-of}, {\it same-as}, {\it has-property}, {\it causes}, {\it entails}, {\it in-time}, {\it in-place} o {\it in-context}.
-	\vspace{-0.1in}
-	\item[•] \texttt{<id1>} e \texttt{<id2>} son los identificadores de las anotaciones de texto que participan en esta relación. La anotación se interpreta de izquierda a derecha, es decir, se interpreta \guillemot{\texttt{T<id1>} \textit{<type>} \texttt{T<id2>}}.
+	\item[•] \texttt{<id1>} e \texttt{<id2>} son los identificadores de las anotaciones de texto que participan en esta relación.
 \end{itemize}
+
+Es necesario tener en cuenta que este tipo de anotaciones se interpretan de izquierda a derecha, es decir, se interpretan \guillemot{\texttt{T<id1>} \textit{<type>} \texttt{T<id2>}}. Por tanto, el orden en que son anotados sus argumentos tiene vital importancia.
 
 En la figura \ref{fig:relation_annotation_example} se puede ver el resultado de anotar las relaciones en \hyperref[sentence:annotation_example]{el documento de prueba}.
 
@@ -450,10 +392,13 @@ En la figura \ref{fig:relation_annotation_example} se puede ver el resultado de 
 	{Ejemplo de anotación de relaciones.}
 	R1\space\space in-context Arg1:T1 Arg2:T2\\
 	R2\space\space subject Arg1:T3 Arg2:T1\\
-	R3\space\space target Arg1:T3 Arg2:T4
+	R3\space\space target Arg1:T3 Arg2:T4\\
+	R4\space\space same-as Arg1:T3 Arg2:T5
 \end{annexample}
 
-Como se comentó anteriormente, en algunos casos especiales un asterisco (\doublequote{\,*\,}) puede ser usado en vez un identificador. Este es el caso de la relación \texttt{same-as}, la cual es simétrica y transitiva. Esta anotación puede tener un asterisco al comienzo o un identificador estándar como las restantes relaciones. Cuando esta relación tiene un asterisco, no es necesario anotar los argumentos explícitamente junto a los identificadores, ni tampoco que sean solo dos argumentos. Es por este motivo que puede ser compactada y los identificadores que actúan en esta relación deben ser anotados separados por un único carácter espacio, sin importar si son dos o más. A continuación en la figura \ref{fig:same_as_relation_annotation_example} se puede ver un ejemplo de anotación de esto en \hyperref[sentence:annotation_example]{el documento de prueba}.
+Como se comentó anteriormente, en algunos casos especiales un asterisco (\doublequote{\,*\,}) puede ser usado en vez de un identificador. Este es el caso de la relación \texttt{same-as}, la cual es simétrica y transitiva. Ellas pueden pueden tener un asterisco al comienzo o un identificador estándar como las restantes relaciones. Cuando se utiliza un asterisco, no es necesario anotar los argumentos explícitamente junto a los identificadores, ni tampoco que sean solo dos argumentos. Por este motivo puede ser compactada y los identificadores que actúan en esta relación deben ser anotados separados por un único carácter espacio, sin importar si estos son dos o más.
+
+A continuación en la figura \ref{fig:same_as_relation_annotation_example} se puede ver un ejemplo de anotación de este tipo en \hyperref[sentence:annotation_example]{el documento de prueba}.
 
 \begin{annexample}
 	[backgroundcolor=cyan!13]
@@ -465,6 +410,8 @@ Como se comentó anteriormente, en algunos casos especiales un asterisco (\doubl
 \end{annexample}
 
 \subsection{Anotación de atributos}
+Los atributos booleanos anteriormente mencionados, son asociados a su respectivo concepto a través de una relación binaria. La misma contiene un único concepto específico unido a un tipo de atributo. Cabe aclarar que, como se comentó en la sección \ref{section:attributes}, estos sintetizan una familia de palabras y por ende, semánticamente no tienen un palabra explícitamente asociada.
+
 Las anotaciones de atributos siguen la siguiente estructura:
 
 \begin{annexample}
@@ -476,17 +423,15 @@ Las anotaciones de atributos siguen la siguiente estructura:
 	A<id>[TAB]<type>[SPACE]T<id1>
 \end{annexample}
 
+\vspace{-0.2in}
 \begin{itemize}
 	\item[•] \texttt{[TAB]} y \texttt{[SPACE]} son el carácter TAB y el carácter espacio respectivamente.
-	\vspace{-0.1in}
 	\item[•] \texttt{<id>} es el número correspondiente a esa anotación específica.
-	\vspace{-0.1in}
 	\item[•] \texttt{<type>} es el tipo de atributo anotado, el cual puede ser solo uno de los cuatro vistos anteriormente: {\it Negated}, {\it Uncertain}, {\it Diminished} o {\it Emphasized}.
-	\vspace{-0.1in}
 	\item[•] \texttt{<id1>} es el identificador de la anotación de texto que es modificada por este atributo.
 \end{itemize}
 
-En la figura \ref{fig:attribute_annotation_example} se puede ver el resultado de anotar el único atributo en \hyperref[sentence:annotation_example]{el documento de prueba}.
+En la figura \ref{fig:attribute_annotation_example} se puede ver el resultado de anotar el único atributo contenido en \hyperref[sentence:annotation_example]{el documento de prueba}.
 
 \begin{annexample}
 	[backgroundcolor=cyan!13]
@@ -498,7 +443,7 @@ En la figura \ref{fig:attribute_annotation_example} se puede ver el resultado de
 \end{annexample}
 
 \subsection{Anotación de comentarios}
-Las anotaciones de comentarios siguen la siguiente estructura:
+Un comentario es texto que no se procesa, por lo que sirve para escribir notas a modo de guía. Las anotaciones de comentarios siguen la siguiente estructura:
 
 \begin{annexample}
 	[backgroundcolor=green!13]
@@ -509,11 +454,10 @@ Las anotaciones de comentarios siguen la siguiente estructura:
 	\#<id>[SPACE]<comment>
 \end{annexample}
 
+\vspace{-0.2in}
 \begin{itemize}
 	\item[•] \texttt{[SPACE]} es el carácter espacio.
-	\vspace{-0.1in}
 	\item[•] \texttt{<id>} es el número correspondiente a esa anotación específica. Este no es obligatorio para anotar comentarios.
-	\vspace{-0.1in}
 	\item[•] \texttt{<comment>} es el comentario en sí, y puede contener cualquier texto.
 \end{itemize}
 
@@ -529,16 +473,20 @@ En la figura \ref{fig:comment_annotation_example} se puede ver un ejemplo de un 
 	\# diabetes, llamada diabetes gestacional.
 \end{annexample}
 
-\subsection{Consideraciones finales}
-Las oraciones anotadas en el documento con extensión \guillemot{\texttt{.ann}} deben estar en el mismo orden con el que aparecen en el documento de texto con extensión \guillemot{\texttt{.txt}}. Además, no es necesario que todas las oraciones en el documento de texto sean anotadas, incluso puede que ninguna esté anotada.
+\subsection{Consideraciones finales}\label{section:annotation_conventions}
+Las oraciones anotadas en el documento con extensión \guillemot{\texttt{.ann}} deben estar en el mismo orden con el que aparecen en el documento de texto con extensión \guillemot{\texttt{.txt}}. Además, no es necesario que todas las oraciones en el documento de texto sean anotadas, incluso puede que ninguna lo esté.
 
-Como se vio en la sección \ref{subsection:id_annotation_conventions}, la letra inicial del identificador debe ser mayúscula, no obstante, puede ser minúscula también, aunque siempre guiarse por los convenios es una buena práctica.
+Como se vio en la sección \ref{subsection:id_annotation_conventions}, la letra inicial del identificador debe ser mayúscula, no obstante, no importa si es minúscula, aunque siempre guiarse por los convenios es una buena práctica.
 
-Por otra parte, el convenio de anotación de los tipos es anotarlo con la primera letra en mayúscula y el resto en minúsculas para los textos y atributos, mientras que para las relaciones se debe anotar completamente en minúsculas.
+Por otra parte, el convenio de anotación de los tipos es hacerlo con la primera letra en mayúscula y el resto en minúsculas para los textos y atributos, mientras que para las relaciones se debe anotar completamente en minúsculas.
 
-Además, el orden de las anotaciones en el archivo no es relevante y tampoco lo son los números específicos de los identificadores. Aunque por cuestión de estética y para una mejor comprensión se recomienda escribir siempre las anotaciones de texto primero, luego las relaciones y por último los atributos. En caso de los identificadores, estos deberían comenzar con el número $1$ y continuar la secuencia de forma incremental de uno en uno.
+Además, el orden de las anotaciones en el archivo no es relevante y tampoco lo son los números específicos de los identificadores. Aunque por cuestión de estética y para una mejor comprensión del anotador, se recomienda escribir siempre las anotaciones de texto primero, luego las relaciones y por último los atributos. En caso de los identificadores, estos deberían comenzar con el número $1$ y continuar la secuencia de forma incremental de uno en uno.
 
-Por último, es recomendable ordenar las anotaciones de texto respecto a la posición inicial de la primera palabra en estos. Las relaciones deben estar ordenadas por los identificadores de sus argumentos, es decir, ordenar primero por el identificador del primer argumento y en caso de que varios coincidan, ordenar por el identificador del segundo argumento. Siendo un caso especial las anotaciones de relaciones de igualdad que comienzan con asteriscos, las cuales deben ser ordenadas de igual forma que las demás relaciones pero deben ir después de estas. Los atributos deben ordenarse de manera similar, pero en este caso, por el identificador su único argumento.
+Por último, es recomendable ordenar las anotaciones de texto respecto a la posición inicial de la primera palabra en estos. Las relaciones deben estar ordenadas por los identificadores de sus argumentos, es decir, ordenar primero por el identificador del primer argumento y en caso de que varios coincidan, ordenar por el del segundo argumento.
+
+Como caso especial están las anotaciones de relaciones de igualdad que comienzan con asteriscos, las cuales deben ser ordenadas entre ellas con igual criterio que las demás relaciones, pero deben ir después de estas. Estas anotaciones deberían comenzar siempre con un asterisco, aunque, como se mencionó en la sección \ref{section:relation_annotation}, no tiene ningún inconveniente hacerlo de manera similar a las demás.
+
+Por último, los atributos deben ordenarse de manera similar, pero en este caso, guiándose por el identificador su único argumento.
 
 Siguiendo las recomendaciones anteriores, \hyperref[sentence:annotation_example]{el documento de prueba} quedaría anotado de la siguiente manera:
 
@@ -562,15 +510,23 @@ Siguiendo las recomendaciones anteriores, \hyperref[sentence:annotation_example]
 	A1\space\space Uncertain T3
 \end{annexample}
 
+\section{Anotación automática de documentos}
+El proceso de anotación de un documento, llevado a cabo por un humano, puede ser engorroso. Dado que un corpus contiene varios de estos, anotarlo puede tomar gran cantidad de tiempo.
+
+No es de extrañar que con el avance tecnológico y científico, principalmente de la inteligencia artificial en este último, este proceso pueda automatizarse. Los avances en este aspecto tienen ventajes y desventajas, a la vez de márgenes de errores y precisión.
+
+En la competencia \textit{eHealth-KD Challenge} presentada en \textit{IberLEF 2019}~\cite{ref:17} e \textit{IberLEF 2020}~\cite{ref:18} tomaron lugar sistemas automáticos para la anotación de corpus~\cite{ref:21}. Las propuestas que compitieron están entrenadas para hacerlo en textos médicos del idioma español y usando el modelo de anotación explicado en esta investigación~\cite{ref:19,ref:21}. De igual forma, otros pueden ser encontrados en la literatura para anotar automáticamente documentos pertenecientes a diferentes dominios e idiomas.
+
 \section{Análisis del corpus}
-El corpus fue construido a partir de un fichero \textit{XML}\footnote{Siglas en inglés de \textit{e\textbf{X}tensible \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado desarrollado por el \textit{World Wide Web Consortium} (W3C).} tomado del sitio web de \textit{Medline} (\textbf{NECESITA REFERENCIAAAAAAAAA}) el $9$ de enero de $2018$, específicamente a las $02:30:31$. \textit{Medline} fue producida y es mantenida por la Biblioteca Nacional de Medicina de los Estados Unidos. Recoge referencias bibliográficas de los artículos publicados en aproximadamente $5,500$ revistas médicas desde $1966$. Actualmente reúne más de $30,000,000$ citas. Cada registro de \textit{Medline} es la referencia bibliográfica de un artículo científico publicado en una revista médica, con los datos bibliográficos básicos de un artículo: título, autores, nombre de la revista, año de publicación, entre otros. Esto permite la recuperación de estas referencias posteriormente en una biblioteca o a través de un \textit{software} específico de recuperación.
+El corpus usado~\cite{ref:20} fue construido a partir de un fichero \textit{XML}\footnote{Siglas en inglés de \textit{e\textbf{X}tensible \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado desarrollado por el \textit{World Wide Web Consortium} (W3C).} tomado del sitio web de \textit{Medline} el $9$ de enero de $2018$, específicamente a las $02:30:31$. \textit{Medline} fue producida y es mantenida por la Biblioteca Nacional de Medicina de los Estados Unidos. Recoge referencias bibliográficas de los artículos publicados en aproximadamente $5,500$ revistas médicas desde $1966$. Actualmente reúne más de $30,000,000$ de citas. Cada registro de \textit{Medline} es la referencia bibliográfica de un artículo científico publicado en una revista médica, con los datos bibliográficos básicos de un artículo: título, autores, nombre de la revista, año de publicación, entre otros. Esto permite la recuperación de estas referencias posteriormente en una biblioteca o a través de un \textit{software} específico de recuperación.
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[height=3.6in]{graphics/corpus_processing.png}
+		\includegraphics[height=3.4in]{graphics/corpus_processing.png}
 		\caption[Esquema del procesamiento inicial del corpus]{Esquema del procesamiento inicial del corpus.}
 		\label{fig:corpus_processing}
 	\end{center}
 \end{figure}
 
+\vspace{-0.2in}
 En la figura \ref{fig:corpus_processing} puede verse una representación esquemática del procesamiento inicial que se le hace al corpus de \textit{Medline}, el cual de forma análoga puede aplicarse a otros.

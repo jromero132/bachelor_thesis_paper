@@ -1,16 +1,55 @@
 %===================================================================================
 % Chapter: Introduction
 %===================================================================================
-\chapter*{introducción}\label{chapter:introduction}
-\addcontentsline{toc}{chapter}{Introducción}
+\Chapter*{Introducción}\label{chapter:introduction}
 %===================================================================================
 
-\subsection*{Objetivos}
-abcd
+\hyphenation{herra-mien-tas}
+\hyphenation{corre-la-cio-nar-los}
 
-\subsection*{Contribuciones}
-efgh
+El presunto desarrollo tecnológico se ha exacerbado con el advenimiento cada vez mayor del uso del Internet y otros medios avanzados y efectivos que garantizan un mejor futuro para cuestiones importantes de la vida. Debido al continuo aumento del flujo informativo, se hace cada vez más necesaria la utilización de herramientas que permitan identificar, capturar y representar el conocimiento dentro de los sistemas de información, ya sea de dominio específico o de propósito general.
 
-\section*{Organización de la Tesis}
-ijkl
-% El capítulo ...
+Para ello, ciencias avanzadas como la Ciencia de la Computación y de la Comunicación comprenden la ontología como esa vía formal de tipos, propiedades, y relaciones entre entidades que existen y están definidas en el dominio de trabajo. Estas son creadas para limitar la complejidad de cualquier tema y para organizar la información. Es una medida eficaz en las soluciones de problemas comunes en la vida diaria, que debido a la sobreinformación no se podrían llevar a cabo de forma manual.
+
+Otro de sus beneficios es el hecho de que permiten crear entendimiento compartido al unificar los diferentes puntos de vista. Esto sirve para facilitar la comunicación entre los actores implicados en la construcción de sistemas de información referidos al tema en cuestión. Además, permiten el reuso del conocimiento del dominio, pues sirve de base ya creada para posteriores investigaciones. También facilitan la recuperación, integración e interoperatividad entre fuentes de conocimiento heterogéneas. Se provee una base para la representación del conocimiento del dominio y ayudar a identificar las categorías semánticas del mismo.~\cite{ref:1}
+
+Surge entonces el creciente interés de estudiar técnicas para el descubrimiento automático de conocimiento. El procesamiento automático trae consigo la posibilidad de analizar colecciones masivas de información. Sin embargo, la mayor parte de estas colecciones almacenan la información disponible en documentos textuales escritos en lenguaje natural. La naturaleza en que se expresa la información y su estructura semántica poco unificada se vuelven la principal fuente de retos de dicho procesamiento. Entre los retos destacan la ambigüedad del lenguaje natural y la gran cantidad de idiomas en que puede estar escrito.
+
+En la actualidad, las ontologías se están aplicando en áreas heterogéneas. Aunque quizás se las conoce más por su papel en el desarrollo de nuevos servicios en la web, basados en la descripción del significado de los contenidos de las sedes o portales de Internet (web semántica), también se están utilizando para el desarrollo de mecanismos que faciliten la comunicación entre las personas y las máquinas por medio del lenguaje natural.~\cite{ref:2}
+
+En el contexto de la salud y la medicina las ontologías adquieren particular interés, debido a que se están utilizando cada vez más para la solución de disímiles tareas, como la recuperación de información y la búsqueda de respuestas en fragmentos de texto que resuelven preguntas. Diariamente se publican muchos artículos médicos y se hace imposible acceder a todos y mantener un absoluto control sobre las novedades médicas y las herramientas que se van desarrollando para solucionar las enfermedades o los problemas de la salud de manera general.
+
+La extracción automática de conocimiento proveería de una herramienta para asistir el desarrollo en esta área a partir de la normalización e integración de los resultados encontrados. Una vez extraído y representado el conocimiento computacionalmente, procesos de inferencia permitirían el descubrimiento de nuevo conocimiento. Ejemplo de esto es el constante descubrimiento de nuevas interacciones entre medicamentos, proteínas y genes. Un sistema de descubrimiento de conocimiento posibilitaría la detección automática de
+nuevas relaciones entre ellos, y por ende, el descubrimiento de nuevas causas de enfermedades, síntomas y tratamientos.\\
+
+\noindent\textbf{\large Problemática}
+
+En disímiles ocaciones, es necesaria la lectura de un amplio grupo de documentos con gran cantidad de páginas para poder tener conocimiento acerca de algún tema. Incluso algunas veces la información leída no es relevante para lo que se desea, y por tanto, fue una inversión de tiempo en vano. Las ontologías, por otra parte, aceleran en gran medida este proceso, pues el análisis y representación de uno o más corpus en un grafo de conocimiento es cuestión de segundos, y esto posibilita posteriormente, buscar la información deseada a través de consultas realizadas a un sistema computacional.
+
+Para diseñar una ontología no existe una única forma o metodología correcta a emplear y tampoco es objetivo de esta investigación definir una. En aras de cumplir con los objetivos propuestos, se realizaron varios estudios para lograr el diseño de una ontología de propósito general. Una vez definida, se hicieron múltiples acercamientos al problema de la creación del grafo de conocimiento. Un claro error fue representar a través de aristas las relaciones del corpus solo con las entidades o fragmentos de texto implicados en ellas. Esto provocó la necesidad de profundizar en el estudio del problema desde otros enfoques y obligando a crear nodos más complejos, los cuales representan las relaciones construidas entre otros más simples. Al mismo tiempo, fue necesario implementar un algoritmo en orden topológico para completar satisfactoriamente esta tarea.
+
+La resolución de estos problemas devino en la construcción de un grafo de conocimiento partiendo de un corpus que consiste en un subconjunto de los artículos en idioma español de \textit{Medline}~\cite{ref:3}, y anotado basándose en la propuesta mostrada en esta investigación. Esto permitió avanzar hacia métodos de descubrimiento de conocimiento que se encontraba implícito en estos artículos, y se alcanzó al correlacionarlos por medio de la ontología sugerida en la misma.\\
+
+\noindent\textbf{\large Objetivos}
+
+La investigación se plantea como objetivo general crear una ontología para representar el conocimiento descrito en un corpus anotado, a través de la implementación computacional de un grafo de conocimiento y a la misma vez que sea generalizable a múltiples dominios.
+
+Se proponen los siguientes objetivos específicos:
+\begin{itemize}
+	\vspace{-0.27cm}
+	\item[•] Estudiar los esquemas de anotación y corpus usados en diversas tareas de extracción del conocimiento.
+	\vspace{-0.27cm}
+	\item[•] Definir un esquema conceptual de anotación para la representación de los rasgos semánticos más relevantes en textos escritos en lenguaje natural.
+	\vspace{-0.27cm}
+	\item[•] Definir un formato de anotación de archivos para el esquema conceptual previamente definido.
+	\vspace{-0.27cm}
+	\item[•] Diseñar una propuesta de ontología donde se pueda representar un corpus de documentos escritos en lenguaje natural.
+	\vspace{-0.27cm}
+	\item[•] Implementar un algoritmo computacional para representar un corpus anotado como grafo de conocimiento a través de dicha ontología.
+	\vspace{-0.27cm}
+	\item[•] Implementar un marco experimental para la evaluación de la propuesta de solución.
+\end{itemize}
+
+\noindent\textbf{\large Organización de la tesis}
+
+El contenido de la tesis se organiza de la siguiente forma. El capítulo \ref{chapter:automatic_generation_of_ontologies} introduce los principales conceptos relacionados con las ontologías y la extracción y representación de conocimiento. En este capítulo, además, se analizan los principales corpus y representaciones semánticas existentes en la literatura. El capítulo \ref{chapter:annotation_model} describe un modelo de anotación de propósito general que busca capturar los rasgos semánticos más importantes en documentos de texto. En el capítulo \ref{chapter:proposed_solution} se presenta una propuesta para la creación de un grafo de conocimiento a través de un corpus anotado. En el capítulo \ref{chapter:analysis_of_results} se muestran los resultados alcanzados en esta investigación, y en función de estos, se discute la efectividad de cada uno de los elementos propuestos en la misma. La investigación finaliza presentando las conclusiones pertinentes y las recomendaciones para su continuidad y mejora.

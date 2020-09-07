@@ -1,25 +1,37 @@
 %===================================================================================
-% Chapter: Ontology Learning
+% Chapter: Automatic Generation of Ontologies
 %===================================================================================
-\chapter{Aprendizaje de Ontologías}\label{chapter:ontology-learning}
+\Chapter{Generación Automática de Ontologías}\label{chapter:automatic_generation_of_ontologies}
 %===================================================================================
-El presunto desarrollo tecnológico se ha exacerbado con el advenimiento cada vez mayor del uso del Internet y otros medios avanzados efectivos que garantizan un mejor futuro para cuestiones importantes de la vida. Debido al continuo aumento del flujo informativo se hace cada vez más necesario el uso de herramientas que permitan identificar, capturar y representar el conocimiento del dominio dentro de los sistemas de información.
 
-Para ello, ciencias avanzadas como la Ciencia de la Computación y de la Comunicación comprenden la ontología como esa vía de formal de tipos, propiedades, y relaciones entre entidades que realmente o fundamentalmente existen para un dominio de discurso en particular. Estas son creadas para limitar la complejidad de cualquier tema y para organizar la información, es una medida eficaz en la soluciones de problemas comunes en la vida diaria, que debido a la sobreinformación no se podrían llevar a cabo de forma manual.
+En los últimos años, el desarrollo de especificaciones formales explícitas de los términos en el dominio y las relaciones entre ellos~\cite{ref:4} en una ontología ha dejado de tener lugar en laboratorios o departamentos de inteligencia artificial para pasar a tener un rol protagónico en los escritorios de expertos en el tema.
 
-Por su parte, permiten crear entendimiento compartido al unificar los diferentes puntos de vista que sirven para facilitar la comunicación entre los actores implicados en la construcción de sistemas de informaciones referidos al tema en cuestión, permitir el reuso del conocimiento del dominio, pues sirve de base ya creada para posteriores investigaciones, facilitar la recuperación, integración e interoperatividad entre fuentes de conocimiento heterogéneas. Se provee una base para la representación del conocimiento del dominio y ayudar a identificar las categorías semánticas del mismo. (REFERENCIAS) D.Pisanelli; A. GANGEMI; G:Steve Ontologies and Information Systems: The Marriage of the Century https://www.loa-cnr.it/Papers/lyee.pdf
+Las ontologías se han vuelto común en el espacio de la \textit{red mundial} (conocida en inglés como \textit{world wide web}). En esta red ellas abarcan un gran espectro de campos, desde grandes taxonomías que categorizan sitios web, como sucede en Yahoo, hasta categorizaciones de productos a la venta y sus características, como sucede en Amazon.
 
-Surge entonces el creciente interés de estudiar técnicas para el descubrimiento automático de conocimiento. El procesamiento automático trae consigo la posibilidad del analizar colecciones masivas de información. Sin embargo, la mayor parte de estas colecciones almacenan la información disponible en documentos textuales escritos en lenguaje natural. La naturaleza en que se expresa la información y su estructura semántica poco unificada, se vuelven la principal fuente de retos para el procesamiento automático. Entre los retos destacan la ambigüedad del lenguaje natural y el número de idiomas en que puede estar escrito. (Juan Pablo Consuegra) Tesis de Licenciatura
+El \textit{World Wide Web Consortium} (W3C) desarrolló el \textit{Resource Description Framework}~\cite{ref:5} (RDF, traducido al español como \textit{Marco de Descripción de Recursos}). El mismo, es un lenguaje para codificar el conocimiento en las páginas web y que sea comprensible para los usuarios que buscan esa información.
 
-Falta la parte más del tema específico
+La \textit{Agencia de Proyectos de Investigación Avanzada de Defensa} (del inglés \textit{Defense Advanced Research Projects Agency}, DARPA), en conjunto con W3C, desarrollaron el \textit{DARPA Agent Markup Language} (DAML, traducido al español como \textit{Lenguaje de Marcado de DARPA para Agentes}), el cual es una extensión de RDF con construcciones más expresivas destinadas a facilitar la interacción de los agentes en la web.~\cite{ref:6}
 
-Problemática
-Objetivos
-General
-El objetivo principal propuesto para cumplir en la investigación es crear una ontología para representar el conocimiento descrito en un corpus anotado.  
-Específicos
-- Estudiar los esquemas de anotación y corpus usados en diversas tareas de extracción del conocimiento.
-- Definir un esquema conceptual generalizable.
-- Diseñar propuesta de ontología donde se pueda representar el corpus.
--Implementar un marco experimental para la evaluación de la propuesta de solución.
--Comparar la propuesta con las anteriormente brindadas y ofrecer resultados.  
+Muchas disciplinas desarrollan ontologías estandarizadas que los expertos en el dominio pueden usar para compartir y anotar información en sus campos. La medicina, por ejemplo, ha producido vocabularios estructurados, estandarizados y extensos como \textit{SNOMED}~\cite{ref:7} y la red semántica del \textit{Unified Medical Language System}~\cite{ref:8} (traducido al español como \textit{Sistema de Lenguaje Médico Unificado}).
+
+También están surgiendo amplias ontologías de propósito general. Por ejemplo, \textit{United Nations Development Program} (traducido al español como \textit{Programa de las Naciones Unidas para el Desarrollo}) y \textit{Dun \& Bradstreet} juntaron sus esfuerzos para desarrollar la ontología \textit{United Nations Standard Products and Services Code}~\cite{ref:9} (UNSPSC, traducido al español como \textit{Código Estándar de Productos y Servicios de las Naciones Unidas}) que proporciona terminología para productos y servicios.
+
+Una ontología define un vocabulario común para los investigadores que necesitan compartir información en un determinado dominio, y a la misma vez, facilita la búsqueda y comprensión de esta información por personas no expertas en el tema. Esto incluye definiciones computacionalmente interpretables de conceptos básicos y relaciones entre ellos pertenecientes al dominio. Hay una interrogante que cabe preguntarse, ¿por qué alguien quisiera desarrollar una ontología? Algunas de las razones principales son:
+
+\begin{itemize}
+	\item[•] Compartir conocimiento de la estructura de la información entre investigadores y/o usuarios.
+	\item[•] Permitir la reutilización del conocimiento del dominio.
+	\item[•] Hacer explícitas las suposiciones o conocimientos a priori del dominio.
+	\item[•] Separar el conocimiento explícito del dominio del conocimiento implícito operacional.
+	\item[•] Analizar el conocimiento del dominio.
+\end{itemize}
+
+\textit{Compartir conocimiento de la estructura de la información entre investigadores y/o usuarios} es uno de los objetivos comunes en el desarrollo de ontologías~\cite{ref:10,ref:4}. Por ejemplo, si varios sitios web diferentes entre sí contienen información médica o proporcionan servicios médicos de comercio electrónico, y estos comparten y publican la misma ontología subyacente de los términos que utilizan, los agentes informáticos pueden extraer y agregar información de los mismos. Además, estos últimos pudieran utilizar dicha información para responder consultas de los usuarios o como datos de entrada para otras aplicaciones.
+
+\textit{Permitir la reutilización del conocimiento del dominio} fue una de las fuerzas impulsoras detrás del reciente aumento de la investigación ontológica. Por ejemplo, los modelos para muchas áreas diferentes deben representar la idea de tiempo. Esta representación incluye, entre otros, las nociones de intervalos, puntos y medidas relativas a este. Si un grupo de investigadores desarrolla tal ontología en detalle, otros pueden simplemente reutilizarla para sus dominios. Además, si se necesita construir una grande, se pueden integrar varias ya existentes que describan partes específicas de la rama deseada. También se puede reutilizar una de propósito general, como UNSPSC, y extenderla para describir el área de interés.
+
+\textit{Hacer explícitas las suposiciones o conocimientos a priori del dominio} hace posible cambiarlas fácilmente si cambian las ideas tenidas de antemano en este tema. Los supuestos de \textit{codificación rígida} (del inglés \textit{hard-coding}) sobre el mundo hechos en lenguajes de programación hacen que estas no solo sean difíciles de encontrar y comprender, sino también de cambiar, en particular para alguien sin experiencia en el ámbito computacional. Además, las especificaciones explícitas del conocimiento del dominio son útiles para los nuevos usuarios que deben aprender qué significan los términos de este.
+
+\textit{Separar el conocimiento explícito del dominio del conocimiento implícito operacional} es otro uso común de las ontologías. Se puede describir la tarea de configurar un producto a partir de sus componentes, de acuerdo con una especificación requerida e implementar un programa que realice esta configuración independientemente del producto.~\cite{ref:11} Seguido de esto, se puede desarrollar una ontología de componentes y características de los ordenadores personales y aplicar el algoritmo para configurar uno de ellos a medida. También este último puede usarse para realizar la misma tarea en ascensores, si se le \doublequote{alimenta} con una ontología de los elementos de estos.~\cite{ref:12}
+
+\textit{Analizar el conocimiento del dominio} es posible una vez que se dispone de una especificación declarativa de los términos. El análisis formal de estos es extremadamente valioso cuando se intenta reutilizar ontologías existentes y ampliarlas.~\cite{ref:13}

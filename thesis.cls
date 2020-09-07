@@ -10,11 +10,15 @@
 \relax
 \LoadClass{book}
 
+\RequirePackage{fancyhdr}
 \RequirePackage{footmisc}
 \RequirePackage{graphicx}
 \RequirePackage{lmodern}
 \RequirePackage{mathptmx}
+\RequirePackage{multirow}
 \RequirePackage{pgffor}
+% \RequirePackage{titleps}
+\RequirePackage{suffix}
 \RequirePackage{xcolor}
 
 % \RequirePackage[ruled,vlined]{algorithm2e}
@@ -28,36 +32,11 @@
 \RequirePackage[spanish,es-nodecimaldot]{babel}
 \RequirePackage[T1]{fontenc}
 
-% % fancyhdr settings from texlive-doc
-% \RequirePackage{fancyhdr}
-% \fancypagestyle{wakala}{%
-% \fancyhf{} % clear all header and footer fields
-% \fancyfoot[C]{\bfseries\thepage} % except the center
-% \renewcommand{\headrulewidth}{1pt}
-% \renewcommand{\footrulewidth}{0pt}}
-
-% \fancyhf{}
-% \if@twoside
-%     \renewcommand{\chaptermark}[1]{\markboth{\small \ \chaptername\ \thechapter. \ #1}{}}
-%     \renewcommand{\sectionmark}[1]{\markright{\thesection \ \ #1}}
-%     \fancyhead[L]{\slshape \leftmark}
-%     \fancyhead[R]{\thepage}
-%     \fancyhead[LO]{\slshape \rightmark}
-%     \fancyhead[RO,LE]{\textbf{\thepage}}
-%     \fancyhead[RE]{\slshape \leftmark}
-% \else
-%     \renewcommand{\chaptermark}[1]{\markboth{\small \ \chaptername\ \thechapter. \ #1}{}}
-%     \fancyhead[L]{\slshape\leftmark}
-%     \fancyhead[R]{\thepage}
-% \fi
-% \renewcommand{\headheight}{28pt}
-
 \setlength\oddsidemargin{36.1\p@}
 \setlength\evensidemargin{36.1\p@}
 \setlength\marginparwidth{36.1\p@}
 \marginparsep 10pt
 \topmargin 0pt \headsep .5in
-%\textheight 8.1in \textwidth 6in
 
 % More liberal float placement from BYUPhys.cls.
 \renewcommand{\topfraction}{0.9}
@@ -94,6 +73,26 @@
   }%
 }
 
+\newcommand\NewChapter[1]{
+  \def\chaptertitle{#1}
+  \thispagestyle{thesis_style_for_new_chapter}
+}
+\newcommand\Chapter[1]{
+  \chapter{#1}
+  \NewChapter{#1}
+}
+
+\WithSuffix\newcommand\Chapter*[1]{
+  \chapter*{#1}
+  \addcontentsline{toc}{chapter}{#1}
+  \NewChapter{#1}
+}
+
+\newcommand\ChapterOutOfToc[1]{
+  \chapter*{#1}
+  \def\chaptertitle{#1}
+}
+
 \renewcommand{\nomname}{Glosario}
 \newcommand{\advisor}[1]{\def\@advisor{#1}}
 \newcommand{\degree}[1]{\def\@degree{#1}}
@@ -101,11 +100,21 @@
 \newcommand{\faculty}[1]{\def\@faculty{#1}}
 \newcommand{\logo}[1]{\def\@logo{#1}}
 
-\newenvironment{opinion}%
-  {\chapter*{Opinión del tutor}}%
-  {}
+\newenvironment{phrase}[1][0.5\textwidth]%
+  {
+    \begin{flushright}
+      \begin{minipage}[t]{#1}
+        \itshape
+  }%
+  {
+      \end{minipage}
+    \end{flushright}
+  }
 \newenvironment{acknowledgements}%
   {\chapter*{Agradecimientos}}%
+  {}
+\newenvironment{opinion}%
+  {\chapter*{Opinión del tutor}}%
   {}
 \newenvironment{abstract}%
   {\chapter*{Resumen}}%
@@ -152,7 +161,7 @@
     {\large \@university}\\
     \@faculty\\
     \vskip 0.25cm
-    \includegraphics[width=1.75cm]{\@logo}\\
+    \includegraphics[width=2cm]{\@logo}\\
     \vfill
     {\huge \textbf{\@title}}\\
     \vskip 2cm
@@ -164,7 +173,8 @@
     presentado en opción al título de\\
     \@degree}\\
     \vskip 0.25cm
-    \includegraphics[width=2.5cm]{graphics/qrcode-thesis}
+    % \includegraphics[width=2.5cm]{graphics/qrcode-thesis}
+    \textbf{CÓDIGO QR EN UN GRAFO SIMULANDO UN GRAFO DE CONOCIMIENTO PARA QUE QUEDE CON UN USO PARECIDO AL RESULTADO DE LA TESIS :)}
     \vskip 0.25cm
     \@date
   \end{center}
@@ -178,80 +188,39 @@
 \def\mainmatter{%
   \cleardoublepage%
   \pagenumbering{arabic}
-  % \pagestyle{main_section_style}
+  \pagestyle{thesis_style}
 }
 
 \def\backmatter{%
-  \pagestyle{plain}
+  \pagestyle{thesis_style}
 }
 
-% % fancyhdr settings from texlive-doc
-% \RequirePackage{fancyhdr}
-% \fancypagestyle{main_section_style}{
-%   \fancyhf{} % clear all header and footer fields
+\fancypagestyle{thesis_style}{
+  \fancyhf{} % clear all header and footer fields
 
-%   % \fancyhead[C]{\@title
+  \fancyhead[L]{\@title}
+  \fancyhead[R]{
+    \ifnum\value{chapter}=0 \chaptertitle
+    \else
+      \chaptername\ \thechapter
+      \ifnum\value{chapter}>1 : \chaptertitle\fi
+    \fi
+  }
+  \fancyfoot[L]{\@author}
+  \fancyfoot[R]{\bfseries\thepage}
 
-%   \fancyhead[L]{\@title}
-%   \fancyhead[R]{\@author}
+  \renewcommand{\headrulewidth}{1pt}
+  \renewcommand{\footrulewidth}{1pt}
+}
 
-%   % \fancyfoot[LE,RO]{\bfseries\thepage}
-%   % \renewcommand{\chaptermark}{1}{\markboth{#1}{}}
-%   \fancyfoot[LE,RO]{\leftmark}
-%   \fancyfoot[RE,LO]{\small\@author}
+\fancypagestyle{thesis_style_for_new_chapter}{
+  \fancyhf{} % clear all header and footer fields
 
-%   \renewcommand{\headrulewidth}{1pt}
-%   \renewcommand{\footrulewidth}{1pt}
-% }
+  \fancyfoot[L]{\@author}
+  \fancyfoot[R]{\bfseries\thepage}
 
-% \RequirePackage[explicit]{titlesec}
-% \RequirePackage{lettrine}
-% \titleformat
-% {\chapter}
-% [display]
-% {\bfseries\Large\flushright\itshape}
-% {{\fontsize{40}{48}\selectfont C}apítulo\space\space\space{\fontsize{40}{48}\selectfont\thechapter}}
-% {-1ex}
-% {
-%   \rule{\textwidth}{1.5pt}
-%   \centering
-%   #1
-% }
-% [
-%   \vspace{-1ex}
-%   \rule{\textwidth}{0.2pt}
-% ]
-
-% \RequirePackage{xstring}
-% \newcommand*{\ExtractFirstChar}[1]{%
-%     \StrRemoveBraces{#1}[\FirstChar]%
-%     \StrChar{\FirstChar}{1}[\FirstChar]%
-%     '\FirstChar'
-% }
-
-% \makeatletter
-% \newcommand{\shortcut}[1]{%
-%   \@tempswafalse
-%   \@for\next:=#1\do
-%     {\if@tempswa\else\@tempswatrue\fi\ExtractFirstChar{\next}}%
-% }
-% \makeatother
-
-% \titleformat
-% {name=\chapter,numberless}
-% [display]
-% {\bfseries\Large\flushright\itshape}
-% {}
-% {0em}
-% {\shortcut{#1}}
-% []
-
-% \titleformat
-% {\section}
-% [wrap]
-% {\normalfont\bfseries}
-% {\thesection.}
-% {0.5em}
-% {}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{1pt}
+}
 
 % Created by José Ariel Romero Costa <josea132.romero@gmail.com>

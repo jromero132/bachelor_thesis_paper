@@ -9,13 +9,15 @@
 \usepackage{float}
 % \usepackage{mathpazo}
 \usepackage{subcaption}
-
 \usepackage{varwidth}
 \usepackage{environ}
-
+%\usepackage{showframe}
 
 \usepackage[framemethod=default]{mdframed}
 \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+
+\renewcommand{\baselinestretch}{1}
+\setlength{\parskip}{0.25\baselineskip}
 
 \definecolor{lightblue}{RGB}{225,244,249}
 
@@ -89,11 +91,7 @@
 % math abs
 \newcommand{\abs}[1]{\left|#1\right|}
 
-% grammar
-% \newcommand{\nonterminal}[1]{\langle\texttt{#1}\rangle}
-% \newcommand{\terminal}[1]{\texttt{#1}}
-
-\title{Aprendizaje de Ontologías}
+\title{Generación Automática de Ontologías}
 \author{José Ariel Romero Costa}
 \advisor{MSc. Juan Pablo Consuegra Ayala}
 \degree{Licenciado en Ciencia de la Computación}
@@ -109,11 +107,25 @@
 	\frontmatter
 	\maketitle
 
+	% phrase
 	\include{frontmatter/phrase}
-	\include{frontmatter/thanks}
+	
+	% dedication
 	\include{frontmatter/dedication}
+
+	% thanks
+	\include{frontmatter/thanks}
+
+	% supervisor opinion
 	\include{frontmatter/supervisor_opinion}
+
+	% abstract (spanish)
+	\include{frontmatter/resumen}
+
+	% abstract (english)
 	\include{frontmatter/abstract}
+
+	% contents
 	\include{frontmatter/contents}
 
 	\mainmatter
@@ -137,6 +149,9 @@
 
 	% conclusions
 	\include{backmatter/conclusions}
+
+	% recommendations
+	\include{backmatter/recommendations}
 
 	% bibliography
 	\include{backmatter/bibliography}

@@ -1,56 +1,21 @@
 %===================================================================================
 % Chapter: Analysis of Results
 %===================================================================================
-\chapter{Análisis de Resultados}\label{chapter:analysis-of-results}
+\Chapter{Análisis de Resultados}\label{chapter:analysis_of_results}
 %===================================================================================
+
+\setcounter{footnote}{5}
+
 El esquema de anotación y el modelo ontológico presentado en este trabajo, y por tanto el grafo de conocimiento generado a partir de ellos, tienen como objetivo fundamental asistir en el desarrollo de sistemas de descubrimiento de conocimiento en documentos escritos en lenguaje natural.
 
-En este capítulo, se presenta el marco experimental diseñado para comprobar la efectividad del esquema de anotación y el modelo ontológico descrito en el capítulo \ref{chapter:annotation_model} y de la propuesta de solución presentada en el capítulo \ref{chapter:proposed-solution}.
+En este capítulo, se presenta el marco experimental diseñado para comprobar la efectividad del esquema de anotación descrito en el capítulo \ref{chapter:annotation_model} y del modelo ontológico y la propuesta de solución presentados en el capítulo \ref{chapter:proposed_solution}.
 
 \section{Marco experimental}
-En esta investigación solo se trabajará con los artículos del corpus de \textit{Medline} en español, estos son procesados para eliminar las marcas específicas de \textit{HTML}\footnote{Siglas en inglés de \textit{\textbf{H}yper\textbf{T}ext \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado usado en la elaboración de páginas web.} y ser divididos en oraciones. Luego, las oraciones anotadas son mezcladas con sus respectivos artículos. Potencialmente, un artículo podrá no tener ninguna de sus oraciones anotadas o estar completamente anotado. Las tablas \ref{tab:stats_corpus} y \ref{tab:stats_annotated_corpus} muestran algunas estadísticas acerca de este corpus y de las oraciones anotadas pertenecientes al mismo.
+En esta investigación solo se trabajará con los artículos del corpus de \textit{Medline} en español, estos son procesados para eliminar las marcas específicas de \textit{HTML}\footnote{Siglas en inglés de \textit{\textbf{H}yper\textbf{T}ext \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado usado en la elaboración de páginas web.} y ser divididos en oraciones. Luego de ser anotadas son mezcladas con sus respectivos artículos. Potencialmente, un artículo podrá no tener ninguna de sus oraciones anotadas o estarlo completamente.
 
-Estos resultados son extraídos usando \textit{python} como lenguaje de programación y los paquetes \textit{nltk} y \textit{spacy} para el procesamiento del lenguaje natural.
+Las tablas \ref{tab:stats_annotated_corpus} y \ref{tab:stats_corpus} muestran algunas estadísticas acerca de este corpus y de las oraciones anotadas pertenecientes al mismo.
 
-\begin{table}[H]
-	\begin{center}
-		\begin{tabular}{lccc}
-			\noalign{\hrule height 1pt}\\
-			\vspace{-0.35in}\\
-			\textbf{Métrica} & \textbf{\textit{Medline}} & \textbf{Anotado} & \textbf{\% anotado}\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Artículos & $1,013$ & $25^*$ & $\approx2.47$\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Oraciones & $12,830$ & $999$ & $\approx7.79$\\
-			Promedio de oraciones por artículo & $\approx13$ & $\approx40$ & $\approx307.69$\\
-			Menor cantidad de oraciones en un artículo & $2$ & $39$ & $1,950$\\
-			Artículos con la menor cantidad de oraciones & $9$ & $1$ & $\approx11.11$\\
-			Mayor cantidad de oraciones en un artículo & $65$ & $40$ & $\approx61.54$\\
-			Artículos con la mayor cantidad de oraciones & $1$ & $24$ & $2,400$\\
-			\hline\\
-			\vspace{-0.35in}\\
-			Palabras & $191,256$ & $14,529$ & $\approx7.6$\\
-			Promedio de palabras por artículo & $\approx189$ & $\approx581$ & $\approx307.41$\\
-			Promedio de palabras por oración & $\approx15$ & $\approx15$ & $100$\\
-			Menor cantidad de palabras en un artículo & $33$ & $489$ & $\approx1,481.82$\\
-			Artículos con la menor cantidad de palabras & $1$ & $1$ & $100$\\
-			Menor cantidad de palabras en una oración & $1$ & $4$ & $400$\\
-			Oraciones con la menor cantidad de palabras & $87$ & $1$ & $\approx1.15$\\
-			Mayor cantidad de palabras en un artículo & $1,199$ & $671$ & $\approx55.96$\\
-			Artículos con la mayor cantidad de palabras & $1$ & $1$ & $100$\\
-			Mayor cantidad de palabras en una oración & $258$ & $46$ & $\approx17.83$\\
-			Oraciones con la mayor cantidad de palabras & $1$ & $1$ & $100$\\
-			\noalign{\hrule height 1pt}\\
-		\end{tabular}
-
-		\vspace{-0.1in}
-		*\small{Esta cifra no son artículos en sí, sino archivos, los cuales pueden contener oraciones de varios artículos.}
-		\caption[Estadísticas del corpus tomado de \textit{Medline} y del anotado]{Estadísticas del corpus tomado de \textit{Medline} y del anotado.}
-		\label{tab:stats_corpus}
-	\end{center}
-\end{table}
+Estos resultados son extraídos usando \textit{python}~\cite{ref:22} como lenguaje de programación y los paquetes \textit{nltk}~\cite{ref:23} y \textit{spacy}~\cite{ref:24} para el procesamiento del lenguaje natural.
 
 \begin{table}[H]
 	\begin{center}
@@ -98,8 +63,57 @@ Estos resultados son extraídos usando \textit{python} como lenguaje de programa
 	\end{center}
 \end{table}
 
+\vspace{-0.2in}
+Estas cifras son las estadísticas del corpus sin haber aplicado el algoritmo de generar la base de conocimiento. Es decir, solo tomando los conceptos, atributos y relaciones que se encuentran en los documentos anotados.
+
+Cabe destacar que estas cifras pueden variar una vez ejecutado el algoritmo, ya sea por la creación de nuevas entidades, como se vio en la sección \ref{section:ontology_construction} o por el hecho de normalizar las palabras o frases, y de esta forma, muchos conceptos pueden llegar a ser la misma entidad.
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{lccc}
+			\noalign{\hrule height 1pt}\\
+			\vspace{-0.35in}\\
+			\textbf{Métrica} & \textbf{\textit{Medline}} & \textbf{Anotado} & \textbf{\% anotado}\\
+			\hline\\
+			\vspace{-0.35in}\\
+			\small{Artículos} & $1,013$ & $25^*$ & $\approx2.47$\\
+			\hline\\
+			\vspace{-0.35in}\\
+			\small{Oraciones} & $12,830$ & $999$ & $\approx7.79$\\
+			\small{Promedio de oraciones por artículo} & $\approx13$ & $\approx40$ & $\approx307.69$\\
+			\small{Menor cantidad de oraciones en un artículo} & $2$ & $39$ & $1,950$\\
+			\small{Artículos con la menor cantidad de oraciones} & $9$ & $1$ & $\approx11.11$\\
+			\small{Mayor cantidad de oraciones en un artículo} & $65$ & $40$ & $\approx61.54$\\
+			\small{Artículos con la mayor cantidad de oraciones} & $1$ & $24$ & $2,400$\\
+			\hline\\
+			\vspace{-0.35in}\\
+			\small{Palabras} & $191,256$ & $14,529$ & $\approx7.6$\\
+			\small{Promedio de palabras por artículo} & $\approx189$ & $\approx581$ & $\approx307.41$\\
+			\small{Promedio de palabras por oración} & $\approx15$ & $\approx15$ & $100$\\
+			\small{Menor cantidad de palabras en un artículo} & $33$ & $489$ & $\approx1,481.82$\\
+			\small{Artículos con la menor cantidad de palabras} & $1$ & $1$ & $100$\\
+			\small{Menor cantidad de palabras en una oración} & $1$ & $4$ & $400$\\
+			\small{Oraciones con la menor cantidad de palabras} & $87$ & $1$ & $\approx1.15$\\
+			\small{Mayor cantidad de palabras en un artículo} & $1,199$ & $671$ & $\approx55.96$\\
+			\small{Artículos con la mayor cantidad de palabras} & $1$ & $1$ & $100$\\
+			\small{Mayor cantidad de palabras en una oración} & $258$ & $46$ & $\approx17.83$\\
+			\small{Oraciones con la mayor cantidad de palabras} & $1$ & $1$ & $100$\\
+			\noalign{\hrule height 1pt}\\
+		\end{tabular}
+
+		\vspace{-0.1in}
+		*\small{Esta cifra no son artículos en sí, sino archivos, los cuales pueden contener oraciones de varios artículos.}
+		\caption[Estadísticas del corpus tomado de \textit{Medline} y del anotado]{Estadísticas del corpus tomado de \textit{Medline} y del anotado.}
+		\label{tab:stats_corpus}
+	\end{center}
+\end{table}
+
+\vspace{-0.3in}
 \section{Resultados computacionales}
-En la figura \ref{fig:out_degree_all_nodes} se evidencia una relación entre el grado de salida de los nodos y la cantidad de estos que tienen un grado específico. Esto representa la cantidad de relaciones como las explicadas en la sección \ref{section:relation_annotation} en las que el nodo es parte izquierda (referenciado a través de \texttt{Arg1}).
+En la figura \ref{fig:out_degree_all_nodes} se evidencia una relación entre el grado de salida de los nodos y la cantidad de estos que tienen un grado específico. Esto representa la cantidad de relaciones como las explicadas en la sección \ref{section:ontology_construction} en las que un nodo es parte izquierda (referenciado a través de \texttt{Arg1}).
+
+En la figura \ref{fig:in_degree_all_nodes} se evidencia una relación entre el grado de salida de los nodos y la cantidad de estos que tienen un grado específico. Esto representa la cantidad de relaciones como las explicadas en la sección \ref{section:ontology_construction} en las que un nodo es parte derecha (referenciado a través de \texttt{Arg2}).
+
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=\textwidth]{graphics/degree1.png}
@@ -108,7 +122,7 @@ En la figura \ref{fig:out_degree_all_nodes} se evidencia una relación entre el 
 	\end{center}
 \end{figure}
 
-En la figura \ref{fig:in_degree_all_nodes} se evidencia una relación entre el grado de salida de los nodos y la cantidad de estos que tienen un grado específico. Esto representa la cantidad de relaciones como las explicadas en la sección \ref{section:relation_annotation} en las que el nodo es parte derecha (referenciado a través de \texttt{Arg2}).
+\vspace{-0.4in}
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=\textwidth]{graphics/degree2.png}
@@ -117,7 +131,12 @@ En la figura \ref{fig:in_degree_all_nodes} se evidencia una relación entre el g
 	\end{center}
 \end{figure}
 
-En la figura \ref{fig:out_degree_nodes_by_rol} se evidencia una relación entre el grado de salida de los nodos y la cantidad de estos que tienen un grado específico, pero esta vez agrupados por su rol semántico. Esto representa la cantidad de relaciones como las explicadas en la sección \ref{section:relation_annotation} en las que el nodo es parte izquierda (referenciado a través de \texttt{Arg1}).
+\vspace{-0.3in}
+En la figura \ref{fig:out_degree_nodes_by_rol} se evidencia una relación entre el grado de salida de los nodos y la cantidad de estos que tienen un grado específico, pero esta vez agrupados por su rol semántico. Esto representa la cantidad de relaciones como las explicadas en la sección \ref{section:ontology_construction} en las que un nodo es parte izquierda (referenciado a través de \texttt{Arg1}).
+
+En la figura \ref{fig:in_degree_nodes_by_rol} se evidencia una relación entre el grado de salida de los nodos y la cantidad de estos que tienen un grado específico, pero esta vez agrupados por su rol semántico. Esto representa la cantidad de relaciones como las explicadas en la sección \ref{section:ontology_construction} en las que el nodo es parte derecha (referenciado a través de \texttt{Arg2}).
+
+\vspace{-0.15in}
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=\textwidth]{graphics/degree3.png}
@@ -126,7 +145,7 @@ En la figura \ref{fig:out_degree_nodes_by_rol} se evidencia una relación entre 
 	\end{center}
 \end{figure}
 
-En la figura \ref{fig:in_degree_nodes_by_rol} se evidencia una relación entre el grado de salida de los nodos y la cantidad de estos que tienen un grado específico, pero esta vez agrupados por su rol semántico. Esto representa la cantidad de relaciones como las explicadas en la sección \ref{section:relation_annotation} en las que el nodo es parte derecha (referenciado a través de \texttt{Arg2}).
+\vspace{-0.49in}
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=\textwidth]{graphics/degree4.png}
@@ -136,7 +155,6 @@ En la figura \ref{fig:in_degree_nodes_by_rol} se evidencia una relación entre e
 \end{figure}
 
 En la tabla \ref{tab:knowledge_graph_stats} se aprecia la cantidad de nodos y aristas según su tipo y a la misma vez se comparan los resultados obtenidos sin normalizar y normalizando las palabras respectivamente. La última columna representa el porcentaje de disminución en cada fila luego de normalizar.
-%Esto posibilita una mayor coincidencia de las palabras o frases y por ende, es ideal para una mejor representación y extracción del conocimiento.
 \begin{table}[H]
 	\begin{center}
 		\begin{tabular}{lccc}
@@ -184,7 +202,9 @@ En la tabla \ref{tab:knowledge_graph_stats} se aprecia la cantidad de nodos y ar
 	\end{center}
 \end{table}
 
-Como se ha podido observar anteriormente, una de las principales funciones de las ontologías y los grafos de conocimiento es la extracción de conocimiento que no está representado explícitamente en el corpus. Un ejemplo de ello es:
+Como se ha podido observar anteriormente, una de las principales funciones de las ontologías y los grafos de conocimiento es la extracción de conocimiento implícito, el cual, como lo dice su nombre, no está representado explícitamente en el corpus.
+
+En la tabla \ref{tab:implicit_knowledge_extraction} puede verse un ejemplo de esto en el corpus usado en esta investigación.
 
 \begin{table}[H]
 	\begin{center}
@@ -207,13 +227,72 @@ Como se ha podido observar anteriormente, una de las principales funciones de la
 	\end{center}
 \end{table}
 
+Para el problema en general de aprendizaje de ontologías se pueden llevar a cabo varias métricas de evaluación y metodologías, por ejemplo OntoRand~\cite{ref:25} y OntoMetric~\cite{ref:26}. Uno de los enfoques comúnmente utilizados en la literatura para la evaluación de ontologías~\cite{ref:27} es la \textit{evaluación basada en datos} (del inglés \textit{data driven evaluation})~\cite{ref:28}.
+
+La evaluación \textit{basada en datos} puede ser llevada a cabo comparando las entidades y relaciones en una ontología dado un corpus de datos representativos del mismo dominio, pero que no es usado durante la creación de la base de conocimiento.
+
+La base de conocimientos creada puede ser evaluada teniendo en cuenta el número de entidades y relaciones pertenecientes a este nuevo corpus y que están presentes en ella.
+
+Este enfoque ha sido usado para comparar relativamente diferentes ontologías creadas por expertos basándose en el mismo corpus y decidir qué ontología provee el mejor \doublequote{ajuste} a este.~\cite{ref:29} Sin embargo, obtener una métrica absoluta del \doublequote{ajuste} entre una ontología y un corpus es una tarea difícil, principalmente porque se desconoce a priori cuál sería el mejor \doublequote{ajuste}.
+
+La tabla \ref{tab:data_driven_evaluation_stats} muestra la división que se hizo entre las oraciones del corpus anotado y los resultados alcanzados, en promedio, luego de $250$ corridas de cada división.
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{rcccccc}
+			\noalign{\hrule height 1pt}\\
+			\vspace{-0.35in}\\
+			\textbf{\% de división} & \textbf{70} & \textbf{75} & \textbf{80} & \textbf{85} & \textbf{90} & \textbf{95}\\
+			\hline\\
+			\vspace{-0.35in}\\
+			oraciones & $959$ & $959$ & $959$ & $959$ & $959$ & $959$\\
+			oraciones de entrenamiento & $671$ & $719$ & $767$ & $815$ & $863$ & $911$\\
+			oraciones de verificación & $288$ & $240$ & $192$ & $144$ & $96$ & $48$\\
+			\hline\\
+			\vspace{-0.35in}\\
+			entidades en el corpus & $3,725$ & $3,938$ & $4,135$ & $4,345$ & $4,544$ & $4,739$\\
+			entidades de verificación & $1,888$ & $1,621$ & $1,353$ & $1,058$ & $746$ & $405$\\
+			coincidencia de entidades & $678$ & $623$ & $554$ & $468$ & $355$ & $209$\\
+			\% de coincidencia & \multirow{2}{*}{$35.91$} & \multirow{2}{*}{$38.43$} & \multirow{2}{*}{$40.95$} & \multirow{2}{*}{$44.23$} & \multirow{2}{*}{$47.59$} & \multirow{2}{*}{$51.6$}\\
+			de entidades\\
+			nuevas entidades & $1,210$ & $998$ & $799$ & $590$ & $391$ & $196$\\
+			\% de nuevas entidades & $64.09$ & $61.57$ & $59.05$ & $55.77$ & $52.41$ & $48.4$\\
+			\hline\\
+			\vspace{-0.35in}\\
+			relaciones en el corpus & $6,139$ & $6,560$ & $6,965$ & $7,390$ & $7,802$ & $8,213$\\
+			relaciones de verificación & $2,728$ & $2,283$ & $1,845$ & $1,390$ & $932$ & $469$\\
+			coincidencia de relaciones & $244$ & $220$ & $187$ & $156$ & $111$ & $59$\\
+			\% de coincidencia & \multirow{2}{*}{$8.94$} & \multirow{2}{*}{$9.64$} & \multirow{2}{*}{$10.14$} & \multirow{2}{*}{$11.22$} & \multirow{2}{*}{$11.91$} & \multirow{2}{*}{$12.58$}\\
+			de relaciones\\
+			nuevas relaciones por & \multirow{2}{*}{$2,416$} & \multirow{2}{*}{$2,003$} & \multirow{2}{*}{$1,609$} & \multirow{2}{*}{$1,195$} & \multirow{2}{*}{$795$} & \multirow{2}{*}{$397$}\\
+			nuevas entidades\\
+			\% de nuevas relaciones por & \multirow{2}{*}{$88.56$} & \multirow{2}{*}{$87.74$} & \multirow{2}{*}{$87.21$} & \multirow{2}{*}{$85.97$} & \multirow{2}{*}{$85.3$} & \multirow{2}{*}{$84.65$}\\
+			nuevas entidades\\
+			nuevas relaciones en & \multirow{2}{*}{$68$} & \multirow{2}{*}{$60$} & \multirow{2}{*}{$49$} & \multirow{2}{*}{$39$} & \multirow{2}{*}{$26$} & \multirow{2}{*}{$13$}\\
+			entidades existentes\\
+			\% de nuevas relaciones en & \multirow{2}{*}{$2.5$} & \multirow{2}{*}{$2.62$} & \multirow{2}{*}{$2.65$} & \multirow{2}{*}{$2.81$} & \multirow{2}{*}{$2.79$} & \multirow{2}{*}{$2.77$}\\
+			entidades existentes\\
+			\% de coincidencia de & \multirow{2}{*}{$78.21$} & \multirow{2}{*}{$78.57$} & \multirow{2}{*}{$79.24$} & \multirow{2}{*}{$80$} & \multirow{2}{*}{$81.02$} & \multirow{2}{*}{$81.94$}\\
+			relaciones válidas\footnotemark\\
+			\noalign{\hrule height 1pt}
+		\end{tabular}
+		\caption[Ejemplo de extracción de conocimiento implícito]{Ejemplo de extracción de conocimiento implícito.}
+		\label{tab:data_driven_evaluation_stats}
+	\end{center}
+\end{table}
+
+\footnotetext{Las relaciones válidas son aquellas entre entidades ya existentes en el corpus, pues si la entidad no existe es obvio que habrá que crearla y por tanto, la relación será un fallo seguro a la hora de comprobar si existe o no en el grafo de conocimiento de entrenamiento.}
+
 \section{Discusión}
-Todos los nodos del grafo de conocimiento participan en al menos una relación, pero como se aprecia en las figuras \ref{fig:out_degree_all_nodes}, \ref{fig:in_degree_all_nodes}, \ref{fig:out_degree_nodes_by_rol} y \ref{fig:in_degree_nodes_by_rol}, hay muchos nodos que tiene un grado bajo. En el caso en que la gráfica muestra la cantidad de nodos con grado cero, esto viene dado o bien porque ese nodo no tiene relaciones de salida y en este caso tendría grado de salida cero o bien no tiene relaciones de entrada y por tanto grado de entrada cero. El hecho de que pocos nodos tengan un alto grado viene dado porque usualmente los nodos más grandes y con más palabras, al ser conocimiento más específico participan en un menor número de relaciones.
+Todos los nodos del grafo de conocimiento participan en al menos una relación, pero como se aprecia en las figuras \ref{fig:out_degree_all_nodes}, \ref{fig:in_degree_all_nodes}, \ref{fig:out_degree_nodes_by_rol} y \ref{fig:in_degree_nodes_by_rol}, hay muchos nodos que tienen un grado bajo.
+
+En el caso en que la gráfica muestra la cantidad de nodos con grado cero, esto viene dado o bien porque ese nodo no tiene relaciones de salida y en este caso tendría grado de salida cero o bien no tiene relaciones de entrada y por tanto grado de entrada cero. El hecho de que pocos nodos tengan un alto grado viene dado porque usualmente los nodos más grandes y con más palabras, al ser conocimiento más específico, pocos de ellos participan en un mayor número de relaciones.
 
 Los roles semánticos \textit{Concept} y \textit{Action} que participan en una mayor cantidad de relaciones en este grafo de conocimiento son \guillemot{\texttt{persona}} y \guillemot{\texttt{tratamiento}} respectivamente. Dado que se trabajó con un corpus de documentos médicos, este resultado cobra sentido pues esas palabras son ampliamente empleadas en este medio.
 
-En la tabla \ref{tab:knowledge_graph_stats} se muestra el resultado de un grafo de conocimiento utilizando palabras o frases sin normalizar y normalizadas. Normalizar las palabras no solo reduce la cantidad de nodos y aristas en el grafo sino que también potencialmente aumenta la cantidad de conocimiento implícito que se puede extraer. Esto sucede debido a que en el grafo, todas las relaciones explícitamente escritas en el corpus representan dos nodos y una arista entre estos. Por tanto, si dos nodos no tienen aristas entre ellos, pero existe un camino que los conecta, esto es conocimiento implícito descubierto a través del grafo.
+En la tabla \ref{tab:knowledge_graph_stats} se muestra el resultado de un grafo de conocimiento utilizando palabras o frases sin normalizar y normalizadas. Normalizar las palabras no solo reduce la cantidad de nodos y aristas en el grafo sino que también potencialmente aumenta la cantidad de conocimiento implícito que puede ser extraído. Esto sucede debido a que al fusionar nodos, la cantidad de caminos en el grafo de conocimiento aumentan. Por otra parte, todas las relaciones explícitamente escritas en el corpus representan dos nodos y una arista entre estos. Por tanto, si dos nodos no tienen aristas entre ellos, pero existe un camino que los conecta, esto es conocimiento implícito descubierto a través del grafo.
 
-El hecho de normalizar implica, por ejemplo, que todas las conjugaciones de un mismo verbo deben resultar en el verbo sin conjugar. Esto trae consigo muchas ventajas, puesto que todas las relaciones de entrada y salida de ese grupo de palabras quedan contenidas en una única palabra y por ende, puede ampliar potencialmente la cantidad de caminos en el grafo y con ello, la cantidad de conocimiento ímplicito extraído.
+El hecho de normalizar implica, por ejemplo, que todas las conjugaciones de un mismo verbo deben resultar en el propio verbo sin conjugar. Lo mismo sucede para el resto de palabras del idioma. Mientras mayor sea la cantidad de palabras normalizadas, hay una mejor representación en el grafo de su conocimiento expuesto en el corpus. Obviamente, es de vital importancia la normalización de familias de palabras a su primitiva, para poder dar continuidad al significado que ellas representan, puesto que no tiene sentido normalizar \guillemot{\texttt{glóbulos rojos}} a \guillemot{\texttt{globo rojo}} o \guillemot{\texttt{glóbulo blanco}}.
 
-Una deficiencia clara sucedió a la hora de hallar los resultados de la tabla \ref{}. Para este tipo de evaluación, lo ideal es tener un grafo de conocimiento formado a partir de una ontología y de un corpus preferentemente grande. A su vez, el grafo debe ser revisado con otro corpus perteneciente al mismo tema y de mediano o gran tamaño. Muchas veces esto es difícil de lograr, y en efecto, es lo que sucedió. Para llevar a cabo esta tarea, se dividieron las oraciones anotadas en dos grupos, un grupo de \textit{training} (\textit{entrenamiento} en español) con el cual se realizará el grafo de conocimiento y un grupo de \textit{testing} (\textit{prueba} en español), con el que se revisará la existencia de las anotaciones de texto y las relaciones respecto a las que ya están construidas en el grafo.
+Una deficiencia clara sucedió a la hora de hallar los resultados de la tabla \ref{tab:data_driven_evaluation_stats}. Para este tipo de evaluación, lo ideal es tener un grafo de conocimiento formado a partir de una ontología y de un corpus preferentemente grande. A su vez, el grafo debe ser revisado con otro corpus perteneciente al mismo tema y de mediano o gran tamaño. Muchas veces esto es difícil de lograr, y en efecto, es lo que sucedió.
+
+Para llevar a cabo esta tarea, se dividieron las oraciones anotadas en dos grupos, un grupo de \textit{training} (\textit{entrenamiento} en español) con el cual se realizará el grafo de conocimiento y un grupo de \textit{testing} (\textit{verificación} en español), con el que se revisará la existencia de las anotaciones de texto y las relaciones respecto a las que ya están construidas en el grafo. Como puede verse en dicha tabla, a medida que el corpus de entrenamiento tiene más entidades y relaciones, se espera una mayor coincidencia respecto a nueva información que se quiera añadir a la base de conocimiento ya formada.
