@@ -4,34 +4,231 @@
 \Chapter{Generación Automática de Ontologías}\label{chapter:automatic_generation_of_ontologies}
 %===================================================================================
 
-En los últimos años, el desarrollo de especificaciones formales explícitas de los términos en el dominio y las relaciones entre ellos~\cite{ref:4} en una ontología ha dejado de tener lugar en laboratorios o departamentos de inteligencia artificial para pasar a tener un rol protagónico en los escritorios de expertos en el tema.
+A comienzos del siglo \RomanNumeral{21}, con el avance de las tecnologías en diferentes dominios, la información no estructurada en internet en forma de noticias y literatura científica ha aumentado de manera exponencial. Sin embargo, la web no ha estado eficiente. Si un autor escribió sobre un tema en algún sitio web, otro pudiera publicar información totalmente contradictoria sobre el mismo tema en otro página web. En otras palabras, la web ha estado desconectada e inconsistente. La extracción de información útil a partir de ella ha sido un proceso erróneo. En aras de resolver este problema, se construyó el concepto de \textit{web semántica}~\cite{ref:35}. La motivación detrás de esta idea fue la creación de una plataforma web que estuviera grandemente enlazada, consistente e inteligente. Las ontologías juegan un papel fundamental para llevar a cabo esta idea.
 
-Las ontologías se han vuelto común en el espacio de la \textit{red mundial} (conocida en inglés como \textit{world wide web}). En esta red ellas abarcan un gran espectro de campos, desde grandes taxonomías que categorizan sitios web, como sucede en Yahoo, hasta categorizaciones de productos a la venta y sus características, como sucede en Amazon.
+Las ontologías pueden ser creadas a partir de la extracción de la información relevante en un texto, a través de un proceso llamado \textit{ontology population} (traducido al español como \textit{poblar la ontología}). Sin embargo, realizar este proceso de forma manual para ontologías grandes es un proceso trabajoso y se hace imposible construir ontologías para todos los dominios~\cite{ref:36}. Por lo tanto, en vez de llevar a cabo la construcción de forma manual, esto ha ido cambiando en la actualidad hacia la generación automática de ontologías.
+
+Las ontologías son ampliamente usadas en sistemas de información, y la construcción de estas ha sido objeto de estudio en varias investigaciones. El mayor problema que trae consigo la creación de ontologías y su uso es la adquisición de conocimiento y el tiempo que conlleva la utilización de diferentes algoritmos en este proceso~\cite{ref:37}. En los últimos años han habido principalmente dos acercamientos para darle solución a este problema:
+
+\begin{enumerate}
+	\item El desarrollo de métodos, metodologías, herramientas y algoritmos para integrar ontologías existentes. Han sido creadas muchas de ellas para diferentes dominios y aplicaciones. Además, existen varios enfoques para usar y unificar las ontologías creadas. El proceso de integración encuentra recursos comunes entre las ontologías usadas y de ellos deriva una nueva que facilita la interoperabilidad entre sistemas informáticos que se basan en las ontologías fuente~\cite{ref:38}. La integración puede ser llevada a cabo a través de uno de los puntos siguientes~\cite{ref:39}:
+	
+	\begin{enumerate}
+		\item Uniendo las ontologías para crear una única ontología coherente.
+		\item Establecer relaciones entre las ontologías permitiendo la reutilización de la información de unas a otras.
+		\item Relacionando las ontologías a través de encontrar elementos similares en ellas.
+	\end{enumerate}
+	
+	Como ejemplo de unión de ontologías se puede mencionar el proyecto de unión de las ontologías \textit{SENSUS}~\cite{ref:40} y \textit{Cyc}~\cite{ref:41} para crear una única ontología de conocimiento~\cite{ref:42}. La propia ontología \textit{SENSUS} fue el resultado de la unión de forma manual de varias ontologías.
+	
+	Hay algunas investigaciones acerca de métodos generalizados para la unión y establecimiento de relaciones entre ontologías. Muestra de esto es, por ejemplo, \textit{PROMPT}~\cite{ref:43}, un algoritmo semiautomático que puede realizar ambos procesos. También hay investigaciones en el último apartado de los anteriores (apartado \textit{c}), por ejemplo el acercamiento realizado por Lacher y Groh a través de clasificación supervisada~\cite{ref:44}.
+	
+	\item El desarrollo de métodos, metodologías, herramientas y algoritmos para adquirir y aprender nuevas ontologías de forma automática o semiautomática.
+\end{enumerate}
+
+En conjunción al problema de \textit{ontology population} mencionado anteriormente, hay otro problema llamado \textit{ontology enrichment} (que puede traducirse al español como \textit{enriquecer la ontología}). Entre estos dos problemas hay tareas en común y la mayoría de los enfoques que existen no pueden ser catalogados a plenitud con estos términos~\cite{ref:34}.
+
+En los últimos años ha habido un aumento notable en el área de generación automática o semiautomática de ontologías. Algunas de las herramientas usadas para ello, y ontologías en sí, son mencionadas a continuación en orden cronológico según el año en que fueron dadas a conocer:
+
+\begin{table}[H]
+	\begin{tabular}{rl}
+		Web$\rightarrow$KB & Combinando métodos de estadística (aprendizaje Bayesia- \\
+		& no) y lógica (regla de aprendizaje FOL), intenta construir \\
+		& una base de conocimiento de propósito general a partir de \\
+		& la web~\cite{ref:45,ref:46}.\\
+		ASIUM & Aprende marcos verbales y conocimiento taxonómico. Ba- \\
+		& sado en análisis estadístico y sintáctico de textos en fran- \\
+		& cés, intenta construir de forma automática jerarquías entre \\
+		& conceptos usando técnicas de agrupamiento~\cite{ref:49,ref:47,ref:48}. \\
+		Clouds & Basado en análisis léxico-sintáctico y aprendizaje inducti- \\
+		& vo, es una herramienta semiautomática para la creación de \\
+		& un mapa de conceptos, el cual consiste en conceptos como \\
+		& nodos y relaciones como aristas~\cite{ref:50}.\\
+		TextStorm/Clouds & Muy parecido al enfoque anterior, pero esta vez, de forma \\
+		& completamente automática, basando en TextStorm el traba- \\
+		& jo que anteriormente realizaba un humano~\cite{ref:51}.\\
+		Hasti & Aprende palabras, conceptos, relaciones y axiomas de am- \\
+		& bas formas, incremental y no incremental. Comienza por \\
+		& una pequeña base (aprendizaje desde cero) y usa métodos \\
+		& híbridos para el aprendizaje, como por ejemplo, lógica, al- \\
+		& goritmos lingüísticos y heurística~\cite{ref:52,ref:53,ref:54,ref:55}.\\
+		Svetlan & Construye una ontología a través del aprendizaje de catego- \\
+		& rías de sustantivos, sin importar el dominio del texto~\cite{ref:56}.\\
+		SYNDIKATE & Aprendizaje de palabras, conceptos y relaciones de forma \\
+		& incremental. Basado en la interpretación de ambos niveles: \\
+		& oraciones y textos. También usa lógica inductiva y acerca- \\
+		& mientos lingüísticos~\cite{ref:58,ref:57}.\\
+		Doddle II & Aprende relaciones taxonómicas y no taxonómicas usando \\
+		& métodos estadísticos (análisis de ocurrencias), también se \\
+		& apoya en el uso de un diccionario legible por computado- \\
+		& ras (\textit{WordNet}) y de textos de dominio específico~\cite{ref:59}.\\
+		ADAPTATIVA & Herramienta semiautomática que permite al usuario esco- \\
+		& ger un corpus y construir una ontología preliminar. Poste- \\
+		& rior al desarrollo de forma automática de una ontología
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabular}{rl}
+		& más grande, puede retroalimentar sus resultados mediante in- \\
+		& formación ofrecida por el usuario~\cite{ref:60}.\\
+		OntoLearn & Emplea un análisis constructivo. Usado entre otras cosas, pa- \\
+		& ra traducción e interpretación de texto~\cite{ref:64,ref:63,ref:62,ref:61}.\\
+		ARTEQUAKT & Es un sistema de resolución de preguntas de dominio específi- \\
+		& co en el arte. Usa una ontología para realizar ese proceso. Ba- \\
+		& sa su aprendizaje en la búsqueda en documentos de internet de \\
+		& información que concuerde con la estructura de clasificación \\
+		& definida~\cite{ref:65}.\\
+		OntoLT & La creación de la base de conocimiento va unida a análisis lin- \\
+		& güístico. Esto es realizado mediante el enlace entre estructuras \\
+		& lingüísticas con conceptos y relaciones en la ontología~\cite{ref:66}.\\
+		KnowItAll & Realiza automáticamente el proceso de extracción de conoci- \\
+		& miento de la web, de forma autónoma e independiente del do- \\
+		& minio. Además, le asocia una probabilidad a cada una de las \\
+		& instancias en aras de seleccionar las relevantes y mejorar la \\
+		& precisión y recobrado~\cite{ref:67}.\\
+		Text2Onto & Tiene enfoques probabilísticos, mediante análisis de ocurren- \\
+		& cias, agrupamiento, agrupamiento jerárquico y minería de re-\\
+		& glas de asociación~\cite{ref:70,ref:71,ref:69,ref:68}. \\
+		VIKEF & Usa catálogos de productos como fuente de datos y la estruc- \\
+		& tura inherente encontrada en estos~\cite{ref:34,ref:72}.\\
+		SOBA & Ontología usada para la extracción de información de forma \\
+		& automática de páginas web referentes al fútbol. Además, pue- \\
+		& de ser usada para responder a preguntas en este dominio~\cite{ref:73}.\\
+		ISOLDE & Genera una ontología de dominio específico al extraer candi- \\
+		& datos de clases del contexto lingüístico del texto. Además in- \\
+		& fiere conocimiento de estas clases a través de los recursos dis- \\
+		& ponibles en la web~\cite{ref:74}.\\
+		LEILA & Extrae instancias de relaciones binarias arbitrarias a partir de \\
+		& lenguaje natural en documentos web. El proceso es automáti- \\
+		& co y sin la intervención de un humano~\cite{ref:75}.\\
+		The BOEMIE & Herramienta que no solo se centra en procesamiento de texto, \\
+		& sino también en multimedia, como por ejemplo imágenes y vi- \\
+		& deos. Se enfoca en poblar la ontología con nuevas instancias o \\
+		& nuevos conceptos y nuevas relaciones semánticas~\cite{ref:76}.\\
+		OPTIMA & Construye la ontología a partir de texto no estructurado y se- \\
+		& miestructurado pertenecientes a páginas web~\cite{ref:77}.\\
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabular}{rl}
+		OntoGain & Sistema de creación de ontologías a partir de aprendizaje no super- \\
+		& visado y texto no estructurado. También realiza métodos de análisis \\
+		& formal de conceptos y agrupamiento jerárquico~\cite{ref:78}.\\
+		CRCTOL & Crea ontologías de forma automática y de dominio específico. Rea- \\
+		& liza un análisis sintáctico del texto completo, combinando métodos \\
+		& estadísticos y de análisis léxico-sintácticos~\cite{ref:79}.\\
+		NELL & Aprendizaje continuo mediante procesamiento de datos de la web. \\
+		& Además, infiere conocimiento nuevo a partir del que ya aprendió. \\
+		& Ambas cosas posibilitan que con el paso del tiempo, la cantidad y \\
+		& calidad del conocimiento aprendido sea mayor~\cite{ref:80}.
+	\end{tabular}
+\end{table}
+
+\vspace{-0.2in}
+Con la introducción del concepto de \textit{web semántica}, las ontologías se han vuelto común en el espacio de la \textit{red mundial} (conocida en inglés como \textit{world wide web}). En esta red ellas abarcan un gran espectro de campos, desde grandes taxonomías que categorizan sitios web, como sucede en Yahoo~\cite{ref:32}, hasta categorizaciones de productos a la venta y sus características, como sucede en Amazon~\cite{ref:33}. Algunas ontologías representan conocimiento de propósito general, como por ejemplo DBpedia~\cite{ref:81}. Otras como la de Ivanović y Budimac~\cite{ref:82}, son de dominio específico, pero contienen conocimiento más detallado~\cite{ref:83}.
 
 El \textit{World Wide Web Consortium} (W3C) desarrolló el \textit{Resource Description Framework}~\cite{ref:5} (RDF, traducido al español como \textit{Marco de Descripción de Recursos}). El mismo, es un lenguaje para codificar el conocimiento en las páginas web y que sea comprensible para los usuarios que buscan esa información.
 
-La \textit{Agencia de Proyectos de Investigación Avanzada de Defensa} (del inglés \textit{Defense Advanced Research Projects Agency}, DARPA), en conjunto con W3C, desarrollaron el \textit{DARPA Agent Markup Language} (DAML, traducido al español como \textit{Lenguaje de Marcado de DARPA para Agentes}), el cual es una extensión de RDF con construcciones más expresivas destinadas a facilitar la interacción de los agentes en la web.~\cite{ref:6}
-
-Muchas disciplinas desarrollan ontologías estandarizadas que los expertos en el dominio pueden usar para compartir y anotar información en sus campos. La medicina, por ejemplo, ha producido vocabularios estructurados, estandarizados y extensos como \textit{SNOMED}~\cite{ref:7} y la red semántica del \textit{Unified Medical Language System}~\cite{ref:8} (traducido al español como \textit{Sistema de Lenguaje Médico Unificado}).
+La \textit{Agencia de Proyectos de Investigación Avanzada de Defensa} (del inglés \textit{Defense Advanced Research Projects Agency}, DARPA), en conjunto con W3C, desarrollaron el \textit{DARPA Agent Markup Language} (DAML, traducido al español como \textit{Lenguaje de Marcado de DARPA para Agentes}), el cual es una extensión de RDF con construcciones más expresivas destinadas a facilitar la interacción de los agentes en la web~\cite{ref:6}.
 
 También están surgiendo amplias ontologías de propósito general. Por ejemplo, \textit{United Nations Development Program} (traducido al español como \textit{Programa de las Naciones Unidas para el Desarrollo}) y \textit{Dun \& Bradstreet} juntaron sus esfuerzos para desarrollar la ontología \textit{United Nations Standard Products and Services Code}~\cite{ref:9} (UNSPSC, traducido al español como \textit{Código Estándar de Productos y Servicios de las Naciones Unidas}) que proporciona terminología para productos y servicios.
 
-Una ontología define un vocabulario común para los investigadores que necesitan compartir información en un determinado dominio, y a la misma vez, facilita la búsqueda y comprensión de esta información por personas no expertas en el tema. Esto incluye definiciones computacionalmente interpretables de conceptos básicos y relaciones entre ellos pertenecientes al dominio. Hay una interrogante que cabe preguntarse, ¿por qué alguien quisiera desarrollar una ontología? Algunas de las razones principales son:
+Uno de los problemas más importantes en el campo de la generación automática de ontologías, es cómo reconocer el conocimiento relevante en un documento escrito en lenguaje natural. Algunas métricas de relevancia han sido propuestas~\cite{ref:28,ref:84} en los últimos años. En sentido general, el conocimiento relevante puede ser asociado a los conceptos y acciones que aparecen con más frecuencia en un dominio~\cite{ref:83}.
 
+\vspace{-0.2in}
+\section{Dominio médico}
+
+\vspace{-0.1in}
+La industria de la e-salud y de las ciencias de vida están en proceso de brindar datos electrónicos a los pacientes para un mejor procesamiento y una rápida manipulación de estos. En aras de lograr que estos datos sean útiles para las aplicaciones de inteligencia artificial, se necesita trabajar con su semántica. De esta forma, se le da paso a la toma de decisiones de forma automática.
+
+Se han desarrollado varias herramientas y ontologías en pos de que los expertos en el dominio pueden usarlas para compartir y anotar información en sus campos. Ejemplo de esto es:
+
+\vspace{-0.1in}
 \begin{itemize}
-	\item[•] Compartir conocimiento de la estructura de la información entre investigadores y/o usuarios.
-	\item[•] Permitir la reutilización del conocimiento del dominio.
-	\item[•] Hacer explícitas las suposiciones o conocimientos a priori del dominio.
-	\item[•] Separar el conocimiento explícito del dominio del conocimiento implícito operacional.
-	\item[•] Analizar el conocimiento del dominio.
+	\item[•] Resumen de pacientes europeos~\cite{ref:85} es uno de los proyectos cuya columna vertebral está inmersa en las tecnologías de la web semántica.
+	\item[•] Guardar e integrar datos acerca del síndrome de prolapso de la válvula mitral~\cite{ref:86}.
+	\item[•] Ontología de electrocardiografías para enfermedades del corazón y su posterior base de conocimiento~\cite{ref:87}.
+	\item[•] Ontología basada en e-salud. Enfocada al problema de la discordancia entre conceptos jerárquicos en ontologías~\cite{ref:88}.
+	\item[•] Ontología del fenotipo humano. Compuesta por $10,088$ clases (o términos) y $13,326$ relaciones describiendo anomalías del fenotipo humano~\cite{ref:89}.
+	\item[•] \textit{SNOMED CT} almacena terminología médica en varios idiomas~\cite{ref:90,ref:7}.
+	\item[•] \textit{Unified Medical Language System} (traducido al español como \textit{Sistema de Lenguaje Médico Unificado}) integra y clasifica terminología médica y estándares de código~\cite{ref:8}.
+	\item[•] \textit{Translational Medicine Ontology} (traducido al español como \textit{Ontología de Medicina Transacional})  tiene carácter evolutivo. Mejora dinámicamente con el pasar del tiempo y las nuevas relaciones que explora de datos en la web y de historias clínicas de pacientes~\cite{ref:91}.
 \end{itemize}
 
-\textit{Compartir conocimiento de la estructura de la información entre investigadores y/o usuarios} es uno de los objetivos comunes en el desarrollo de ontologías~\cite{ref:10,ref:4}. Por ejemplo, si varios sitios web diferentes entre sí contienen información médica o proporcionan servicios médicos de comercio electrónico, y estos comparten y publican la misma ontología subyacente de los términos que utilizan, los agentes informáticos pueden extraer y agregar información de los mismos. Además, estos últimos pudieran utilizar dicha información para responder consultas de los usuarios o como datos de entrada para otras aplicaciones.
+\section{Métodos de evaluación}\label{section:ontology_evaluation_methods}
+Evaluar la calidad de un algoritmo o sistema de generación de ontologías es un aspecto muy importante, puesto que permite a los investigadores y usuarios comprobar la correctitud de las mismas. Además, posibilita refinar o volver a modelar por completo el proceso de generación de la ontología en caso de resultados inesperados y que no se ajustan a los requerimientos iniciales.
 
-\textit{Permitir la reutilización del conocimiento del dominio} fue una de las fuerzas impulsoras detrás del reciente aumento de la investigación ontológica. Por ejemplo, los modelos para muchas áreas diferentes deben representar la idea de tiempo. Esta representación incluye, entre otros, las nociones de intervalos, puntos y medidas relativas a este. Si un grupo de investigadores desarrolla tal ontología en detalle, otros pueden simplemente reutilizarla para sus dominios. Además, si se necesita construir una grande, se pueden integrar varias ya existentes que describan partes específicas de la rama deseada. También se puede reutilizar una de propósito general, como UNSPSC, y extenderla para describir el área de interés.
+Dado que la generación automática de ontologías se realiza a través de varios niveles, su evaluación es un proceso difícil. Considerando esto, un sinnúmero de técnicas han sido propuestas en los últimos años y en la actualidad esta área continúa en desarrollo. Los métodos propuestos pueden ser clasificados en una de las categorías siguientes~\cite{ref:92,ref:34,ref:27}:
 
-\textit{Hacer explícitas las suposiciones o conocimientos a priori del dominio} hace posible cambiarlas fácilmente si cambian las ideas tenidas de antemano en este tema. Los supuestos de \textit{codificación rígida} (del inglés \textit{hard-coding}) sobre el mundo hechos en lenguajes de programación hacen que estas no solo sean difíciles de encontrar y comprender, sino también de cambiar, en particular para alguien sin experiencia en el ámbito computacional. Además, las especificaciones explícitas del conocimiento del dominio son útiles para los nuevos usuarios que deben aprender qué significan los términos de este.
+\begin{itemize}
+	\item[•] comparación con un estándar dorado
+	\item[•] evaluación a través de una aplicación
+	\item[•] evaluación basada en datos
+	\item[•] evaluación por humanos
+\end{itemize}
 
-\textit{Separar el conocimiento explícito del dominio del conocimiento implícito operacional} es otro uso común de las ontologías. Se puede describir la tarea de configurar un producto a partir de sus componentes, de acuerdo con una especificación requerida e implementar un programa que realice esta configuración independientemente del producto.~\cite{ref:11} Seguido de esto, se puede desarrollar una ontología de componentes y características de los ordenadores personales y aplicar el algoritmo para configurar uno de ellos a medida. También este último puede usarse para realizar la misma tarea en ascensores, si se le \doublequote{alimenta} con una ontología de los elementos de estos.~\cite{ref:12}
+La siguiente tabla pretende mostrar los diferentes enfoques en los que trabajan y evalúan las categorías de evaluación de generación de ontologías previamente mencionadas.
 
-\textit{Analizar el conocimiento del dominio} es posible una vez que se dispone de una especificación declarativa de los términos. El análisis formal de estos es extremadamente valioso cuando se intenta reutilizar ontologías existentes y ampliarlas.~\cite{ref:13}
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{ccccc}
+			\noalign{\hrule height 1pt}\\
+			\vspace{-0.35in}\\
+			\textbf{Nivel de evaluación} & \textbf{Estándar dorado} & \textbf{Aplicación} & \textbf{Datos} & \textbf{Humanos}\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Léxico, vocabulario, & \multirow{2}{*}{X} & \multirow{2}{*}{X} & \multirow{2}{*}{X} & \multirow{2}{*}{X}\\
+			conceptos y datos\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Jerarquía y taxonomía & X & X & X & X\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Otras relaciones se- & \multirow{2}{*}{X} & \multirow{2}{*}{X} & \multirow{2}{*}{X} & \multirow{2}{*}{X}\\
+			mánticas\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Aplicación y contexto & & X & & X\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Sintaxis & X & & & X\\
+			\hline\\
+			\vspace{-0.35in}\\
+			Estructura, arquitectu- & & & & \multirow{2}{*}{X}\\
+			ra y diseño\\
+			\noalign{\hrule height 1pt}
+		\end{tabular}
+		\caption[Enfoques de las categorías de evaluación de generación de ontologías]{Enfoques de las categorías de evaluación de generación de ontologías.}
+		\label{tab:levels_of_ontology_evaluation_methods}
+	\end{center}
+\end{table}
+
+\subsection{Comparación con un estándar dorado}
+La \textit{comparación con un estándar dorado} (del inglés \textit{golden standard-based evaluation}) se basa en evaluar la ontología resultante con una previamente definida en el mismo dominio, esta última es considera el \doublequote{\textit{estándar dorado}}~\cite{ref:93}. Mediante esta evaluación se puede validar eficientemente cuán abarcadora del dominio y consistente es la ontología creada respecto a la de referencia. El estándar dorado puede ser una ontología en particular, estadísticas extraídas de un corpus o formalizadas por expertos del dominio.
+
+Estas técnicas de evaluación también son conocidas como \textit{similitud de ontologías} o \textit{alineación de ontologías} (del inglés \textit{ontology mapping} y \textit{ontology alignment} respectivamente). Encontrar un estándar dorado apropiado para la evaluación puede conllevar un reto enorme, puesto que debe ser uno que haya sido creado bajo objetivos y condiciones similares que la ontología creada. Esto implica que usualmente se seleccionen como estándar dorado taxonomías creadas manualmente o taxonomías confiables del mismo dominio.
+
+Las técnicas de evaluación en esta categoría usualmente miden la completitud, consistencia y precisión de los factores de la ontología generada~\cite{ref:92}. Además, aunque dos ontologías hayan sido extraídas de un mismo dominio de forma manual y por medio de expertos, pudieran tener amplias diferencias respecto a su estructura. Por tanto, usualmente se necesita algún tipo de normalización o isomorfismo entre ambas ontologías en aras de llevar a cabo la comparación~\cite{ref:34}.
+
+\subsection{Evaluación a través de una aplicación}
+La \textit{evaluación a través de una aplicación} es también conocida como \textit{evaluación basada en tareas}, debido a que la ontología creada es evaluada a través de una aplicación realizando una o más tareas. El resultado de una tarea en particular determina cuán buena es en ella la ontología creada, sin tener en cuenta su estructura. Este tipo de evaluación posibilita la detección de incosistencia entre conceptos y permite la evaluación de la adaptabilidad de la ontología creada mediante el análisis del rendimiento en varios contextos y tareas~\cite{ref:94}.
+
+Un enfoque práctico de esta evaluación consiste en encontrar una aplicación y evaluar si la ontología creada mejora a la aplicación en el aspecto que se quiere evaluar~\cite{ref:95}. Esto permite una evaluación automática y con resultados instantáneos en cuanto a la ontología creada y su uso en la aplicación seleccionada. En cambio, validar la ontología generada en un único caso de estudio no necesariamente implica que el resultado alcanzado se extenderá al resto de casos, ni siquiera se valida la calidad y correctitud de la información extraída~\cite{ref:34}.
+
+En adición, estas técnicas pueden ser usadas en el proceso de evaluación de la compatibilidad entre varias herramientas con la ontología creada. Además, sirve como comparación de correctitud, contenido y compatibilidad entre varias aplicaciones que usen la ontología creada.
+
+\subsection{Evaluación basada en datos}
+La \textit{evaluación basada en datos} es también conocida como \textit{evaluación basada en corpus}~\cite{ref:96} utiliza conocimiento específico del dominio (usualmente corpus de textos)  para comprobar el contenido aprendido por la ontología creada~\cite{ref:28}. Puede ser llevada a cabo comparando las entidades y relaciones en la ontología creada mediante un corpus de datos representativos del mismo dominio, pero que no haya sido usado durante la generación de dicha ontología. 
+
+La mayor ventaja de este tipo de evaluación es la posibilidad de comparar una o más ontologías a través de de un corpus. Los criterios de comparación son parecidos a los tomados para la evaluación con un estándar dorado, como por ejemplo: completitud, consistencia y precisión. El mayor reto de esta evaluación es encontrar un corpus del dominio deseado que posea las cualidades, condiciones y conocimiento que se desea medir de la ontología generada.
+
+Este enfoque ha sido usado para comparar diferentes ontologías creadas por expertos basándose en el mismo corpus y decidir qué ontología provee el mejor \doublequote{ajuste} a este~\cite{ref:29}. Sin embargo, obtener una métrica absoluta del \doublequote{ajuste} entre una ontología y un corpus es una tarea difícil, principalmente porque se desconoce a priori cuál sería el mejor \doublequote{ajuste}~\cite{ref:34}.
+
+\subsection{Evaluación por humanos}
+La \textit{evaluación por humanos} es llevada a cabo por uno o más expertos en el dominio de la ontología creada mediante la comprobación manual de las entidades y relaciones en dicha ontología y evaluarlas basados en alguna métrica~\cite{ref:97}. Además, también puede ser usada para definir y formular varios criterios de decisión para la selección de forma manual de la mejor ontología entre un conjunto específico de candidatos.
+
+Esta evaluación también puede ser llevada a cabo mediante la asignación de una puntuación numérica a cada criterio definido. Luego, una suma (puede ser con pesos en los criterios o no) es llevada a cabo para ofrecer el resultado final. Este tipo de evaluación es conocida como \textit{evaluación basada en criterios}\cite{ref:96}. Esta modalidad es la que usualmente se usa en la selección de la mejor ontología en un conjunto específico~\cite{ref:92}.
+
+La mayor desventaja de esta evaluación es el alto costo en tiempo y esfuerzo que requiere la comprobación manual de los términos y relaciones pertenecientes a una ontología. No obstante, este enfoque está siendo dejado en desuso en la actualidad~\cite{ref:92}.

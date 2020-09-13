@@ -2,14 +2,14 @@
 % Chapter: Annotation model
 %===================================================================================
 \Chapter{Modelo de Anotación}\label{chapter:annotation_model}
-El primer paso para el algoritmo presentado en este trabajo, es tener un corpus\footnote{Un corpus es un conjunto de oraciones y/o documentos de ejemplos reales usados en el lenguaje natural.} anotado basado en el esquema presentado a continuación. Además, en este capítulo son analizadas algunas estadísticas de un corpus de oraciones del dominio médico en idioma español, el cual es utilizado en la presente investigación y son mostradas las herramientas empleadas para construirlo y trabajar con el mismo.
+El primer paso para el algoritmo presentado en este trabajo, es tener un corpus\footnote{Un corpus es un conjunto de oraciones y/o documentos de ejemplos reales usados en el lenguaje natural.} anotado basado en el esquema presentado a continuación. Además, en este capítulo son analizadas algunas estadísticas de un corpus de oraciones del dominio médico en idioma español. Esto es utilizado en la presente investigación. También son mostradas las herramientas empleadas para construirlo y trabajar con el mismo.
 %===================================================================================
 
 \section{Esquema de anotación}
 \label{section:annotation_structure}
 El modelo de anotación de propósito general empleado busca capturar los rasgos y relaciones semánticas más relevantes presentes en oraciones del lenguaje natural. Este debe evitar ambigüedades tanto como sea posible, de forma que anotadores humanos distintos tengan una alta probabilidad de coincidir. A la misma vez, necesita ser lo suficientemente expresivo para representar los conceptos relevantes del dominio y sus interacciones. Además, debe ser capaz de construir conceptos complejos a partir de combinar otros más simples mediante el uso de un conjunto reducido de reglas. También está diseñado para asistir en desarrollo de sistemas de descubrimiento de conocimiento. Por este motivo es necesario independizar la representación del modelo de la estructura gramatical de las oraciones, y en su lugar, tratar de representar el significado semántico.
 
-Este modelo de anotación se basa en las tripletas \textit{Subject-Action-Target} (en español \textit{Sujeto-Acción-Objetivo}) y en la estructura gramatical \textit{sujeto-verbo-objeto}, normalmente expresada con su abreviatura \textbf{SVO}. Tiende a ser el orden predeterminado porque el verbo se usa para dividir el sujeto del predicado, sin necesidad de usar partículas para indicar dónde empiezan o terminan los mismos. Es, por ende, una de las secuencias más frecuente en el lenguaje natural y de hecho es usada en la mayoría de lenguas occidentales y un buen número de orientales.
+Este modelo de anotación se basa en las tripletas \textit{Subject-Action-Target} (en español \textit{Sujeto-Acción-Objetivo}) y en la estructura gramatical \textit{sujeto-verbo-objeto}, normalmente expresada con su abreviatura \textbf{SVO}. Tiende a ser el orden predeterminado porque el verbo se usa para dividir el sujeto del predicado, sin necesidad de usar partículas para indicar dónde empiezan o terminan los mismos. Además, es una de las secuencias más frecuente en el lenguaje natural y de hecho es usada en la mayoría de lenguas occidentales y un buen número de orientales~\cite{ref:83}.
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{graphics/annotation_model.png}
@@ -55,6 +55,7 @@ Por tanto, el rol semántico \textit{Action} describe el significado de un conce
 	\end{center}
 \end{figure}
 
+\vspace{-0.4in}
 \subsection{Referencias}
 El rol \textit{Reference} es un tipo de \textit{Concept} que no tiene un significado semántico específico, pero que es necesario por razones gramaticales. Es usado para anotar pronombres (por ejemplo, \textit{este}, \textit{aquel}) y demás elementos que hacen referencia a otro \textit{Concept} presente en la oración, documento y/o corpus. En la figura \ref{fig:annotation_example_reference_and_predicate} puede verse un ejemplo.
 
@@ -152,12 +153,13 @@ Las parejas de sinonimia, anotadas como relaciones \textit{same-as} (en español
 
 La figura \ref{fig:annotation_example_same_as} muestra un ejemplo de anotación de la relación \textit{same-as}. La palabra \guillemot{\texttt{SIDA}} y la frase \guillemot{\texttt{síndrome de inmunodeficiencia adquirida}} son anotadas como conceptos. Por tanto, esta oración a modo de anotación queda \guillemot{\texttt{SIDA} \textit{same-as} \texttt{síndrome de inmunodeficiencia adquirida}}.
 
-Las propiedades, anotadas como relaciones \textit{has-property} (traducido al español como \textit{tiene-propiedad}) es usada para especificar que un concepto tiene una propiedad, característica, o puede ser descrita por otro concepto. Sin embargo, este tipo de relación puede conllevar a ciertas dificultades, como por ejemplo la paradoja de Bertrand Russell~\cite{ref:15} y la de Grelling-Nelson~\cite{ref:16}. Además, una propiedad puede implicar gran cantidad de propiedades e incluso una cantidad infinita de ellas. Por ejemplo si \guillemot{\texttt{la persona pesa más de 60 kilogramos}} entonces también se cumple que \guillemot{\texttt{la persona pesa más de 59 kilogramos}} y por consiguiente, que \guillemot{\texttt{la persona pesa más de 58 kilogramos}}. De manera similar, dado que en este caso, el peso es un valor numérico decimal, se pueden construir infinitas propiedas de este tipo.
+Las propiedades, anotadas como relaciones \textit{has-property} (traducido al español como \textit{tiene-propiedad}) es usada para especificar que un concepto tiene una propiedad, característica, o puede ser descrita por otro concepto. Sin embargo, este tipo de relación puede conllevar a ciertas dificultades, como por ejemplo la paradoja de Bertrand Russell~\cite{ref:15} y la de Grelling-Nelson~\cite{ref:16}. Además, una propiedad puede implicar gran cantidad de propiedades e incluso una cantidad infinita de ellas. Por ejemplo si \guillemot{\texttt{la persona pesa más de 60 kilogramos}} entonces también se cumple que \guillemot{\texttt{la persona pesa más de 59 kilogramos}} y por consiguiente, que \guillemot{\texttt{la persona pesa más de 58 kilogramos}}. De manera similar, dado que en este caso, el peso es un valor numérico decimal, se pueden construir infinitas propiedas de este tipo. Esto cobra especial importancia a la hora de crear e interpretar la base de conocimientos explicada en el capítulo \ref{chapter:proposed_solution}. Puesto que no pueden crearse infinitas relaciones, y por tanto, la interpretación de estas es dependiente del contexto en que se esté analizando.
 
 En la figura \ref{fig:annotation_example_has_property} se puede observar un ejemplo de la anotación \textit{has-property}. En esta oración son anotadas la frase \guillemot{\texttt{estreptococo del grupo A}} y las palabras \guillemot{\texttt{causa}} y \guillemot{\texttt{común}} como conceptos. También, la palabra \guillemot{\texttt{más}} es anotada como un predicado, en conjunto con \guillemot{\texttt{causa}} y \guillemot{\texttt{común}} como dominio y argumento respectivamente. Al ser anotada la relación \textit{has-property}, la anotación resulta como \guillemot{\texttt{estreptococo del grupo A} \textit{has-property} \texttt{causa más común}}.
 
 Para todas las relaciones taxonómicas, solo se considera su anotación cuando la oración implica la existencia de ella, aun cuando fuese implícita. En ningún caso se anota basada solamente en conocimiento externo o del dominio.
 
+\vspace{-0.2in}
 \subsection{Causalidad e implicación}
 Las cuatro relaciones semánticas presentadas hasta ahora son útiles para capturar la estructura taxonómica del conocimiento expresado en textos del lenguaje natural. Dos relaciones adicionales son definidas para construir conexiones lógicas entre conceptos: \textit{causes} y \textit{entails} (en español \textit{causa} e \textit{implica} respectivamente). La relación \textit{causes} es usada para expresar que un evento, identificado en general como un concepto, es una posible causa para otro evento. En la figura \ref{fig:annotation_example_causes} se muestra un ejemplo anotado.
 
@@ -190,6 +192,7 @@ En contraste, la relación \textit{entails} es usada para denotar implicación l
 \vspace{-0.1in}
 La anotación de causalidad e implicación evita anotar varias palabras y frases que comparten el mismo significado semántico. Por ejemplo, en la figura \ref{fig:annotation_example_causes} no resulta necesario anotar \guillemot{\texttt{puede causarle}} debido a que el significado correcto está siendo representado por la relación \textit{causes}.
 
+\vspace{-0.2in}
 \subsection{Contextualización}
 En ocasiones, los conceptos solo participan en determinada relación con precondiciones, como por ejemplo, si dura un período específico de tiempo, solo en una ubicación específica o con algunas propiedades adicionales.
 
@@ -209,13 +212,13 @@ La diferencia entre las relaciones de contexto y el resto es que ellas no define
 	\begin{subfigure}{3.6in}
 		\includegraphics[width=\textwidth]{graphics/annotation_example_in_time.png}
 		\caption{Ejemplo de anotación de tiempo.}
-		\vspace{0.3in}
+		\vspace{0.2in}
 		\label{fig:annotation_example_in_time}
 	\end{subfigure}
 	\begin{subfigure}{3.3in}
 		\includegraphics[width=\linewidth]{graphics/annotation_example_in_place.png}
 		\caption{Ejemplo de anotación de lugar.}
-		\vspace{0.3in}
+		\vspace{0.2in}
 		\label{fig:annotation_example_in_place}
 	\end{subfigure}
 	\begin{subfigure}{3.2in}
@@ -515,7 +518,7 @@ El proceso de anotación de un documento, llevado a cabo por un humano, puede se
 
 No es de extrañar que con el avance tecnológico y científico, principalmente de la inteligencia artificial en este último, este proceso pueda automatizarse. Los avances en este aspecto tienen ventajes y desventajas, a la vez de márgenes de errores y precisión.
 
-En la competencia \textit{eHealth-KD Challenge} presentada en \textit{IberLEF 2019}~\cite{ref:17} e \textit{IberLEF 2020}~\cite{ref:18} tomaron lugar sistemas automáticos para la anotación de corpus~\cite{ref:21}. Las propuestas que compitieron están entrenadas para hacerlo en textos médicos del idioma español y usando el modelo de anotación explicado en esta investigación~\cite{ref:19,ref:21}. De igual forma, otros pueden ser encontrados en la literatura para anotar automáticamente documentos pertenecientes a diferentes dominios e idiomas.
+En la competencia \textit{eHealth-KD Challenge} presentada en \textit{IberLEF 2019}~\cite{ref:17} e \textit{IberLEF 2020}~\cite{ref:18} tomaron lugar sistemas automáticos para la anotación de corpus~\cite{ref:21}. Las propuestas que compitieron están entrenadas para hacerlo en textos médicos del idioma español y usando el modelo de anotación explicado en esta investigación~\cite{ref:21,ref:19}. De igual forma, otros pueden ser encontrados en la literatura para anotar automáticamente documentos pertenecientes a diferentes dominios e idiomas.
 
 \section{Análisis del corpus}
 El corpus usado~\cite{ref:20} fue construido a partir de un fichero \textit{XML}\footnote{Siglas en inglés de \textit{e\textbf{X}tensible \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado desarrollado por el \textit{World Wide Web Consortium} (W3C).} tomado del sitio web de \textit{Medline} el $9$ de enero de $2018$, específicamente a las $02:30:31$. \textit{Medline} fue producida y es mantenida por la Biblioteca Nacional de Medicina de los Estados Unidos. Recoge referencias bibliográficas de los artículos publicados en aproximadamente $5,500$ revistas médicas desde $1966$. Actualmente reúne más de $30,000,000$ de citas. Cada registro de \textit{Medline} es la referencia bibliográfica de un artículo científico publicado en una revista médica, con los datos bibliográficos básicos de un artículo: título, autores, nombre de la revista, año de publicación, entre otros. Esto permite la recuperación de estas referencias posteriormente en una biblioteca o a través de un \textit{software} específico de recuperación.

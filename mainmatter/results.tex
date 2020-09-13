@@ -13,7 +13,7 @@ En este capítulo, se presenta el marco experimental diseñado para comprobar la
 \section{Marco experimental}
 En esta investigación solo se trabajará con los artículos del corpus de \textit{Medline} en español, estos son procesados para eliminar las marcas específicas de \textit{HTML}\footnote{Siglas en inglés de \textit{\textbf{H}yper\textbf{T}ext \textbf{M}arkup \textbf{L}anguage}, un lenguaje de marcado usado en la elaboración de páginas web.} y ser divididos en oraciones. Luego de ser anotadas son mezcladas con sus respectivos artículos. Potencialmente, un artículo podrá no tener ninguna de sus oraciones anotadas o estarlo completamente.
 
-Las tablas \ref{tab:stats_annotated_corpus} y \ref{tab:stats_corpus} muestran algunas estadísticas acerca de este corpus y de las oraciones anotadas pertenecientes al mismo.
+Las tablas \ref{tab:stats_annotated_corpus} y \ref{tab:stats_corpus} muestran algunas estadísticas acerca de este corpus y de las oraciones anotadas pertenecientes al mismo. Estas cifras son las estadísticas del corpus sin haber aplicado el algoritmo de generar la base de conocimiento. Es decir, solo tomando los conceptos, atributos y relaciones que se encuentran en los documentos anotados. Cabe destacar que estas estadísticas pueden variar una vez ejecutado el algoritmo, ya sea por la creación de nuevas entidades, como se vio en la sección \ref{section:ontology_construction} o por el hecho de normalizar las palabras o frases, y de esta forma, muchos conceptos pueden llegar a ser la misma entidad.
 
 Estos resultados son extraídos usando \textit{python}~\cite{ref:22} como lenguaje de programación y los paquetes \textit{nltk}~\cite{ref:23} y \textit{spacy}~\cite{ref:24} para el procesamiento del lenguaje natural.
 
@@ -62,11 +62,6 @@ Estos resultados son extraídos usando \textit{python}~\cite{ref:22} como lengua
 		\label{tab:stats_annotated_corpus}
 	\end{center}
 \end{table}
-
-\vspace{-0.2in}
-Estas cifras son las estadísticas del corpus sin haber aplicado el algoritmo de generar la base de conocimiento. Es decir, solo tomando los conceptos, atributos y relaciones que se encuentran en los documentos anotados.
-
-Cabe destacar que estas cifras pueden variar una vez ejecutado el algoritmo, ya sea por la creación de nuevas entidades, como se vio en la sección \ref{section:ontology_construction} o por el hecho de normalizar las palabras o frases, y de esta forma, muchos conceptos pueden llegar a ser la misma entidad.
 
 \begin{table}[H]
 	\begin{center}
@@ -202,9 +197,7 @@ En la tabla \ref{tab:knowledge_graph_stats} se aprecia la cantidad de nodos y ar
 	\end{center}
 \end{table}
 
-Como se ha podido observar anteriormente, una de las principales funciones de las ontologías y los grafos de conocimiento es la extracción de conocimiento implícito, el cual, como lo dice su nombre, no está representado explícitamente en el corpus.
-
-En la tabla \ref{tab:implicit_knowledge_extraction} puede verse un ejemplo de esto en el corpus usado en esta investigación.
+Como se ha podido observar anteriormente, una de las principales funciones de las bases de conocimiento es la extracción de conocimiento implícito. En la tabla \ref{tab:implicit_knowledge_extraction} puede verse un ejemplo de esto en el corpus usado en esta investigación.
 
 \begin{table}[H]
 	\begin{center}
@@ -227,15 +220,12 @@ En la tabla \ref{tab:implicit_knowledge_extraction} puede verse un ejemplo de es
 	\end{center}
 \end{table}
 
-Para el problema en general de aprendizaje de ontologías se pueden llevar a cabo varias métricas de evaluación y metodologías, por ejemplo OntoRand~\cite{ref:25} y OntoMetric~\cite{ref:26}. Uno de los enfoques comúnmente utilizados en la literatura para la evaluación de ontologías~\cite{ref:27} es la \textit{evaluación basada en datos} (del inglés \textit{data driven evaluation})~\cite{ref:28}.
+Para el problema en general de aprendizaje de ontologías se pueden llevar a cabo varias métricas de evaluación y metodologías, por ejemplo OntoRand~\cite{ref:25} y OntoMetric~\cite{ref:26}. Como se vio en la sección \ref{section:ontology_evaluation_methods}, uno de los enfoques comúnmente utilizados para la evaluación de ontologías es la \textit{evaluación basada en datos}: esta fue la evaluación que se realizó.
 
-La evaluación \textit{basada en datos} puede ser llevada a cabo comparando las entidades y relaciones en una ontología dado un corpus de datos representativos del mismo dominio, pero que no es usado durante la creación de la base de conocimiento.
+La tabla \ref{tab:data_driven_evaluation_stats} muestra la división realizada entre las oraciones del corpus anotado y los resultados alcanzados con esto, en promedio, luego de $250$ corridas de cada división.
 
-La base de conocimientos creada puede ser evaluada teniendo en cuenta el número de entidades y relaciones pertenecientes a este nuevo corpus y que están presentes en ella.
+\newpage
 
-Este enfoque ha sido usado para comparar relativamente diferentes ontologías creadas por expertos basándose en el mismo corpus y decidir qué ontología provee el mejor \doublequote{ajuste} a este.~\cite{ref:29} Sin embargo, obtener una métrica absoluta del \doublequote{ajuste} entre una ontología y un corpus es una tarea difícil, principalmente porque se desconoce a priori cuál sería el mejor \doublequote{ajuste}.
-
-La tabla \ref{tab:data_driven_evaluation_stats} muestra la división que se hizo entre las oraciones del corpus anotado y los resultados alcanzados, en promedio, luego de $250$ corridas de cada división.
 \begin{table}[H]
 	\begin{center}
 		\begin{tabular}{rcccccc}
@@ -293,6 +283,57 @@ En la tabla \ref{tab:knowledge_graph_stats} se muestra el resultado de un grafo 
 
 El hecho de normalizar implica, por ejemplo, que todas las conjugaciones de un mismo verbo deben resultar en el propio verbo sin conjugar. Lo mismo sucede para el resto de palabras del idioma. Mientras mayor sea la cantidad de palabras normalizadas, hay una mejor representación en el grafo de su conocimiento expuesto en el corpus. Obviamente, es de vital importancia la normalización de familias de palabras a su primitiva, para poder dar continuidad al significado que ellas representan, puesto que no tiene sentido normalizar \guillemot{\texttt{glóbulos rojos}} a \guillemot{\texttt{globo rojo}} o \guillemot{\texttt{glóbulo blanco}}.
 
-Una deficiencia clara sucedió a la hora de hallar los resultados de la tabla \ref{tab:data_driven_evaluation_stats}. Para este tipo de evaluación, lo ideal es tener un grafo de conocimiento formado a partir de una ontología y de un corpus preferentemente grande. A su vez, el grafo debe ser revisado con otro corpus perteneciente al mismo tema y de mediano o gran tamaño. Muchas veces esto es difícil de lograr, y en efecto, es lo que sucedió.
+Una deficiencia clara sucedió a la hora de hallar los resultados de la tabla \ref{tab:data_driven_evaluation_stats}. Para este tipo de evaluación, lo ideal es tener un grafo de conocimiento formado a partir de una ontología y de un corpus preferentemente grande. A su vez, el grafo debe ser revisado con otro corpus perteneciente al mismo tema y de mediano o gran tamaño.
 
-Para llevar a cabo esta tarea, se dividieron las oraciones anotadas en dos grupos, un grupo de \textit{training} (\textit{entrenamiento} en español) con el cual se realizará el grafo de conocimiento y un grupo de \textit{testing} (\textit{verificación} en español), con el que se revisará la existencia de las anotaciones de texto y las relaciones respecto a las que ya están construidas en el grafo. Como puede verse en dicha tabla, a medida que el corpus de entrenamiento tiene más entidades y relaciones, se espera una mayor coincidencia respecto a nueva información que se quiera añadir a la base de conocimiento ya formada.
+Para llevar a cabo esta tarea, se dividieron las oraciones anotadas en dos grupos, un grupo de \textit{training} (\textit{entrenamiento} en español) con el cual se construyó el grafo de conocimiento y un grupo de \textit{testing} (\textit{verificación} en español), con el que se revisó la existencia de las anotaciones de texto y las relaciones respecto a las que ya están construidas en el grafo.
+
+Como puede verse en la tabla \ref{tab:data_driven_evaluation_stats}, a medida que el corpus de entrenamiento tiene más entidades y relaciones, se logró un mayor porcentaje de coincidencia respecto a la información con la que se comprobaba la base de conocimiento ya formada. Esto se traduce en que la base de conocimiento es capaz de condensar lo aprendido, logrado a través de la normalización de palabras y frases. Además, este resultado también evidencia que mientras más grande sea el corpus anotado inicial, mayor y de mejor calidad será el conocimiento representado en el grafo creado siguiendo los pasos propuestos en esta investigación.
+
+En adición a esto, las palabras que participan en una mayor cantidad de relaciones en la base de conocimiento generada se muestran a continuación de manera descendente.
+
+\vspace{0.1in}
+\noindent\begin{minipage}[h]{0.47\textwidth}
+	Representados como \textit{Concept} en el corpus anotado, los nodos del grafo de conocimiento que más relaciones tienen son:\\
+	\vspace{-0.3in}
+	\begin{itemize}
+		\item[•] tratamiento
+		\vspace{-0.1in}
+		\item[•] persona
+		\vspace{-0.1in}
+		\item[•] cuerpo
+		\vspace{-0.1in}
+		\item[•] problema
+		\vspace{-0.1in}
+		\item[•] médico
+		\vspace{-0.1in}
+		\item[•] sangre
+		\vspace{-0.1in}
+		\item[•] síntoma
+		\vspace{-0.1in}
+		\item[•] niño
+	\end{itemize}
+\end{minipage}
+\hspace{0.04\textwidth}
+\begin{minipage}[h]{0.47\textwidth}
+	Representados como \textit{Action} en el corpus anotado, los nodos del grafo de conocimiento que más relaciones tienen son:\\
+	\vspace{-0.3in}
+	\begin{itemize}
+		\item[•] tener
+		\vspace{-0.1in}
+		\item[•] usar
+		\vspace{-0.1in}
+		\item[•] dolor
+		\vspace{-0.1in}
+		\item[•] riesgo
+		\vspace{-0.1in}
+		\item[•] utilizar
+		\vspace{-0.1in}
+		\item[•] ayudar
+		\vspace{-0.1in}
+		\item[•] causar
+		\vspace{-0.1in}
+		\item[•] dañar
+	\end{itemize}
+\end{minipage}\\
+
+Estas palabras evidentemente están ampliamente correlacionadas con el dominio médico, al que pertenece el corpus usado. De este resultado se interpreta que los nodos con mayor cantidad de relación en el grafo son nodos con conocimiento válido, consistentes y de calidad en el dominio específico y no con conocimiento espurio.
