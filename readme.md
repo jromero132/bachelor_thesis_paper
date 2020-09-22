@@ -1,6 +1,7 @@
 # Documento de la Tesis de Licenciatura en Ciencia de la Computación
 
 ## A modo general
+
 Nombre y apellidos: José Ariel Romero Costa \
 Institución: Facultad de Matemática y Computación de la Universidad de La Habana \
 Grupo: C-512 \
@@ -8,10 +9,11 @@ Correo de MatCom: j.romero@estudiantes.matcom.uh.cu \
 Correo de contacto: josea132.romero@gmail.com \
 Tema de tesis: Generación Automática de Ontologías \
 Tutor: MSc. Juan Pablo Consuegra Ayala \
-Dirección del repositorio: https://github.com/jromero132/bachelor_thesis
+Dirección del repositorio: <https://github.com/jromero132/bachelor_thesis/>
 
 ## Documento de tesis
-El documento de tesis fue escrito en `LaTex`. El archivo `thesis.pdf` es el documento formal de la misma, mientras que `thesis.tex` es su código en `LaTex`.
+
+El documento de tesis fue escrito en [LaTex](https://www.latex-project.org/). El archivo `thesis.pdf` es el documento formal de la misma, mientras que `thesis.tex` es su código en `LaTex`.
 
 La redacción de la tesis utiliza el archivo `thesis.cls` como formato base. Además, fue dividida en varios archivos los cuales se encuentran en las carpetas:
 
